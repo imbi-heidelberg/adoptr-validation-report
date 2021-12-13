@@ -24,7 +24,7 @@
 <meta name="author" content="Kevin Kunzmann &amp; Maximilian Pilz" />
 
 
-<meta name="date" content="2021-10-26" />
+<meta name="date" content="2021-12-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -270,12 +270,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="scenarioVI.html"><a href="scenarioVI.html"><i class="fa fa-check"></i><b>7</b> Scenario VI: binomial distribution</a><ul>
 <li class="chapter" data-level="7.1" data-path="scenarioVI.html"><a href="scenarioVI.html#details-5"><i class="fa fa-check"></i><b>7.1</b> Details</a></li>
-<li class="chapter" data-level="7.2" data-path="scenarioVI.html"><a href="scenarioVI.html#variantVI_1"><i class="fa fa-check"></i><b>7.2</b> Variant VI-1, efficiency of optimal designs for binomial distribution</a><ul>
+<li class="chapter" data-level="7.2" data-path="scenarioVI.html"><a href="scenarioVI.html#variantVI_1"><i class="fa fa-check"></i><b>7.2</b> Variant VI-1: Minimizing Expected Sample Size Under Point Prior</a><ul>
 <li class="chapter" data-level="7.2.1" data-path="scenarioVI.html"><a href="scenarioVI.html#objective-14"><i class="fa fa-check"></i><b>7.2.1</b> Objective</a></li>
 <li class="chapter" data-level="7.2.2" data-path="scenarioVI.html"><a href="scenarioVI.html#constraints-14"><i class="fa fa-check"></i><b>7.2.2</b> Constraints</a></li>
 <li class="chapter" data-level="7.2.3" data-path="scenarioVI.html"><a href="scenarioVI.html#initial-designs-1"><i class="fa fa-check"></i><b>7.2.3</b> Initial Designs</a></li>
 <li class="chapter" data-level="7.2.4" data-path="scenarioVI.html"><a href="scenarioVI.html#optimization-13"><i class="fa fa-check"></i><b>7.2.4</b> Optimization</a></li>
 <li class="chapter" data-level="7.2.5" data-path="scenarioVI.html"><a href="scenarioVI.html#test-cases-14"><i class="fa fa-check"></i><b>7.2.5</b> Test Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="scenarioVI.html"><a href="scenarioVI.html#variantVI_2"><i class="fa fa-check"></i><b>7.3</b> Variant VI-2: Minimizing Expected Sample Size under Null Hypothesis</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="scenarioVI.html"><a href="scenarioVI.html#objective-15"><i class="fa fa-check"></i><b>7.3.1</b> Objective</a></li>
+<li class="chapter" data-level="7.3.2" data-path="scenarioVI.html"><a href="scenarioVI.html#constraints-15"><i class="fa fa-check"></i><b>7.3.2</b> Constraints</a></li>
+<li class="chapter" data-level="7.3.3" data-path="scenarioVI.html"><a href="scenarioVI.html#initial-design-12"><i class="fa fa-check"></i><b>7.3.3</b> Initial design</a></li>
+<li class="chapter" data-level="7.3.4" data-path="scenarioVI.html"><a href="scenarioVI.html#optimization-14"><i class="fa fa-check"></i><b>7.3.4</b> Optimization</a></li>
+<li class="chapter" data-level="7.3.5" data-path="scenarioVI.html"><a href="scenarioVI.html#test-cases-15"><i class="fa fa-check"></i><b>7.3.5</b> Test cases</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="scenarioVI.html"><a href="scenarioVI.html#variant-vi-3-conditional-power-constraint"><i class="fa fa-check"></i><b>7.4</b> Variant VI-3: Conditional Power constraint</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="scenarioVI.html"><a href="scenarioVI.html#objective-16"><i class="fa fa-check"></i><b>7.4.1</b> Objective</a></li>
+<li class="chapter" data-level="7.4.2" data-path="scenarioVI.html"><a href="scenarioVI.html#constraints-16"><i class="fa fa-check"></i><b>7.4.2</b> Constraints</a></li>
+<li class="chapter" data-level="7.4.3" data-path="scenarioVI.html"><a href="scenarioVI.html#initial-design-13"><i class="fa fa-check"></i><b>7.4.3</b> Initial Design</a></li>
+<li class="chapter" data-level="7.4.4" data-path="scenarioVI.html"><a href="scenarioVI.html#optimization-15"><i class="fa fa-check"></i><b>7.4.4</b> Optimization</a></li>
+<li class="chapter" data-level="7.4.5" data-path="scenarioVI.html"><a href="scenarioVI.html#test-cases-16"><i class="fa fa-check"></i><b>7.4.5</b> Test Cases</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -302,7 +316,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Validation Report for <strong>adoptr</strong> package</h1>
 <p class="author"><em>Kevin Kunzmann &amp; Maximilian Pilz</em></p>
-<p class="date"><em>2021-10-26</em></p>
+<p class="date"><em>2021-12-13</em></p>
 </div>
 <div id="introduction" class="section level1">
 <h1><span class="header-section-number">1</span> Introduction</h1>
@@ -823,9 +837,9 @@ absolute deviation of <span class="math inline">\(0.5\)</span>.</p>
 <span id="cb6-2"><a href="index.html#cb6-2"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-## ✔ tibble  3.1.5     ✔ dplyr   1.0.7
+## ✔ tibble  3.1.6     ✔ dplyr   1.0.7
 ## ✔ tidyr   1.1.4     ✔ stringr 1.4.0
-## ✔ readr   2.0.2     ✔ forcats 0.5.1</code></pre>
+## ✔ readr   2.1.1     ✔ forcats 0.5.1</code></pre>
 <pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
