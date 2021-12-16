@@ -1,8 +1,42 @@
+---
+title: "Temp"
+output: html_document
+---
+
+
+```{r}
+library(adoptr)
+library(tidyverse)
+library(rpact)
+library(pwr)
+library(testthat)
+library(tinytex)
+
+# load custom functions in folder subfolder '/R'
+for (nm in list.files("R", pattern = "\\.[RrSsQq]$"))
+   source(file.path("R", nm))
+
+# define seed value
+seed  <- 42
+
+# define absolute tolerance for error rates
+tol   <- 0.01
+
+# define absolute tolerance for sample sizes
+tol_n <- 0.5
+
+# define custom tolerance and iteration limit for nloptr
+opts = list(
+    algorithm = "NLOPT_LN_COBYLA",
+    xtol_rel  = 1e-5,
+    maxeval   = 100000
+)
+```
 #Scenario VII: binomial distribution, Gaussian prior {#scenarioVII}
 
 ## Details
 
-In this scenario, we revisit the case from [ScenarioVI](#variantVI), but are not assuming a point prior anymore. Instead, a Gaussian prior with mean $\theta = 0.4$ and variance $\tau^2 = 0.2^2$ on the effect size is assumed. 
+In this scenario, we revisit the case from , but are not assuming a point prior anymore. Instead, a Gaussian prior with mean $\theta = 0.4$ and variance $\tau^2 = 0.2^2$ on the effect size is assumed. 
 
 In order to fulfill regulatory considerations, the type one error rate is still protected under the point prior $\delta=0$ at the level of significance $\alpha=0.025$.
 
