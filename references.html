@@ -291,8 +291,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.4" data-path="scenarioVI.html"><a href="scenarioVI.html#optimization-15"><i class="fa fa-check"></i><b>7.4.4</b> Optimization</a></li>
 <li class="chapter" data-level="7.4.5" data-path="scenarioVI.html"><a href="scenarioVI.html#test-cases-16"><i class="fa fa-check"></i><b>7.4.5</b> Test Cases</a></li>
 </ul></li>
+<li class="chapter" data-level="7.5" data-path="scenarioVI.html"><a href="scenarioVI.html#details-6"><i class="fa fa-check"></i><b>7.5</b> Details</a></li>
+<li class="chapter" data-level="7.6" data-path="scenarioVI.html"><a href="scenarioVI.html#scenarioVII_1"><i class="fa fa-check"></i><b>7.6</b> Variant VII-1: Minimizing Expected Sample Size under Point Prior</a><ul>
+<li class="chapter" data-level="7.6.1" data-path="scenarioVI.html"><a href="scenarioVI.html#objective-17"><i class="fa fa-check"></i><b>7.6.1</b> Objective</a></li>
+<li class="chapter" data-level="7.6.2" data-path="scenarioVI.html"><a href="scenarioVI.html#constraints-17"><i class="fa fa-check"></i><b>7.6.2</b> Constraints</a></li>
+<li class="chapter" data-level="7.6.3" data-path="scenarioVI.html"><a href="scenarioVI.html#initial-design-14"><i class="fa fa-check"></i><b>7.6.3</b> Initial Design</a></li>
+<li class="chapter" data-level="7.6.4" data-path="scenarioVI.html"><a href="scenarioVI.html#optimization-16"><i class="fa fa-check"></i><b>7.6.4</b> Optimization</a></li>
+<li class="chapter" data-level="7.6.5" data-path="scenarioVI.html"><a href="scenarioVI.html#test-cases-17"><i class="fa fa-check"></i><b>7.6.5</b> Test Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a><ul>
+<li class="chapter" data-level="7.7" data-path="references.html"><a href="references.html#details-7"><i class="fa fa-check"></i><b>7.7</b> Details</a></li>
+<li class="chapter" data-level="7.8" data-path="scenarioVI.html"><a href="scenarioVI.html#scenarioVII_1"><i class="fa fa-check"></i><b>7.8</b> Variant VII-1: Minimizing Expected Sample Size under Point Prior</a><ul>
+<li class="chapter" data-level="7.8.1" data-path="references.html"><a href="references.html#objective-18"><i class="fa fa-check"></i><b>7.8.1</b> Objective</a></li>
+<li class="chapter" data-level="7.8.2" data-path="references.html"><a href="references.html#constraints-18"><i class="fa fa-check"></i><b>7.8.2</b> Constraints</a></li>
+<li class="chapter" data-level="7.8.3" data-path="references.html"><a href="references.html#initial-design-15"><i class="fa fa-check"></i><b>7.8.3</b> Initial Design</a></li>
+<li class="chapter" data-level="7.8.4" data-path="references.html"><a href="references.html#optimization-17"><i class="fa fa-check"></i><b>7.8.4</b> Optimization</a></li>
+<li class="chapter" data-level="7.8.5" data-path="references.html"><a href="references.html#test-cases-18"><i class="fa fa-check"></i><b>7.8.5</b> Test Cases</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -316,6 +333,146 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="references.html#cb194-1"></a><span class="kw">library</span>(adoptr)</span>
+<span id="cb194-2"><a href="references.html#cb194-2"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb194-3"><a href="references.html#cb194-3"></a><span class="kw">library</span>(rpact)</span>
+<span id="cb194-4"><a href="references.html#cb194-4"></a><span class="kw">library</span>(pwr)</span>
+<span id="cb194-5"><a href="references.html#cb194-5"></a><span class="kw">library</span>(testthat)</span>
+<span id="cb194-6"><a href="references.html#cb194-6"></a><span class="kw">library</span>(tinytex)</span>
+<span id="cb194-7"><a href="references.html#cb194-7"></a></span>
+<span id="cb194-8"><a href="references.html#cb194-8"></a><span class="co"># load custom functions in folder subfolder &#39;/R&#39;</span></span>
+<span id="cb194-9"><a href="references.html#cb194-9"></a><span class="cf">for</span> (nm <span class="cf">in</span> <span class="kw">list.files</span>(<span class="st">&quot;R&quot;</span>, <span class="dt">pattern =</span> <span class="st">&quot;</span><span class="ch">\\</span><span class="st">.[RrSsQq]$&quot;</span>))</span>
+<span id="cb194-10"><a href="references.html#cb194-10"></a>   <span class="kw">source</span>(<span class="kw">file.path</span>(<span class="st">&quot;R&quot;</span>, nm))</span>
+<span id="cb194-11"><a href="references.html#cb194-11"></a></span>
+<span id="cb194-12"><a href="references.html#cb194-12"></a><span class="co"># define seed value</span></span>
+<span id="cb194-13"><a href="references.html#cb194-13"></a>seed  &lt;-<span class="st"> </span><span class="dv">42</span></span>
+<span id="cb194-14"><a href="references.html#cb194-14"></a></span>
+<span id="cb194-15"><a href="references.html#cb194-15"></a><span class="co"># define absolute tolerance for error rates</span></span>
+<span id="cb194-16"><a href="references.html#cb194-16"></a>tol   &lt;-<span class="st"> </span><span class="fl">0.01</span></span>
+<span id="cb194-17"><a href="references.html#cb194-17"></a></span>
+<span id="cb194-18"><a href="references.html#cb194-18"></a><span class="co"># define absolute tolerance for sample sizes</span></span>
+<span id="cb194-19"><a href="references.html#cb194-19"></a>tol_n &lt;-<span class="st"> </span><span class="fl">0.5</span></span>
+<span id="cb194-20"><a href="references.html#cb194-20"></a></span>
+<span id="cb194-21"><a href="references.html#cb194-21"></a><span class="co"># define custom tolerance and iteration limit for nloptr</span></span>
+<span id="cb194-22"><a href="references.html#cb194-22"></a>opts =<span class="st"> </span><span class="kw">list</span>(</span>
+<span id="cb194-23"><a href="references.html#cb194-23"></a>    <span class="dt">algorithm =</span> <span class="st">&quot;NLOPT_LN_COBYLA&quot;</span>,</span>
+<span id="cb194-24"><a href="references.html#cb194-24"></a>    <span class="dt">xtol_rel  =</span> <span class="fl">1e-5</span>,</span>
+<span id="cb194-25"><a href="references.html#cb194-25"></a>    <span class="dt">maxeval   =</span> <span class="dv">100000</span></span>
+<span id="cb194-26"><a href="references.html#cb194-26"></a>)</span></code></pre></div>
+<p>#Scenario VII: binomial distribution, Gaussian prior {#scenarioVII}</p>
+<div id="details-7" class="section level2">
+<h2><span class="header-section-number">7.7</span> Details</h2>
+<p>In this scenario, we revisit the case from , but are not assuming a point prior anymore. Instead, a Gaussian prior with mean <span class="math inline">\(\theta = 0.4\)</span> and variance <span class="math inline">\(\tau^2 = 0.2^2\)</span> on the effect size is assumed.</p>
+<p>In order to fulfill regulatory considerations, the type one error rate is still protected under the point prior <span class="math inline">\(\delta=0\)</span> at the level of significance <span class="math inline">\(\alpha=0.025\)</span>.</p>
+<p>The power constraint, however, needs to be modified. It is not senseful to compute the power as rejection probability under the full prior, because effect sizes less than a minimal clinically relevant effect do not show (sufficient) evidence againt the null hypothesis. Therefore, we assume a minimal clinically relevant effect size <span class="math inline">\(\delta=0.0\)</span> and condition the prior on values <span class="math inline">\(\delta&gt;0\)</span> to compute expected power. In the following, the expected power should be at least <span class="math inline">\(0.8\)</span>.</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="references.html#cb195-1"></a><span class="co"># data distribution and priors</span></span>
+<span id="cb195-2"><a href="references.html#cb195-2"></a>datadist   &lt;-<span class="st"> </span><span class="kw">Normal</span>(<span class="dt">two_armed =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb195-3"><a href="references.html#cb195-3"></a>H_<span class="dv">0</span>        &lt;-<span class="st"> </span><span class="kw">PointMassPrior</span>(.<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb195-4"><a href="references.html#cb195-4"></a>prior      &lt;-<span class="st"> </span><span class="kw">ContinuousPrior</span>(<span class="cf">function</span>(delta) <span class="kw">dnorm</span>(delta, <span class="dt">mean =</span> <span class="fl">.4</span>, <span class="dt">sd =</span> <span class="fl">.2</span>),</span>
+<span id="cb195-5"><a href="references.html#cb195-5"></a>                              <span class="dt">support =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb195-6"><a href="references.html#cb195-6"></a>                              <span class="dt">tighten_support =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb195-7"><a href="references.html#cb195-7"></a></span>
+<span id="cb195-8"><a href="references.html#cb195-8"></a><span class="co"># define constraints on type one error rate and expected power</span></span>
+<span id="cb195-9"><a href="references.html#cb195-9"></a>alpha      &lt;-<span class="st"> </span><span class="fl">0.025</span></span>
+<span id="cb195-10"><a href="references.html#cb195-10"></a>min_epower &lt;-<span class="st"> </span><span class="fl">0.8</span></span>
+<span id="cb195-11"><a href="references.html#cb195-11"></a>toer_cnstr &lt;-<span class="st"> </span><span class="kw">Power</span>(datadist, H_<span class="dv">0</span>) <span class="op">&lt;=</span><span class="st"> </span>alpha</span>
+<span id="cb195-12"><a href="references.html#cb195-12"></a>epow_cnstr &lt;-<span class="st"> </span><span class="kw">Power</span>(datadist, <span class="kw">condition</span>(prior, <span class="kw">c</span>(<span class="fl">0.0</span>, prior<span class="op">@</span>support[<span class="dv">2</span>]))) <span class="op">&gt;=</span><span class="st"> </span>min_epower</span></code></pre></div>
+</div>
+<div id="scenarioVII_1" class="section level2">
+<h2><span class="header-section-number">7.8</span> Variant VII-1: Minimizing Expected Sample Size under Point Prior</h2>
+<div id="objective-18" class="section level3">
+<h3><span class="header-section-number">7.8.1</span> Objective</h3>
+<p>Expected sample size under the full prior is minimized, i.e., <span class="math inline">\(\boldsymbol{E}\big[n(\mathcal{D})\big]\)</span>.</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="references.html#cb196-1"></a>ess &lt;-<span class="st"> </span><span class="kw">ExpectedSampleSize</span>(datadist, prior)</span></code></pre></div>
+</div>
+<div id="constraints-18" class="section level3">
+<h3><span class="header-section-number">7.8.2</span> Constraints</h3>
+<p>No additional constraints are considered in this variant.</p>
+</div>
+<div id="initial-design-15" class="section level3">
+<h3><span class="header-section-number">7.8.3</span> Initial Design</h3>
+<p>For this example, the optimal one-stage, group-sequential, and generic two-stage designs are computed. While the initial design for the one-stage case is determined heuristically, both the group sequential and the generic two-stage designs are optimized starting from the a group-sequential design that is computed by the <code>rpact</code>package to fulfill the type one error rate constraint and that fulfills the power constraint at an effect size of <span class="math inline">\(\delta=0.3\)</span>.</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="references.html#cb197-1"></a>order &lt;-<span class="st"> </span>5L</span>
+<span id="cb197-2"><a href="references.html#cb197-2"></a><span class="co"># data frame of initial designs </span></span>
+<span id="cb197-3"><a href="references.html#cb197-3"></a>tbl_designs &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb197-4"><a href="references.html#cb197-4"></a>    <span class="dt">type    =</span> <span class="kw">c</span>(<span class="st">&quot;one-stage&quot;</span>, <span class="st">&quot;group-sequential&quot;</span>, <span class="st">&quot;two-stage&quot;</span>),</span>
+<span id="cb197-5"><a href="references.html#cb197-5"></a>    <span class="dt">initial =</span> <span class="kw">list</span>(</span>
+<span id="cb197-6"><a href="references.html#cb197-6"></a>        <span class="kw">OneStageDesign</span>(<span class="dv">250</span>, <span class="fl">2.0</span>),</span>
+<span id="cb197-7"><a href="references.html#cb197-7"></a>        <span class="kw">rpact_design</span>(datadist, <span class="fl">0.3</span>, <span class="fl">0.025</span>, <span class="fl">0.8</span>, <span class="ot">TRUE</span>, order),</span>
+<span id="cb197-8"><a href="references.html#cb197-8"></a>        <span class="kw">TwoStageDesign</span>(<span class="kw">rpact_design</span>(datadist, <span class="fl">0.3</span>, <span class="fl">0.025</span>, <span class="fl">0.8</span>, <span class="ot">TRUE</span>, order))) )</span></code></pre></div>
+<p>The order of integration is set to 5.</p>
+</div>
+<div id="optimization-17" class="section level3">
+<h3><span class="header-section-number">7.8.4</span> Optimization</h3>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="references.html#cb198-1"></a>tbl_designs &lt;-<span class="st"> </span>tbl_designs <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb198-2"><a href="references.html#cb198-2"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
+<span id="cb198-3"><a href="references.html#cb198-3"></a>       <span class="dt">optimal =</span> purrr<span class="op">::</span><span class="kw">map</span>(initial, <span class="op">~</span><span class="kw">minimize</span>(</span>
+<span id="cb198-4"><a href="references.html#cb198-4"></a>         </span>
+<span id="cb198-5"><a href="references.html#cb198-5"></a>          ess,</span>
+<span id="cb198-6"><a href="references.html#cb198-6"></a>          <span class="kw">subject_to</span>(</span>
+<span id="cb198-7"><a href="references.html#cb198-7"></a>              toer_cnstr,</span>
+<span id="cb198-8"><a href="references.html#cb198-8"></a>              epow_cnstr</span>
+<span id="cb198-9"><a href="references.html#cb198-9"></a>          ),</span>
+<span id="cb198-10"><a href="references.html#cb198-10"></a>          </span>
+<span id="cb198-11"><a href="references.html#cb198-11"></a>          <span class="dt">initial_design =</span> ., </span>
+<span id="cb198-12"><a href="references.html#cb198-12"></a>          <span class="dt">opts           =</span> opts)) )</span></code></pre></div>
+</div>
+<div id="test-cases-18" class="section level3">
+<h3><span class="header-section-number">7.8.5</span> Test Cases</h3>
+<p>Firstly, it is checked that the maximum number of iterations was not reached in all these cases.</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="references.html#cb199-1"></a>tbl_designs <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb199-2"><a href="references.html#cb199-2"></a><span class="st">  </span><span class="kw">transmute</span>(</span>
+<span id="cb199-3"><a href="references.html#cb199-3"></a>      type, </span>
+<span id="cb199-4"><a href="references.html#cb199-4"></a>      <span class="dt">iterations =</span> purrr<span class="op">::</span><span class="kw">map_int</span>(tbl_designs<span class="op">$</span>optimal, </span>
+<span id="cb199-5"><a href="references.html#cb199-5"></a>                                  <span class="op">~</span>.<span class="op">$</span>nloptr_return<span class="op">$</span>iterations) ) <span class="op">%&gt;%</span></span>
+<span id="cb199-6"><a href="references.html#cb199-6"></a><span class="st">  </span>{<span class="kw">print</span>(.); .} <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb199-7"><a href="references.html#cb199-7"></a><span class="st">  </span>{testthat<span class="op">::</span><span class="kw">expect_true</span>(<span class="kw">all</span>(.<span class="op">$</span>iterations <span class="op">&lt;</span><span class="st"> </span>opts<span class="op">$</span>maxeval))}</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+##   type             iterations
+##   &lt;chr&gt;                 &lt;int&gt;
+## 1 one-stage                26
+## 2 group-sequential        720
+## 3 two-stage              1965</code></pre>
+<p>Since type one error rate is defined under the point effect size <span class="math inline">\(\delta=0\)</span>, the type one error rate constraint can be tested for all three optimal designs.</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="references.html#cb201-1"></a>tbl_designs <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb201-2"><a href="references.html#cb201-2"></a><span class="st">  </span><span class="kw">transmute</span>(</span>
+<span id="cb201-3"><a href="references.html#cb201-3"></a>      type, </span>
+<span id="cb201-4"><a href="references.html#cb201-4"></a>      <span class="dt">toer =</span> purrr<span class="op">::</span><span class="kw">map</span>(tbl_designs<span class="op">$</span>optimal, </span>
+<span id="cb201-5"><a href="references.html#cb201-5"></a>                        <span class="op">~</span><span class="kw">sim_pr_reject</span>(.[[<span class="dv">1</span>]], <span class="fl">.0</span>, datadist)<span class="op">$</span>prob) ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb201-6"><a href="references.html#cb201-6"></a><span class="st">  </span><span class="kw">unnest</span>(., <span class="dt">cols =</span> <span class="kw">c</span>(toer)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb201-7"><a href="references.html#cb201-7"></a><span class="st">  </span>{<span class="kw">print</span>(.); .} <span class="op">%&gt;%</span><span class="st"> </span>{</span>
+<span id="cb201-8"><a href="references.html#cb201-8"></a>  testthat<span class="op">::</span><span class="kw">expect_true</span>(<span class="kw">all</span>(.<span class="op">$</span>toer <span class="op">&lt;=</span><span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>tol))) }</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+##   type               toer
+##   &lt;chr&gt;             &lt;dbl&gt;
+## 1 one-stage        0.0251
+## 2 group-sequential 0.0250
+## 3 two-stage        0.0249</code></pre>
+<p>Since the optimal two-stage design is more flexible than the optimal group-sequential design (constant <span class="math inline">\(n_2\)</span> function) and this is more flexible than the optimal one-stage design (no second stage), the expected sample sizes under the prior should be ordered in the opposite way. Additionally, expected sample sizes under the null hypothesis are computed both via <code>evaluate()</code> and simulation-based.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="references.html#cb203-1"></a>essh0 &lt;-<span class="st"> </span><span class="kw">ExpectedSampleSize</span>(datadist, H_<span class="dv">0</span>)</span>
+<span id="cb203-2"><a href="references.html#cb203-2"></a></span>
+<span id="cb203-3"><a href="references.html#cb203-3"></a>tbl_designs <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb203-4"><a href="references.html#cb203-4"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
+<span id="cb203-5"><a href="references.html#cb203-5"></a>        <span class="dt">ess       =</span> <span class="kw">map_dbl</span>(optimal,</span>
+<span id="cb203-6"><a href="references.html#cb203-6"></a>                            <span class="op">~</span><span class="kw">evaluate</span>(ess, .<span class="op">$</span>design) ),</span>
+<span id="cb203-7"><a href="references.html#cb203-7"></a>        <span class="dt">essh0     =</span> <span class="kw">map_dbl</span>(optimal,</span>
+<span id="cb203-8"><a href="references.html#cb203-8"></a>                            <span class="op">~</span><span class="kw">evaluate</span>(essh0, .<span class="op">$</span>design) ),</span>
+<span id="cb203-9"><a href="references.html#cb203-9"></a>        <span class="dt">essh0_sim =</span> <span class="kw">map_dbl</span>(optimal,</span>
+<span id="cb203-10"><a href="references.html#cb203-10"></a>                            <span class="op">~</span><span class="kw">sim_n</span>(.<span class="op">$</span>design, <span class="fl">.0</span>, datadist)<span class="op">$</span>n ) ) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb203-11"><a href="references.html#cb203-11"></a><span class="st">    </span>{<span class="kw">print</span>(.); .} <span class="op">%&gt;%</span><span class="st"> </span>{</span>
+<span id="cb203-12"><a href="references.html#cb203-12"></a>    <span class="co"># sim/evaluate same under null?</span></span>
+<span id="cb203-13"><a href="references.html#cb203-13"></a>    testthat<span class="op">::</span><span class="kw">expect_equal</span>(.<span class="op">$</span>essh0, .<span class="op">$</span>essh0_sim, </span>
+<span id="cb203-14"><a href="references.html#cb203-14"></a>                           <span class="dt">tolerance =</span> tol_n,</span>
+<span id="cb203-15"><a href="references.html#cb203-15"></a>                           <span class="dt">scale =</span> <span class="dv">1</span>)</span>
+<span id="cb203-16"><a href="references.html#cb203-16"></a>    <span class="co"># monotonicity with respect to degrees of freedom</span></span>
+<span id="cb203-17"><a href="references.html#cb203-17"></a>    testthat<span class="op">::</span><span class="kw">expect_true</span>(<span class="kw">all</span>(<span class="kw">diff</span>(.<span class="op">$</span>ess) <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>)) }</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 6
+##   type             initial    optimal          ess essh0 essh0_sim
+##   &lt;chr&gt;            &lt;list&gt;     &lt;list&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+## 1 one-stage        &lt;OnStgDsg&gt; &lt;adptrOpR [3]&gt;  165   165       165 
+## 2 group-sequential &lt;GrpSqntD&gt; &lt;adptrOpR [3]&gt;  117.  115.      115.
+## 3 two-stage        &lt;TwStgDsg&gt; &lt;adptrOpR [3]&gt;  115.  119.      119.</code></pre>
+
 <div id="refs" class="references">
 <div>
 <p>Bauer, P., F. Bretz, V. Dragalin, F. König, and G. Wassmer. 2015. “Twenty-Five Years of Confirmatory Adaptive Designs: Opportunities and Pitfalls.” <em>Statistics in Medicine</em> 35 (3): 325–47. <a href="https://doi.org/10.1002/sim.6472">https://doi.org/10.1002/sim.6472</a>.</p>
@@ -331,6 +488,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div>
 <p>Wickham, H., R Studio, and R Core Team. 2018. <em>Testthat: Unit Testing for R</em>. <a href="https://cran.r-project.org/web/packages/testthat/index.html">https://cran.r-project.org/web/packages/testthat/index.html</a>.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
