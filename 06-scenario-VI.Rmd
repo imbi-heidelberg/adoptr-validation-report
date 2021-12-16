@@ -1,4 +1,4 @@
-# Scenario VI: binomial distribution {#scenarioVI}
+# Scenario VI: binomial distribution, point prior {#scenarioVI}
 
 ## Details
 

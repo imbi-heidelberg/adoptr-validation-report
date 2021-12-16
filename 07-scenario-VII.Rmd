@@ -1,0 +1,3 @@
+#Scenario VII: binomial distribution, Gaussian prior {#scenarioVII}
+
+In this scenario, we revisit the case from (#variantVII), but are not assuming a point prior anymore. Instead, a Gaussian prior with mean $\theta = 0.4$ and variance $\tau^2 = 0.2^2$ on the effect size is assumed. 
