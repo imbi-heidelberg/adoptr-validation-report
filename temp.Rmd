@@ -47,8 +47,8 @@ The power constraint, however, needs to be modified. It is not senseful to compu
 datadist   <- Normal(two_armed = TRUE)
 H_0        <- PointMassPrior(.0, 1)
 prior      <- ContinuousPrior(function(delta) dnorm(delta, mean = .4, sd = .2),
-                              support = c(-5, 5),
-                              tighten_support = TRUE)
+                              support = c(0, 5),
+                              tighten_support = TRUE,check_normalization = FALSE)
 
 # define constraints on type one error rate and expected power
 alpha      <- 0.025
