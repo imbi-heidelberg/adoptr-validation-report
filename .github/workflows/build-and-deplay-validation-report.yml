@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - master
+      - nico
   pull_request:
     branches:
       - main
