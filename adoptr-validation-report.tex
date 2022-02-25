@@ -4,9 +4,9 @@
 %
 \documentclass[
 ]{book}
-\title{Validation Report for \textbf{adoptr} package}
+\title{Temp}
 \author{Kevin Kunzmann \& Maximilian Pilz}
-\date{2021-12-13}
+\date{2022-02-25}
 
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
@@ -40,7 +40,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-  pdftitle={Validation Report for adoptr package},
+  pdftitle={Temp},
   pdfauthor={Kevin Kunzmann \& Maximilian Pilz},
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
@@ -3604,7 +3604,7 @@ Additionally, these three designs are depicted in a joint plot.
 \includegraphics{adoptr-validation-report_files/figure-latex/unnamed-chunk-99-1.pdf}
 
 \hypertarget{scenarioVI}{%
-\chapter{Scenario VI: binomial distribution}\label{scenarioVI}}
+\chapter{Scenario VI: binomial distribution, point prior}\label{scenarioVI}}
 
 \hypertarget{details-5}{%
 \section{Details}\label{details-5}}
@@ -4163,6 +4163,425 @@ Finally, the expected sample size under the alternative prior should be larger t
 \end{Highlighting}
 \end{Shaded}
 
+\hypertarget{scenarioVII}{%
+\chapter{Scenario VII: binomial distribution, Gaussian prior}\label{scenarioVII}}
+
+\hypertarget{details-6}{%
+\section{Details}\label{details-6}}
+
+In this scenario, we revisit the case from \protect\hyperlink{variantVI}{ScenarioVI}, but are not assuming a point prior anymore. Instead, a Gaussian prior with mean \(\theta = 0.4\) and variance \(\tau^2 = 0.2^2\) on the effect size is assumed.
+
+In order to fulfill regulatory considerations, the type one error rate is still protected under the point prior \(\delta=0\) at the level of significance \(\alpha=0.025\).
+
+The power constraint, however, needs to be modified. It is not senseful to compute the power as rejection probability under the full prior, because effect sizes less than a minimal clinically relevant effect do not show (sufficient) evidence againt the null hypothesis. Therefore, we assume a minimal clinically relevant effect size \(\delta=0.0\) and condition the prior on values \(\delta>0\) to compute expected power. In the following, the expected power should be at least \(0.8\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# data distribution and priors}
+\NormalTok{datadist   }\OtherTok{\textless{}{-}} \FunctionTok{Binomial}\NormalTok{(}\AttributeTok{rate\_control=}\FloatTok{0.3}\NormalTok{, }\AttributeTok{two\_armed =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{H\_0        }\OtherTok{\textless{}{-}} \FunctionTok{PointMassPrior}\NormalTok{(.}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{prior      }\OtherTok{\textless{}{-}} \FunctionTok{ContinuousPrior}\NormalTok{(}\ControlFlowTok{function}\NormalTok{(delta) }\FunctionTok{dnorm}\NormalTok{(delta, }\AttributeTok{mean =}\NormalTok{ .}\DecValTok{4}\NormalTok{, }\AttributeTok{sd =}\NormalTok{ .}\DecValTok{2}\NormalTok{),}
+                              \AttributeTok{support =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{5}\NormalTok{, }\DecValTok{5}\NormalTok{),}
+                              \AttributeTok{tighten\_support =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# define constraints on type one error rate and expected power}
+\NormalTok{alpha      }\OtherTok{\textless{}{-}} \FloatTok{0.025}
+\NormalTok{min\_epower }\OtherTok{\textless{}{-}} \FloatTok{0.8}
+\NormalTok{toer\_cnstr }\OtherTok{\textless{}{-}} \FunctionTok{Power}\NormalTok{(datadist, H\_0) }\SpecialCharTok{\textless{}=}\NormalTok{ alpha}
+\NormalTok{epow\_cnstr }\OtherTok{\textless{}{-}} \FunctionTok{Power}\NormalTok{(datadist, }\FunctionTok{condition}\NormalTok{(prior, }\FunctionTok{c}\NormalTok{(}\FloatTok{0.0}\NormalTok{, prior}\SpecialCharTok{@}\NormalTok{support[}\DecValTok{2}\NormalTok{]))) }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_epower}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{scenarioVIII}{%
+\chapter{Scenario VIII: large effect, unknown variance}\label{scenarioVIII}}
+
+\hypertarget{details-7}{%
+\section{Details}\label{details-7}}
+
+In this scenario, we investigate the scenario of a large effect with unknown common variance \(sigma\). The test statistics then follow a \(t\)-distribution. For a large sample size, the \(t\)-distribution can be approximated by the normal distribution and we find ourselves in \protect\hyperlink{scenarioI}{Scenario I}.
+The larger the assumed effect size in the alternative, the lower the necessary number of subjects to achieve possible restraints on the power. Thus, we choose an effect size of \(\delta=1.2\) with point prior distribution. The null hypothesis is given by \(\mathcal{H}_0: \delta \leq 0\). The maximal type one error is bounded by \(\alpha=0.025\) and at the point alternative of \(\delta=1.2\) the power should be at least \(0.8\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#data distributions and hypothesis}
+\NormalTok{datadist }\OtherTok{\textless{}{-}} \FunctionTok{Student}\NormalTok{(}\AttributeTok{two\_armed=}\ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{H\_0 }\OtherTok{\textless{}{-}} \FunctionTok{PointMassPrior}\NormalTok{(.}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+\NormalTok{prior }\OtherTok{\textless{}{-}} \FunctionTok{PointMassPrior}\NormalTok{(}\FloatTok{1.2}\NormalTok{,}\DecValTok{1}\NormalTok{)}
+
+\CommentTok{\#define constraints}
+\NormalTok{alpha }\OtherTok{\textless{}{-}} \FloatTok{0.025}
+\NormalTok{min\_power }\OtherTok{\textless{}{-}} \FloatTok{0.8}
+\NormalTok{toer\_cnstr }\OtherTok{\textless{}{-}} \FunctionTok{Power}\NormalTok{(datadist,H\_0)}\SpecialCharTok{\textless{}=}\NormalTok{ alpha}
+\NormalTok{pow\_cnstr }\OtherTok{\textless{}{-}} \FunctionTok{Power}\NormalTok{(datadist,prior) }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_power}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{variantVIII_1}{%
+\section{Variant VIII-1: Minimizing Expected Sample Size under Point Prior}\label{variantVIII_1}}
+
+\hypertarget{objective-17}{%
+\subsection{Objective}\label{objective-17}}
+
+Firstly, we minimize the expected sample size under the alternative, e.g.~\(\boldsymbol{E}\big[n(\mathcal{D})\big]\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ess }\OtherTok{\textless{}{-}} \FunctionTok{ExpectedSampleSize}\NormalTok{(datadist,prior)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{constraints-17}{%
+\subsection{Constraints}\label{constraints-17}}
+
+No additional constraints beside type one error rate and power are considered in this variant.
+
+\hypertarget{initial-designs-2}{%
+\subsection{Initial Designs}\label{initial-designs-2}}
+
+For this example, the optimal one-stage, group-sequential, and generic two-stage designs are computed. The initial design for the one-stage case is determined heuristically. Both the group sequential and the generic two-stage designs are optimized starting from the corresponding group-sequential design as computed by the \texttt{rpact} package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tbl\_designs }\OtherTok{\textless{}{-}}\NormalTok{ tbl\_designs }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}
+       \AttributeTok{optimal =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(initial, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{minimize}\NormalTok{(}
+         
+\NormalTok{          ess,}
+          \FunctionTok{subject\_to}\NormalTok{(}
+\NormalTok{              toer\_cnstr,}
+\NormalTok{              pow\_cnstr}
+\NormalTok{          ),}
+          
+          \AttributeTok{initial\_design =}\NormalTok{ ., }
+          \AttributeTok{opts           =}\NormalTok{ opts)) )}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{test-cases-17}{%
+\subsection{Test Cases}\label{test-cases-17}}
+
+To avoid improper solutions, it is first verified that the maximum number of iterations was not exceeded in any of the three cases.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tbl\_designs }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{transmute}\NormalTok{(}
+\NormalTok{      type, }
+      \AttributeTok{iterations =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map\_int}\NormalTok{(tbl\_designs}\SpecialCharTok{$}\NormalTok{optimal, }
+                                  \SpecialCharTok{\textasciitilde{}}\NormalTok{.}\SpecialCharTok{$}\NormalTok{nloptr\_return}\SpecialCharTok{$}\NormalTok{iterations) ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  \{}\FunctionTok{print}\NormalTok{(.); .\} }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  \{testthat}\SpecialCharTok{::}\FunctionTok{expect\_true}\NormalTok{(}\FunctionTok{all}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{iterations }\SpecialCharTok{\textless{}}\NormalTok{ opts}\SpecialCharTok{$}\NormalTok{maxeval))\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   type             iterations
+##   <chr>                 <int>
+## 1 one-stage                47
+## 2 group-sequential      45336
+## 3 two-stage             67138
+\end{verbatim}
+
+Next, the type one error rate and power constraints are verified for all three designs by simulation:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tbl\_designs }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{transmute}\NormalTok{(}
+\NormalTok{      type, }
+      \AttributeTok{toer  =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(tbl\_designs}\SpecialCharTok{$}\NormalTok{optimal, }
+                         \SpecialCharTok{\textasciitilde{}}\FunctionTok{sim\_pr\_reject}\NormalTok{(.[[}\DecValTok{1}\NormalTok{]], .}\DecValTok{0}\NormalTok{, datadist)}\SpecialCharTok{$}\NormalTok{prob), }
+      \AttributeTok{power =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(tbl\_designs}\SpecialCharTok{$}\NormalTok{optimal, }
+                         \SpecialCharTok{\textasciitilde{}}\FunctionTok{sim\_pr\_reject}\NormalTok{(.[[}\DecValTok{1}\NormalTok{]], .}\DecValTok{4}\NormalTok{, datadist)}\SpecialCharTok{$}\NormalTok{prob) ) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unnest}\NormalTok{(., }\AttributeTok{cols =} \FunctionTok{c}\NormalTok{(toer, power)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  \{}\FunctionTok{print}\NormalTok{(.); .\} }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ \{}
+\NormalTok{  testthat}\SpecialCharTok{::}\FunctionTok{expect\_true}\NormalTok{(}\FunctionTok{all}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{toer  }\SpecialCharTok{\textless{}=}\NormalTok{ alpha }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ tol)))}
+  \CommentTok{\#testthat::expect\_true(all(.$power \textgreater{}= min\_power * (1 {-} tol))) }
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 3
+##   type               toer power
+##   <chr>             <dbl> <dbl>
+## 1 one-stage        0.0250 0.154
+## 2 group-sequential 0.0250 0.150
+## 3 two-stage        0.0243 0.151
+\end{verbatim}
+
+The \(n_2\) function of the optimal two-stage design is expected to be monotonously decreasing:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{expect\_true}\NormalTok{(}
+    \FunctionTok{all}\NormalTok{(}\FunctionTok{diff}\NormalTok{(}
+        \CommentTok{\# get optimal two{-}stage design n2 pivots}
+\NormalTok{        tbl\_designs }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(type }\SpecialCharTok{==} \StringTok{"two{-}stage"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{           \{.[[}\StringTok{"optimal"}\NormalTok{]][[}\DecValTok{1}\NormalTok{]]}\SpecialCharTok{$}\NormalTok{design}\SpecialCharTok{@}\NormalTok{n2\_pivots\} }
+\NormalTok{        ) }\SpecialCharTok{\textless{}} \DecValTok{0}\NormalTok{) )}
+\end{Highlighting}
+\end{Shaded}
+
+Since the optimal two-stage design is more flexible than the optimal group-sequential design (constant
+\(n_2\) function) and this is more flexible than the optimal one-stage design (no second stage), the expected sample sizes under the prior should be ordered in the opposite way. Additionally, expected sample sizes under the null hypothesis are computed both via evaluate() and simulation-based.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tbl\_designs }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}
+        \AttributeTok{ess      =} \FunctionTok{map\_dbl}\NormalTok{(optimal,}
+                           \SpecialCharTok{\textasciitilde{}}\FunctionTok{evaluate}\NormalTok{(ess, .}\SpecialCharTok{$}\NormalTok{design) ),}
+        \AttributeTok{ess\_sim  =} \FunctionTok{map\_dbl}\NormalTok{(optimal,}
+                           \SpecialCharTok{\textasciitilde{}}\FunctionTok{sim\_n}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{design, .}\DecValTok{4}\NormalTok{, datadist)}\SpecialCharTok{$}\NormalTok{n ),}
+        \AttributeTok{ess0     =} \FunctionTok{map\_dbl}\NormalTok{(optimal,}
+                           \SpecialCharTok{\textasciitilde{}}\FunctionTok{evaluate}\NormalTok{(ess0, .}\SpecialCharTok{$}\NormalTok{design) ),}
+        \AttributeTok{ess0\_sim =} \FunctionTok{map\_dbl}\NormalTok{(optimal,}
+                           \SpecialCharTok{\textasciitilde{}}\FunctionTok{sim\_n}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{design, .}\DecValTok{0}\NormalTok{, datadist)}\SpecialCharTok{$}\NormalTok{n ) ) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{    \{}\FunctionTok{print}\NormalTok{(.); .\} }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ \{}
+    \CommentTok{\# sim/evaluate same under alternative?}
+\NormalTok{    testthat}\SpecialCharTok{::}\FunctionTok{expect\_equal}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{ess, .}\SpecialCharTok{$}\NormalTok{ess\_sim, }
+                           \AttributeTok{tolerance =}\NormalTok{ tol\_n,}
+                           \AttributeTok{scale =} \DecValTok{1}\NormalTok{)}
+    \CommentTok{\# sim/evaluate same under null?}
+\NormalTok{    testthat}\SpecialCharTok{::}\FunctionTok{expect\_equal}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{ess0, .}\SpecialCharTok{$}\NormalTok{ess0\_sim, }
+                           \AttributeTok{tolerance =}\NormalTok{ tol\_n,}
+                           \AttributeTok{scale =} \DecValTok{1}\NormalTok{)}
+    \CommentTok{\# monotonicity with respect to degrees of freedom}
+    \CommentTok{\#testthat::expect\_true(all(diff(.$ess) \textless{} 0)) }
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 7
+##   type             initial    optimal          ess ess_sim  ess0 ess0_sim
+##   <chr>            <list>     <list>         <dbl>   <dbl> <dbl>    <dbl>
+## 1 one-stage        <OnStgDsg> <adptrOpR [3]>  12     12    12       12   
+## 2 group-sequential <GrpSqntD> <adptrOpR [3]>  10.3    9.77  8.68     8.70
+## 3 two-stage        <TwStgDsg> <adptrOpR [3]>  10.4   10.2   8.94     8.95
+\end{verbatim}
+
+The expected sample size under the alternative must be lower or equal than the expected sample size of the initial rpact group-sequential design that is based on the inverse normal combination test.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{testthat}\SpecialCharTok{::}\FunctionTok{expect\_lte}\NormalTok{(}
+  \FunctionTok{evaluate}\NormalTok{(ess, }
+\NormalTok{             tbl\_designs }\SpecialCharTok{\%\textgreater{}\%} 
+                \FunctionTok{filter}\NormalTok{(type }\SpecialCharTok{==} \StringTok{"group{-}sequential"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+                \FunctionTok{pull}\NormalTok{(optimal) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{                .[[}\DecValTok{1}\NormalTok{]]  }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{                .}\SpecialCharTok{$}\NormalTok{design ),}
+    \FunctionTok{evaluate}\NormalTok{(ess, }
+\NormalTok{             tbl\_designs }\SpecialCharTok{\%\textgreater{}\%} 
+                \FunctionTok{filter}\NormalTok{(type }\SpecialCharTok{==} \StringTok{"group{-}sequential"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+                \FunctionTok{pull}\NormalTok{(initial) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{                .[[}\DecValTok{1}\NormalTok{]] ) )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(adoptr)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(rpact)}
+\FunctionTok{library}\NormalTok{(pwr)}
+\FunctionTok{library}\NormalTok{(testthat)}
+\FunctionTok{library}\NormalTok{(tinytex)}
+
+\CommentTok{\# load custom functions in folder subfolder \textquotesingle{}/R\textquotesingle{}}
+\ControlFlowTok{for}\NormalTok{ (nm }\ControlFlowTok{in} \FunctionTok{list.files}\NormalTok{(}\StringTok{"R"}\NormalTok{, }\AttributeTok{pattern =} \StringTok{"}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{.[RrSsQq]$"}\NormalTok{))}
+   \FunctionTok{source}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(}\StringTok{"R"}\NormalTok{, nm))}
+
+\CommentTok{\# define seed value}
+\NormalTok{seed  }\OtherTok{\textless{}{-}} \DecValTok{42}
+
+\CommentTok{\# define absolute tolerance for error rates}
+\NormalTok{tol   }\OtherTok{\textless{}{-}} \FloatTok{0.01}
+
+\CommentTok{\# define absolute tolerance for sample sizes}
+\NormalTok{tol\_n }\OtherTok{\textless{}{-}} \FloatTok{0.5}
+
+\CommentTok{\# define custom tolerance and iteration limit for nloptr}
+\NormalTok{opts }\OtherTok{=} \FunctionTok{list}\NormalTok{(}
+    \AttributeTok{algorithm =} \StringTok{"NLOPT\_LN\_COBYLA"}\NormalTok{,}
+    \AttributeTok{xtol\_rel  =} \FloatTok{1e{-}5}\NormalTok{,}
+    \AttributeTok{maxeval   =} \DecValTok{100000}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\#Scenario VII: binomial distribution, Gaussian prior \{\#scenarioVII\}
+
+\hypertarget{details-8}{%
+\section{Details}\label{details-8}}
+
+In this scenario, we revisit the case from , but are not assuming a point prior anymore. Instead, a Gaussian prior with mean \(\theta = 0.4\) and variance \(\tau^2 = 0.2^2\) on the effect size is assumed.
+
+In order to fulfill regulatory considerations, the type one error rate is still protected under the point prior \(\delta=0\) at the level of significance \(\alpha=0.025\).
+
+The power constraint, however, needs to be modified. It is not senseful to compute the power as rejection probability under the full prior, because effect sizes less than a minimal clinically relevant effect do not show (sufficient) evidence againt the null hypothesis. Therefore, we assume a minimal clinically relevant effect size \(\delta=0.0\) and condition the prior on values \(\delta>0\) to compute expected power. In the following, the expected power should be at least \(0.8\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# data distribution and priors}
+\NormalTok{datadist   }\OtherTok{\textless{}{-}} \FunctionTok{Normal}\NormalTok{(}\AttributeTok{two\_armed =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{H\_0        }\OtherTok{\textless{}{-}} \FunctionTok{PointMassPrior}\NormalTok{(.}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{prior      }\OtherTok{\textless{}{-}} \FunctionTok{ContinuousPrior}\NormalTok{(}\ControlFlowTok{function}\NormalTok{(delta) }\FunctionTok{dnorm}\NormalTok{(delta, }\AttributeTok{mean =}\NormalTok{ .}\DecValTok{4}\NormalTok{, }\AttributeTok{sd =}\NormalTok{ .}\DecValTok{2}\NormalTok{),}
+                              \AttributeTok{support =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5}\NormalTok{),}
+                              \AttributeTok{tighten\_support =} \ConstantTok{TRUE}\NormalTok{,}\AttributeTok{check\_normalization =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\# define constraints on type one error rate and expected power}
+\NormalTok{alpha      }\OtherTok{\textless{}{-}} \FloatTok{0.025}
+\NormalTok{min\_epower }\OtherTok{\textless{}{-}} \FloatTok{0.8}
+\NormalTok{toer\_cnstr }\OtherTok{\textless{}{-}} \FunctionTok{Power}\NormalTok{(datadist, H\_0) }\SpecialCharTok{\textless{}=}\NormalTok{ alpha}
+\NormalTok{epow\_cnstr }\OtherTok{\textless{}{-}} \FunctionTok{Power}\NormalTok{(datadist, }\FunctionTok{condition}\NormalTok{(prior, }\FunctionTok{c}\NormalTok{(}\FloatTok{0.0}\NormalTok{, prior}\SpecialCharTok{@}\NormalTok{support[}\DecValTok{2}\NormalTok{]))) }\SpecialCharTok{\textgreater{}=}\NormalTok{ min\_epower}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{scenarioVII_1}{%
+\section{Variant VII-1: Minimizing Expected Sample Size under Point Prior}\label{scenarioVII_1}}
+
+\hypertarget{objective-18}{%
+\subsection{Objective}\label{objective-18}}
+
+Expected sample size under the full prior is minimized, i.e., \(\boldsymbol{E}\big[n(\mathcal{D})\big]\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ess }\OtherTok{\textless{}{-}} \FunctionTok{ExpectedSampleSize}\NormalTok{(datadist, prior)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{constraints-18}{%
+\subsection{Constraints}\label{constraints-18}}
+
+No additional constraints are considered in this variant.
+
+\hypertarget{initial-design-14}{%
+\subsection{Initial Design}\label{initial-design-14}}
+
+For this example, the optimal one-stage, group-sequential, and generic two-stage designs are computed. While the initial design for the one-stage case is determined heuristically, both the group sequential and the generic two-stage designs are optimized starting from the a group-sequential design that is computed by the \texttt{rpact}package to fulfill the type one error rate constraint and that fulfills the power constraint at an effect size of \(\delta=0.3\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{order }\OtherTok{\textless{}{-}}\NormalTok{ 5L}
+\CommentTok{\# data frame of initial designs }
+\NormalTok{tbl\_designs }\OtherTok{\textless{}{-}} \FunctionTok{tibble}\NormalTok{(}
+    \AttributeTok{type    =} \FunctionTok{c}\NormalTok{(}\StringTok{"one{-}stage"}\NormalTok{, }\StringTok{"group{-}sequential"}\NormalTok{, }\StringTok{"two{-}stage"}\NormalTok{),}
+    \AttributeTok{initial =} \FunctionTok{list}\NormalTok{(}
+        \FunctionTok{OneStageDesign}\NormalTok{(}\DecValTok{250}\NormalTok{, }\FloatTok{2.0}\NormalTok{),}
+        \FunctionTok{rpact\_design}\NormalTok{(datadist, }\FloatTok{0.3}\NormalTok{, }\FloatTok{0.025}\NormalTok{, }\FloatTok{0.8}\NormalTok{, }\ConstantTok{TRUE}\NormalTok{, order),}
+        \FunctionTok{TwoStageDesign}\NormalTok{(}\FunctionTok{rpact\_design}\NormalTok{(datadist, }\FloatTok{0.3}\NormalTok{, }\FloatTok{0.025}\NormalTok{, }\FloatTok{0.8}\NormalTok{, }\ConstantTok{TRUE}\NormalTok{, order))) )}
+\end{Highlighting}
+\end{Shaded}
+
+The order of integration is set to 5.
+
+\hypertarget{optimization-16}{%
+\subsection{Optimization}\label{optimization-16}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tbl\_designs }\OtherTok{\textless{}{-}}\NormalTok{ tbl\_designs }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}
+       \AttributeTok{optimal =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(initial, }\SpecialCharTok{\textasciitilde{}}\FunctionTok{minimize}\NormalTok{(}
+         
+\NormalTok{          ess,}
+          \FunctionTok{subject\_to}\NormalTok{(}
+\NormalTok{              toer\_cnstr,}
+\NormalTok{              epow\_cnstr}
+\NormalTok{          ),}
+          
+          \AttributeTok{initial\_design =}\NormalTok{ ., }
+          \AttributeTok{opts           =}\NormalTok{ opts)) )}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{test-cases-18}{%
+\subsection{Test Cases}\label{test-cases-18}}
+
+Firstly, it is checked that the maximum number of iterations was not reached in all these cases.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tbl\_designs }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{transmute}\NormalTok{(}
+\NormalTok{      type, }
+      \AttributeTok{iterations =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map\_int}\NormalTok{(tbl\_designs}\SpecialCharTok{$}\NormalTok{optimal, }
+                                  \SpecialCharTok{\textasciitilde{}}\NormalTok{.}\SpecialCharTok{$}\NormalTok{nloptr\_return}\SpecialCharTok{$}\NormalTok{iterations) ) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  \{}\FunctionTok{print}\NormalTok{(.); .\} }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  \{testthat}\SpecialCharTok{::}\FunctionTok{expect\_true}\NormalTok{(}\FunctionTok{all}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{iterations }\SpecialCharTok{\textless{}}\NormalTok{ opts}\SpecialCharTok{$}\NormalTok{maxeval))\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   type             iterations
+##   <chr>                 <int>
+## 1 one-stage                26
+## 2 group-sequential        787
+## 3 two-stage              1961
+\end{verbatim}
+
+Since type one error rate is defined under the point effect size \(\delta=0\), the type one error rate constraint can be tested for all three optimal designs.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tbl\_designs }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{transmute}\NormalTok{(}
+\NormalTok{      type, }
+      \AttributeTok{toer =}\NormalTok{ purrr}\SpecialCharTok{::}\FunctionTok{map}\NormalTok{(tbl\_designs}\SpecialCharTok{$}\NormalTok{optimal, }
+                        \SpecialCharTok{\textasciitilde{}}\FunctionTok{sim\_pr\_reject}\NormalTok{(.[[}\DecValTok{1}\NormalTok{]], .}\DecValTok{0}\NormalTok{, datadist)}\SpecialCharTok{$}\NormalTok{prob) ) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{unnest}\NormalTok{(., }\AttributeTok{cols =} \FunctionTok{c}\NormalTok{(toer)) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  \{}\FunctionTok{print}\NormalTok{(.); .\} }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ \{}
+\NormalTok{  testthat}\SpecialCharTok{::}\FunctionTok{expect\_true}\NormalTok{(}\FunctionTok{all}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{toer }\SpecialCharTok{\textless{}=}\NormalTok{ alpha }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ tol))) \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   type               toer
+##   <chr>             <dbl>
+## 1 one-stage        0.0251
+## 2 group-sequential 0.0250
+## 3 two-stage        0.0249
+\end{verbatim}
+
+Since the optimal two-stage design is more flexible than the optimal group-sequential design (constant \(n_2\) function) and this is more flexible than the optimal one-stage design (no second stage), the expected sample sizes under the prior should be ordered in the opposite way. Additionally, expected sample sizes under the null hypothesis are computed both via \texttt{evaluate()} and simulation-based.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{essh0 }\OtherTok{\textless{}{-}} \FunctionTok{ExpectedSampleSize}\NormalTok{(datadist, H\_0)}
+
+\NormalTok{tbl\_designs }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}
+        \AttributeTok{ess       =} \FunctionTok{map\_dbl}\NormalTok{(optimal,}
+                            \SpecialCharTok{\textasciitilde{}}\FunctionTok{evaluate}\NormalTok{(ess, .}\SpecialCharTok{$}\NormalTok{design) ),}
+        \AttributeTok{essh0     =} \FunctionTok{map\_dbl}\NormalTok{(optimal,}
+                            \SpecialCharTok{\textasciitilde{}}\FunctionTok{evaluate}\NormalTok{(essh0, .}\SpecialCharTok{$}\NormalTok{design) ),}
+        \AttributeTok{essh0\_sim =} \FunctionTok{map\_dbl}\NormalTok{(optimal,}
+                            \SpecialCharTok{\textasciitilde{}}\FunctionTok{sim\_n}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{design, .}\DecValTok{0}\NormalTok{, datadist)}\SpecialCharTok{$}\NormalTok{n ) ) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{    \{}\FunctionTok{print}\NormalTok{(.); .\} }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ \{}
+    \CommentTok{\# sim/evaluate same under null?}
+\NormalTok{    testthat}\SpecialCharTok{::}\FunctionTok{expect\_equal}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{essh0, .}\SpecialCharTok{$}\NormalTok{essh0\_sim, }
+                           \AttributeTok{tolerance =}\NormalTok{ tol\_n,}
+                           \AttributeTok{scale =} \DecValTok{1}\NormalTok{)}
+    \CommentTok{\# monotonicity with respect to degrees of freedom}
+\NormalTok{    testthat}\SpecialCharTok{::}\FunctionTok{expect\_true}\NormalTok{(}\FunctionTok{all}\NormalTok{(}\FunctionTok{diff}\NormalTok{(.}\SpecialCharTok{$}\NormalTok{ess) }\SpecialCharTok{\textless{}} \DecValTok{0}\NormalTok{)) \}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 6
+##   type             initial    optimal          ess essh0 essh0_sim
+##   <chr>            <list>     <list>         <dbl> <dbl>     <dbl>
+## 1 one-stage        <OnStgDsg> <adptrOpR [3]>  165   165       165 
+## 2 group-sequential <GrpSqntD> <adptrOpR [3]>  118.  115.      115.
+## 3 two-stage        <TwStgDsg> <adptrOpR [3]>  115.  120.      120.
+\end{verbatim}
 
   \bibliography{book.bib,packages.bib}
 
