@@ -1,4 +1,4 @@
-# Scenario VII: binomial distribution, Gaussian prior {#scenarioVII}
+# Scenario VII: binomial distribution, Beta prior {#scenarioVII}
 
 ## Details
 
@@ -15,17 +15,17 @@ The power constraint, however, needs to be modified. It is not senseful to compu
 datadist   <- Binomial(rate_control=0.3, two_armed = TRUE)
 H_0        <- PointMassPrior(.0, 1)
 prior      <- ContinuousPrior(function(delta) dbeta(delta, shape1=7,shape2=5),
-                              support = c(0, 1),
+                              support = c(0,1),
                               tighten_support = TRUE)
 
 # define constraints on type one error rate and expected power
 alpha      <- 0.025
 min_epower <- 0.8
 toer_cnstr <- Power(datadist, H_0) <= alpha
-epow_cnstr <- Power(datadist, condition(prior, c(0.3, prior@support[2]))) >= min_epower
+epow_cnstr <- Power(datadist, condition(prior, c(0.3,1))) >= min_epower
 ```
 
-## Variant II-1: Minimizing Expedted Sample Size under Point Prior
+## Variant II-1: Minimizing Expected Sample Size under Point Prior
 
 ### Objective
 
@@ -50,8 +50,8 @@ tbl_designs <- tibble(
     type    = c("one-stage", "group-sequential", "two-stage"),
     initial = list(
         OneStageDesign(200, 2.0),
-        rpact_design(datadist, 0.2, 0.025, 0.8, TRUE, order),
-        TwoStageDesign(rpact_design(datadist, 0.2, 0.025, 0.8, TRUE, order))) )
+        rpact_design(datadist, 0.3, 0.025, 0.8, TRUE, order),
+        TwoStageDesign(rpact_design(datadist, 0.3, 0.025, 0.8, TRUE, order))) )
 ```
 The order of integration is set to 7.
 
@@ -61,11 +61,10 @@ The order of integration is set to 7.
 tbl_designs <- tbl_designs %>% 
     mutate(
        optimal = purrr::map(initial, ~minimize(
-         
           ess,
           subject_to(
               toer_cnstr,
-              pow_cnstr
+              epow_cnstr
           ),
           
           initial_design = ., 

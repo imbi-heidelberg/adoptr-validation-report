@@ -2,7 +2,7 @@
 
 ## Details
 
-In this scenario, we investigate the scenario of a large effect with unknown common variance $sigma$. The test statistics then follow a $t$-distribution. For a large sample size, the $t$-distribution can be approximated by the normal distribution and we find ourselves in [Scenario I](#scenarioI).
+In this scenario, we investigate the scenario of a large effect with unknown common variance $sigma$. The test statistics then follows a $t$-distribution. For a large sample size, the $t$-distribution can be approximated by the normal distribution and we find ourselves in [Scenario I](#scenarioI).
 The larger the assumed effect size in the alternative, the lower the necessary number of subjects to achieve possible restraints on the power. Thus, we choose an effect size of $\delta=1.2$ with point prior distribution. The null hypothesis is given by $\mathcal{H}_0: \delta \leq 0$. The maximal type one error is bounded by $\alpha=0.025$ and at the point alternative of $\delta=1.2$ the power should be at least $0.8$. 
 
 ```{r}
@@ -37,10 +37,24 @@ No additional constraints beside type one error rate and power are considered in
 For this example, the optimal one-stage, group-sequential, and generic two-stage designs are computed. The initial design for the one-stage case is determined heuristically. Both the group sequential and the generic two-stage designs are optimized starting from the corresponding group-sequential design as computed by the `rpact` package.
 
 ```{r}
+order <- 7L
+# data frame of initial designs 
+tbl_designs <- tibble(
+    type    = c("one-stage", "group-sequential", "two-stage"),
+    initial = list(
+        OneStageDesign(20, 2.0),
+        rpact_design(datadist, 1.2, 0.025, 0.8, TRUE, order),
+        TwoStageDesign(rpact_design(datadist, 1.2, 0.025, 0.8, TRUE, order))) )
+```
+
+
+
+### Optimization
+
+```{r}
 tbl_designs <- tbl_designs %>% 
     mutate(
        optimal = purrr::map(initial, ~minimize(
-         
           ess,
           subject_to(
               toer_cnstr,
@@ -78,7 +92,7 @@ tbl_designs %>%
   unnest(., cols = c(toer, power)) %>% 
   {print(.); .} %>% {
   testthat::expect_true(all(.$toer  <= alpha * (1 + tol)))
-  #testthat::expect_true(all(.$power >= min_power * (1 - tol))) 
+  testthat::expect_true(all(.$power >= min_power * (1 - tol))) 
 }
 ```
 
@@ -116,7 +130,7 @@ tbl_designs %>%
                            tolerance = tol_n,
                            scale = 1)
     # monotonicity with respect to degrees of freedom
-    #testthat::expect_true(all(diff(.$ess) < 0)) 
+    testthat::expect_true(all(diff(.$ess) < 0)) 
 }
 ```
 
