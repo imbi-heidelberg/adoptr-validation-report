@@ -74,7 +74,6 @@ The order of integration is set to `r order`.
 tbl_designs <- tbl_designs %>% 
     mutate(
        optimal = purrr::map(initial, ~minimize(
-         
           ess,
           subject_to(
               toer_cnstr,
@@ -226,13 +225,13 @@ tibble(
 ## Variant VI-2: Minimizing Expected Sample Size under Null Hypothesis {#variantVI_2}
 
 ### Objective
-Expected sample size under the null hypothesis is maximized.
+Expected sample size under the null hypothesis is minimized.
 
 ### Constraints
 The constraints remain unchanged.
 
 ### Initial design
-Since optimization under the null favours an entirely different (monotonically increasing) sample size function, and thus also a different shape of the $c_2$ function, the `rpact`initial design is a suboptimal starting point. Instead, we start with a constant $c_2$ function by heuristically setting it to $2$ on the continuation area. Also, optimizing under the null favours extremely conservative boundaries for early efficacy stopping and we thus impose as fairly liberal upper bound of $3$ for early efficacy stopping.
+Since optimization under the null favours a monotonically increasing sample size function, and thus also a different shape of the $c_2$ function, the `rpact`initial design is a suboptimal starting point. Instead, we start with a constant $c_2$ function by heuristically setting it to $2$ on the continuation area. Also, optimizing under the null favours extremely conservative boundaries for early efficacy stopping and we thus impose a fairly liberal upper bound of $3$ for early efficacy stopping.
 ```{r}
 init_design_h0 <- tbl_designs %>% 
     filter(type == "two-stage") %>% 
@@ -250,7 +249,7 @@ ub_design <- TwoStageDesign(
 ```
 
 ### Optimization
-The optimal two-stage design is computed.
+The optimal two-stage design is now computed.
 ```{r}
 opt_h0 <- minimize(
   
@@ -281,7 +280,7 @@ expect_true(
 Next, the type one error rate and power constraints are tested.
 ```{r}
 tbl_performance <- tibble(
-    delta = c(.0, .4) ) %>% 
+    delta = c(.0, .2) ) %>% 
     mutate(
         power     = map(
             delta, 
@@ -310,7 +309,7 @@ testthat::expect_lte(
     alpha * (1 + tol) )
 
 testthat::expect_gte(
-    tbl_performance %>% filter(delta == 0.4) %>% pull(power_sim),
+    tbl_performance %>% filter(delta == 0.2) %>% pull(power_sim),
     min_power * (1 - tol) )
 
 # make sure that evaluate() leads to same results
@@ -425,7 +424,7 @@ testthat::expect_equal(
     tol   = tol_n,
     scale = 1 )
 ```
-The conditional power constraint is evaluated and tested on a grid over the continuation region (both simulated an via numerical integration).
+The conditional power constraint is evaluated and tested on a grid over the continuation region (both simulated via numerical integration).
 
 ```{r}
 tibble(

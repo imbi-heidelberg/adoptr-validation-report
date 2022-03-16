@@ -1,28 +1,27 @@
-# Scenario VII: binomial distribution, Beta prior {#scenarioVII}
+# Scenario VII: binomial distribution, Gaussian prior {#scenarioVII}
 
 ## Details
 
 In this scenario, we revisit the case from [ScenarioVI](#variantVI), but are not assuming a point prior anymore.
-We assume $p_C=0.3$ for the event rate in the control group. The parameter which can be varied is the event rate in the experimental group $p_E$ and we assume that $p_E \sim \text{Beta}(7,5)$.
+We assume $p_C=0.3$ for the event rate in the control group. The parameter which can be varied is the event rate in the experimental group $p_E$ and we assume that the rate difference $p_E-p_C \sim \textbf{1}_{(-0.29,0.69)} \mathcal{N}(0.3,0.2)$.The restriction to the interval $(-0.29,0.69)$ is necessary to ensure that the parameter $p_E$ does not become smaller than $0$ or larger than $1$.
 
 In order to fulfill regulatory considerations, the type one error rate is still protected under the point prior $\delta=0$ at the level of significance $\alpha=0.025$.
 
-The power constraint, however, needs to be modified. It is not senseful to compute the power as rejection probability under the full prior, because effect sizes less than a minimal clinically relevant effect do not show (sufficient) evidence against the null hypothesis. Therefore, we only consider possible event rates of at least $p_E=0.3$ and condition the prior on values $p_E>0.3$. In the following, the expected power should be at least $0.8$.
-
+Since effect sizes less than a minimal clincally relevant effect do not show evidene against the null hypothesis, we assume a clinically relevant effect size $\delta =0.0$ and condition the prior on values $\delta > 0$ in order to compute the expected power. We assume a minimal expected power of at least $0.8$. 
 
 ```{r}
 # data distribution and priors
 datadist   <- Binomial(rate_control=0.3, two_armed = TRUE)
 H_0        <- PointMassPrior(.0, 1)
-prior      <- ContinuousPrior(function(delta) dbeta(delta, shape1=7,shape2=5),
-                              support = c(0,1),
+prior      <- ContinuousPrior(function(x) 1/(pnorm(0.69,0.3,0.2)-pnorm(-0.29,0.3,0.2))*dnorm(x,0.3,0.2),
+                              support = c(-0.29,0.69),
                               tighten_support = TRUE)
 
 # define constraints on type one error rate and expected power
 alpha      <- 0.025
 min_epower <- 0.8
 toer_cnstr <- Power(datadist, H_0) <= alpha
-epow_cnstr <- Power(datadist, condition(prior, c(0.3,1))) >= min_epower
+epow_cnstr <- Power(datadist, condition(prior, c(0.0,0.69))) >= min_epower
 ```
 
 ## Variant II-1: Minimizing Expected Sample Size under Point Prior
@@ -57,7 +56,7 @@ The order of integration is set to 7.
 
 ### Optimization
 
-```{r}
+```{r,eval=FALSE}
 tbl_designs <- tbl_designs %>% 
     mutate(
        optimal = purrr::map(initial, ~minimize(
