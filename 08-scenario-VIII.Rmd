@@ -2,7 +2,7 @@
 
 ## Details
 
-In this scenario, we investigate the scenario of a large effect with unknown common variance $sigma$. The test statistics then follows a $t$-distribution. For a large sample size, the $t$-distribution can be approximated by the normal distribution and we find ourselves in [Scenario I](#scenarioI).
+In this scenario, we investigate the scenario of a large effect with unknown common variance $\sigma$. The test statistics then follows a $t$-distribution. For a large sample size, the $t$-distribution can be approximated by the normal distribution and we find ourselves in [Scenario I](#scenarioI).
 The larger the assumed effect size in the alternative, the lower the necessary number of subjects to achieve a minimum power. Thus, we choose an effect size of $\delta=1.2$ with point prior distribution. The null hypothesis is given by $\mathcal{H}_0: \delta \leq 0$. The maximal type one error is bounded by $\alpha=0.025$ and at the point alternative of $\delta=1.2$ the power should be at least $0.8$. 
 
 ```{r}

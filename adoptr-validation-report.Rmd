@@ -3297,7 +3297,7 @@ toer_cnstr <- Power(datadist, H_0) <= alpha
 epow_cnstr <- Power(datadist, condition(prior, c(0.0,0.69))) >= min_epower
 ```
 
-## Variant II-1: Minimizing Expected Sample Size under Point Prior
+## Variant II-1: Minimizing Expected Sample Size under Point Prior {#variantVII-1}
 
 ### Objective
 
@@ -3329,7 +3329,7 @@ The order of integration is set to 7.
 
 ### Optimization
 
-```{r,eval=FALSE}
+```{r}
 tbl_designs <- tbl_designs %>% 
     mutate(
        optimal = purrr::map(initial, ~minimize(
@@ -3391,7 +3391,7 @@ tbl_designs %>%
     testthat::expect_true(all(diff(.$ess) < 0)) }
 ```
 
-## Variant II-2: Minimizing Expected Sample Size under Null Hypothesis
+## Variant VII-2: Minimizing Expected Sample Size under Null Hypothesis
 
 ### Objective
 In this scenario, the expected sample size conditioned on negative effect sizes is minimized, i.e.,
@@ -3404,6 +3404,189 @@ ess_0 <- ExpectedSampleSize(datadist, condition(prior, c(-0.29,0)))
 No additional constraints besides type one error rate and expected power are considered in this variant.
 
 ### Initial Design
+When minimizing the expected sample size under the null, one may expect an increasing sample size function, and thus also a different shape of the $c_2$ function. Thus, the `rpact` initial design is a suboptimal starting point. Instead, we use a constant $c_2$ function by heuristically setting it to 2 on the continuation area. Since optimization under the null hypothesis favours conservative boundaries for early efficacy stopping, we set the upper bound to 3.
+
+```{r}
+init_design_h0 <- tbl_designs %>% 
+    filter(type == "two-stage") %>% 
+    pull(initial) %>% 
+    .[[1]]
+init_design_h0@c2_pivots <- rep(2, order)
+
+ub_design <- TwoStageDesign(
+    3 * init_design_h0@n1,
+    2,
+    3,
+    rep(600, order),
+    rep(3.0, order)
+)
+```
+
+### Optimization
+```{r}
+opt_neg <- minimize(
+        ess_0,
+        subject_to(
+          
+            toer_cnstr,
+            epow_cnstr
+        ),
+        
+        initial_design = init_design_h0,
+        upper_boundary_design = ub_design,
+        opts = opts
+)
+```
+
+### Test Cases
+First of al, verify that the maximum number of iterations was not exceeded:
+```{r}
+testthat::expect_true(opt_neg$nloptr_return$iterations < opts$maxeval)
+print(opt_neg$nloptr_return$iterations)
+```
+
+Test the type one error rate under the point null hypothesis $\delta=0$ via simulation.
+```{r}
+tbl_toer <- tibble(
+  toer     = evaluate(Power(datadist, H_0), opt_neg$design),
+  toer_sim = sim_pr_reject(opt_neg$design, .0, datadist)$prob
+)
+
+print(tbl_toer)
+```
+The expected sample size under the prior conditioned on $\delta\leq 0$ should be lower for the optimal design derived in this variant than in the previous one where we minimized the expected sample size under the full prior.
+
+```{r}
+testthat::expect_lte(
+    evaluate(ess_0, opt_neg$design),
+    evaluate(
+        ess_0, 
+        tbl_designs %>% 
+            filter(type == "two-stage") %>% 
+            pull(optimal) %>% 
+            .[[1]] %>% 
+            .$design )
+)
+```
+## Variant VII-3: conditional Power Constraint
+
+### Objective
+As in [VariantVII-1](#variantVII-1), the expected sample size under the full prior is minimized. 
+
+### Constraints
+In addition to the constraints on type one error rate and expected power, a constraint on conditional power to be larger than $0.7$ is included. 
+
+```{r}
+cp       <- ConditionalPower(datadist, condition(prior, c(0, 0.69)))
+cp_cnstr <- cp >= 0.7
+```
+
+### Initial Design
+We reuse the previous inital design.
+
+### Optimization
+```{r}
+opt_cp <- minimize(
+        ess,
+        subject_to(
+            toer_cnstr,
+            epow_cnstr,
+            cp_cnstr
+        ),
+        initial_design = tbl_designs$initial[[3]],
+        opts = opts
+)
+```
+
+### Test Cases
+As always, we start checking whether the maximum number of iterations was reached or not.
+```{r}
+testthat::expect_true(opt_cp$nloptr_return$iterations < opts$maxeval)
+print(opt_cp$nloptr_return$iterations)
+```
+
+The type one error rate is tested via simulation and compared to the value obtained by `evaluate()`.
+```{r}
+tbl_toer <- tibble(
+  toer     = evaluate(Power(datadist, H_0), opt_cp$design),
+  toer_sim = sim_pr_reject(opt_cp$design, .0, datadist)$prob
+)
+
+print(tbl_toer)
+```
+
+```{r}
+testthat::expect_true(tbl_toer$toer <= alpha * (1 + tol))
+testthat::expect_true(tbl_toer$toer_sim <= alpha * (1 + tol))
+```
+
+The conditional power is evaluated via numerical integration on several points inside the continuation region and it is tested whether the constraint is fulfilled on all these points.
+
+```{r}
+tibble(
+    x1 = seq(opt_cp$design@c1f, opt_cp$design@c1e, length.out = 25),
+    cp = map_dbl(x1, ~evaluate(cp, opt_cp$design, .)) ) %>% 
+  {print(.); .} %>% {
+      testthat::expect_true(all(.$cp >= 0.7 * (1 - tol))) }
+```
+
+Due to the additional constraint, this variant should show a larger expected sample size.
+```{r}
+testthat::expect_gte(
+    evaluate(ess, opt_cp$design),
+    evaluate(
+        ess, 
+        tbl_designs %>% 
+            filter(type == "two-stage") %>% 
+            pull(optimal) %>% 
+            .[[1]] %>% 
+            .$design )
+)
+```
+
+## Plot Two-Stage Designs
+The optimal two-stage designs are plotted together.
+```{r, echo=FALSE}
+x1 <- seq(0, 4, by = .01)
+
+tibble(
+    type  = c(
+        "ESS under prior", 
+        "ESS under null", 
+        "ESS under prior + CP constraint" ), 
+    design = list(
+        tbl_designs %>% 
+            filter(type == "two-stage") %>% 
+            pull(optimal) %>% 
+            .[[1]] %>% 
+            .$design, 
+        opt_neg$design, 
+        opt_cp$design ) ) %>% 
+    group_by(type) %>% 
+    do(
+        x1 = x1,
+        n  = adoptr::n(.$design[[1]], x1),
+        c2 = c2(.$design[[1]], x1),
+        CP = evaluate(cp, .$design[[1]], x1) ) %>% 
+    unnest(., cols = c(x1, n, c2, CP)) %>% 
+    mutate(
+        section = ifelse(
+            is.finite(c2), 
+            "continuation", 
+            ifelse(c2 == -Inf, "efficacy", "futility") ) ) %>% 
+    gather(variable, value, n, c2, CP) %>% 
+    ggplot(aes(x1, value, color = type)) +
+        geom_line(aes(group = interaction(section, type))) + 
+        facet_wrap(~variable, scales = "free_y") +
+        labs(y = "", x = expression(x[1])) +
+        scale_color_discrete("") +
+        theme_bw() +
+        theme(
+            panel.grid      = element_blank(),
+            legend.position = "bottom" )
+```
+
+
 
 <!--chapter:end:07-scenario-VII.Rmd-->
 
@@ -3411,7 +3594,7 @@ No additional constraints besides type one error rate and expected power are con
 
 ## Details
 
-In this scenario, we investigate the scenario of a large effect with unknown common variance $sigma$. The test statistics then follows a $t$-distribution. For a large sample size, the $t$-distribution can be approximated by the normal distribution and we find ourselves in [Scenario I](#scenarioI).
+In this scenario, we investigate the scenario of a large effect with unknown common variance $\sigma$. The test statistics then follows a $t$-distribution. For a large sample size, the $t$-distribution can be approximated by the normal distribution and we find ourselves in [Scenario I](#scenarioI).
 The larger the assumed effect size in the alternative, the lower the necessary number of subjects to achieve a minimum power. Thus, we choose an effect size of $\delta=1.2$ with point prior distribution. The null hypothesis is given by $\mathcal{H}_0: \delta \leq 0$. The maximal type one error is bounded by $\alpha=0.025$ and at the point alternative of $\delta=1.2$ the power should be at least $0.8$. 
 
 ```{r}
