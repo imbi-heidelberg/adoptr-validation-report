@@ -1,6 +1,6 @@
 --- 
 title: "Validation Report for **adoptr** package"
-author: "Kevin Kunzmann & Maximilian Pilz"
+author: "Kevin Kunzmann, Maximilian Pilz & Nico Bruder"
 date: "`r Sys.Date()`"
 bibliography:
 - book.bib
@@ -36,6 +36,7 @@ output:
       latex_engine: xelatex
       citation_package: natbib
       keep_tex: yes
+      classoption: oneside 
 ---
 
 
