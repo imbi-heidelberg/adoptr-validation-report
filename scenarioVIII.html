@@ -326,17 +326,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.2.4" data-path="scenarioVIII.html"><a href="scenarioVIII.html#optimization-19"><i class="fa fa-check"></i><b>9.2.4</b> Optimization<span></span></a></li>
 <li class="chapter" data-level="9.2.5" data-path="scenarioVIII.html"><a href="scenarioVIII.html#test-cases-20"><i class="fa fa-check"></i><b>9.2.5</b> Test Cases<span></span></a></li>
 </ul></li>
-</ul></li>
-<li><a href="references.html#references">References<span></span></a><ul>
-<li class="chapter" data-level="9.3" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>9.3</b> Details<span></span></a></li>
-<li class="chapter" data-level="9.4" data-path="references.html"><a href="references.html#scenarioVII_1"><i class="fa fa-check"></i><b>9.4</b> Variant VII-1: Minimizing Expected Sample Size under Point Prior<span></span></a><ul>
-<li class="chapter" data-level="9.4.1" data-path="references.html"><a href="references.html#objective-21"><i class="fa fa-check"></i><b>9.4.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="9.4.2" data-path="references.html"><a href="references.html#constraints-21"><i class="fa fa-check"></i><b>9.4.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="9.4.3" data-path="references.html"><a href="references.html#initial-design-16"><i class="fa fa-check"></i><b>9.4.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="9.4.4" data-path="references.html"><a href="references.html#optimization-20"><i class="fa fa-check"></i><b>9.4.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="9.4.5" data-path="references.html"><a href="references.html#test-cases-21"><i class="fa fa-check"></i><b>9.4.5</b> Test Cases<span></span></a></li>
+<li class="chapter" data-level="9.3" data-path="scenarioVIII.html"><a href="scenarioVIII.html#variant-viii-2-comparison-to-normal-distribution"><i class="fa fa-check"></i><b>9.3</b> Variant VIII-2: Comparison to Normal Distribution<span></span></a><ul>
+<li class="chapter" data-level="9.3.1" data-path="scenarioVIII.html"><a href="scenarioVIII.html#generate-comparison-design"><i class="fa fa-check"></i><b>9.3.1</b> Generate Comparison Design<span></span></a></li>
+<li class="chapter" data-level="9.3.2" data-path="scenarioVIII.html"><a href="scenarioVIII.html#test-cases-21"><i class="fa fa-check"></i><b>9.3.2</b> Test Cases<span></span></a></li>
 </ul></li>
 </ul></li>
+<li><a href="references.html#references">References<span></span></a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -379,8 +374,7 @@ The larger the assumed effect size in the alternative, the lower the necessary n
 <div id="objective-20" class="section level3 hasAnchor">
 <h3><span class="header-section-number">9.2.1</span> Objective<a href="scenarioVIII.html#objective-20" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Firstly, we minimize the expected sample size under the alternative, e.g. <span class="math inline">\(\boldsymbol{E}\big[n(\mathcal{D})\big]\)</span>.</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="scenarioVIII.html#cb213-1"></a>ess &lt;-<span class="st"> </span><span class="kw">ExpectedSampleSize</span>(datadist,prior)</span>
-<span id="cb213-2"><a href="scenarioVIII.html#cb213-2"></a>ess0 &lt;-<span class="st"> </span><span class="kw">ExpectedSampleSize</span>(datadist, H_<span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="scenarioVIII.html#cb213-1"></a>ess &lt;-<span class="st"> </span><span class="kw">ExpectedSampleSize</span>(datadist,prior)</span></code></pre></div>
 </div>
 <div id="constraints-20" class="section level3 hasAnchor">
 <h3><span class="header-section-number">9.2.2</span> Constraints<a href="scenarioVIII.html#constraints-20" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -483,7 +477,7 @@ The larger the assumed effect size in the alternative, the lower the necessary n
 ##   &lt;chr&gt;            &lt;list&gt;     &lt;list&gt;         &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 one-stage        &lt;OnStgDsg&gt; &lt;adptrOpR [3]&gt;  22      22    22       22  
 ## 2 group-sequential &lt;GrpSqntD&gt; &lt;adptrOpR [3]&gt;  17.3    17.3  15.7     15.7
-## 3 two-stage        &lt;TwStgDsg&gt; &lt;adptrOpR [3]&gt;  17.0    17.0  16.6     16.6</code></pre>
+## 3 two-stage        &lt;TwStgDsg&gt; &lt;adptrOpR [3]&gt;  17.0    17.0  16.7     16.6</code></pre>
 <p>The expected sample size under the alternative must be lower or equal than the expected sample size of the initial rpact group-sequential design that is based on the inverse normal combination test.</p>
 <div class="sourceCode" id="cb223"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb223-1"><a href="scenarioVIII.html#cb223-1"></a>testthat<span class="op">::</span><span class="kw">expect_lte</span>(</span>
 <span id="cb223-2"><a href="scenarioVIII.html#cb223-2"></a>  <span class="kw">evaluate</span>(ess, </span>
@@ -497,6 +491,51 @@ The larger the assumed effect size in the alternative, the lower the necessary n
 <span id="cb223-10"><a href="scenarioVIII.html#cb223-10"></a><span class="st">                </span><span class="kw">filter</span>(type <span class="op">==</span><span class="st"> &quot;group-sequential&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb223-11"><a href="scenarioVIII.html#cb223-11"></a><span class="st">                </span><span class="kw">pull</span>(initial) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb223-12"><a href="scenarioVIII.html#cb223-12"></a><span class="st">                </span>.[[<span class="dv">1</span>]] ) )</span></code></pre></div>
+</div>
+</div>
+<div id="variant-viii-2-comparison-to-normal-distribution" class="section level2 hasAnchor">
+<h2><span class="header-section-number">9.3</span> Variant VIII-2: Comparison to Normal Distribution<a href="scenarioVIII.html#variant-viii-2-comparison-to-normal-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="generate-comparison-design" class="section level3 hasAnchor">
+<h3><span class="header-section-number">9.3.1</span> Generate Comparison Design<a href="scenarioVIII.html#generate-comparison-design" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We now compare the expected sample size of this scenario to the expected sample size when we assume that the variance is known. Thus, we need to find the optimal designs with normal distributed test statistics. These steps are completely analogous to scenario I.</p>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="scenarioVIII.html#cb224-1"></a>datadistnorm &lt;-<span class="st"> </span><span class="kw">Normal</span>(<span class="dt">two_armed=</span><span class="ot">TRUE</span>)</span>
+<span id="cb224-2"><a href="scenarioVIII.html#cb224-2"></a>H_0norm &lt;-<span class="st"> </span><span class="kw">PointMassPrior</span>(.<span class="dv">0</span>,<span class="dv">1</span>)</span>
+<span id="cb224-3"><a href="scenarioVIII.html#cb224-3"></a>priornorm &lt;-<span class="st"> </span><span class="kw">PointMassPrior</span>(<span class="fl">1.0</span>,<span class="dv">1</span>)</span>
+<span id="cb224-4"><a href="scenarioVIII.html#cb224-4"></a></span>
+<span id="cb224-5"><a href="scenarioVIII.html#cb224-5"></a>toernorm &lt;-<span class="st"> </span><span class="kw">Power</span>(datadistnorm,H_0norm) <span class="op">&lt;=</span><span class="st"> </span>alpha</span>
+<span id="cb224-6"><a href="scenarioVIII.html#cb224-6"></a>pownorm &lt;-<span class="st"> </span><span class="kw">Power</span>(datadistnorm,priornorm) <span class="op">&gt;=</span><span class="st"> </span>min_power</span></code></pre></div>
+<p>We minimize the expected sample size under the alternative.</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="scenarioVIII.html#cb225-1"></a>essnorm &lt;-<span class="st"> </span><span class="kw">ExpectedSampleSize</span>(datadistnorm,priornorm)</span></code></pre></div>
+<p>We now choose different initial designs since we do not use the <span class="math inline">\(t\)</span>-distribution anymore.</p>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="scenarioVIII.html#cb226-1"></a>tbl_designsnorm &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
+<span id="cb226-2"><a href="scenarioVIII.html#cb226-2"></a>    <span class="dt">type    =</span> <span class="kw">c</span>(<span class="st">&quot;one-stage&quot;</span>, <span class="st">&quot;group-sequential&quot;</span>, <span class="st">&quot;two-stage&quot;</span>),</span>
+<span id="cb226-3"><a href="scenarioVIII.html#cb226-3"></a>    <span class="dt">initial =</span> <span class="kw">list</span>(</span>
+<span id="cb226-4"><a href="scenarioVIII.html#cb226-4"></a>        <span class="kw">OneStageDesign</span>(<span class="dv">20</span>, <span class="fl">2.0</span>),</span>
+<span id="cb226-5"><a href="scenarioVIII.html#cb226-5"></a>        <span class="kw">rpact_design</span>(datadist, <span class="fl">1.0</span>, <span class="fl">0.025</span>, <span class="fl">0.9</span>, <span class="ot">TRUE</span>, order),</span>
+<span id="cb226-6"><a href="scenarioVIII.html#cb226-6"></a>        <span class="kw">TwoStageDesign</span>(<span class="kw">rpact_design</span>(datadist, <span class="fl">1.0</span>, <span class="fl">0.025</span>, <span class="fl">0.9</span>, <span class="ot">TRUE</span>, order))) )</span></code></pre></div>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="scenarioVIII.html#cb227-1"></a>tbl_designsnorm &lt;-<span class="st"> </span>tbl_designsnorm <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb227-2"><a href="scenarioVIII.html#cb227-2"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
+<span id="cb227-3"><a href="scenarioVIII.html#cb227-3"></a>       <span class="dt">optimal =</span> purrr<span class="op">::</span><span class="kw">map</span>(initial, <span class="op">~</span><span class="kw">minimize</span>(</span>
+<span id="cb227-4"><a href="scenarioVIII.html#cb227-4"></a>          ess,</span>
+<span id="cb227-5"><a href="scenarioVIII.html#cb227-5"></a>          <span class="kw">subject_to</span>(</span>
+<span id="cb227-6"><a href="scenarioVIII.html#cb227-6"></a>              toernorm,</span>
+<span id="cb227-7"><a href="scenarioVIII.html#cb227-7"></a>              pownorm</span>
+<span id="cb227-8"><a href="scenarioVIII.html#cb227-8"></a>          ),</span>
+<span id="cb227-9"><a href="scenarioVIII.html#cb227-9"></a>          </span>
+<span id="cb227-10"><a href="scenarioVIII.html#cb227-10"></a>          <span class="dt">initial_design =</span> ., </span>
+<span id="cb227-11"><a href="scenarioVIII.html#cb227-11"></a>          <span class="dt">opts           =</span> opts))  )</span></code></pre></div>
+</div>
+<div id="test-cases-21" class="section level3 hasAnchor">
+<h3><span class="header-section-number">9.3.2</span> Test Cases<a href="scenarioVIII.html#test-cases-21" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In all of the three designs, we should see that the expected sample size under the normal distributed test statistics is lower than the expected sample size when we use the <span class="math inline">\(t\)</span>-distribution.</p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="scenarioVIII.html#cb228-1"></a>essstudent &lt;-<span class="st"> </span><span class="kw">map_dbl</span>(tbl_designs<span class="op">$</span>optimal,<span class="op">~</span><span class="kw">evaluate</span>(ess,.<span class="op">$</span>design))</span>
+<span id="cb228-2"><a href="scenarioVIII.html#cb228-2"></a>essnorm &lt;-<span class="st"> </span><span class="kw">map_dbl</span>(tbl_designsnorm<span class="op">$</span>optimal,<span class="op">~</span><span class="kw">evaluate</span>(ess,.<span class="op">$</span>design))</span></code></pre></div>
+<pre><code>## Student 
+##  22 17.34883 16.97221</code></pre>
+<pre><code>## Normal 
+##  21 15.87606 15.59285</code></pre>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="scenarioVIII.html#cb231-1"></a>diff &lt;-<span class="st"> </span>essstudent<span class="op">-</span>essnorm</span>
+<span id="cb231-2"><a href="scenarioVIII.html#cb231-2"></a>testthat<span class="op">::</span><span class="kw">expect_true</span>(<span class="kw">all</span>(diff<span class="op">&gt;</span><span class="dv">0</span>))</span></code></pre></div>
 
 </div>
 </div>
