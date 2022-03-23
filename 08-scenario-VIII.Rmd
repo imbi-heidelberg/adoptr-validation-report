@@ -26,7 +26,6 @@ pow_cnstr <- Power(datadist,prior) >= min_power
 Firstly, we minimize the expected sample size under the alternative, e.g. $\boldsymbol{E}\big[n(\mathcal{D})\big]$.
 ```{r}
 ess <- ExpectedSampleSize(datadist,prior)
-ess0 <- ExpectedSampleSize(datadist, H_0)
 ```
 
 ### Constraints
@@ -151,4 +150,67 @@ testthat::expect_lte(
                 pull(initial) %>% 
                 .[[1]] ) )
 ```
+
+## Variant VIII-2: Comparison to Normal Distribution
+
+### Generate Comparison Design
+We now compare the expected sample size of this scenario to the expected sample size when we assume that the variance is known. Thus, we need to find the optimal designs with normal distributed test statistics. These steps are completely analogous to scenario I. 
+
+```{r}
+datadistnorm <- Normal(two_armed=TRUE)
+H_0norm <- PointMassPrior(.0,1)
+priornorm <- PointMassPrior(1.0,1)
+
+toernorm <- Power(datadistnorm,H_0norm) <= alpha
+pownorm <- Power(datadistnorm,priornorm) >= min_power
+```
+
+We minimize the expected sample size under the alternative.
+```{r}
+essnorm <- ExpectedSampleSize(datadistnorm,priornorm)
+```
+
+We now choose different initial designs since we do not use the $t$-distribution anymore. 
+```{r}
+tbl_designsnorm <- tibble(
+    type    = c("one-stage", "group-sequential", "two-stage"),
+    initial = list(
+        OneStageDesign(20, 2.0),
+        rpact_design(datadist, 1.0, 0.025, 0.9, TRUE, order),
+        TwoStageDesign(rpact_design(datadist, 1.0, 0.025, 0.9, TRUE, order))) )
+```
+
+```{r}
+tbl_designsnorm <- tbl_designsnorm %>% 
+    mutate(
+       optimal = purrr::map(initial, ~minimize(
+          ess,
+          subject_to(
+              toernorm,
+              pownorm
+          ),
+          
+          initial_design = ., 
+          opts           = opts))  )
+
+```
+
+### Test Cases
+In all of the three designs, we should see that the expected sample size under the normal distributed test statistics is lower than the expected sample size when we use the $t$-distribution.
+
+```{r}
+essstudent <- map_dbl(tbl_designs$optimal,~evaluate(ess,.$design))
+essnorm <- map_dbl(tbl_designsnorm$optimal,~evaluate(ess,.$design))
+```
+
+```{r,echo=FALSE}
+cat("Student","\n",essstudent)
+cat("Normal","\n",essnorm)
+```
+
+```{r}
+diff <- essstudent-essnorm
+testthat::expect_true(all(diff>0))
+```
+
 
