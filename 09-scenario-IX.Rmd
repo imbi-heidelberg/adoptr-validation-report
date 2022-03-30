@@ -20,7 +20,7 @@ ess <- ExpectedSampleSize(datadist,prior)
 
 ### Details
 
-Even though the expected sample size of adaptive two-stage designs is generally lower than the expected sample size of classical one-stage designs, it is possible that the sample size of two-stage designs exceeds the sample size of one-stage designs in some cases. Thus, it is not absurd to assume that the maximum sample size should have an upper bound. We say this upper bound is given by $1.25$ times the sample size of the one-stage design.
+Even though the expected sample size of adaptive two-stage designs is generally lower than the expected sample size of classical one-stage designs, it is possible that the sample size of two-stage designs exceeds the sample size of one-stage designs in some cases. Thus, it is not absurd to assume that the maximum sample size should have an upper bound. We say this upper bound is given by $1.4$ times the sample size of the one-stage design.
 
 ```{r}
 init_onestage <- OneStageDesign(100,2)
@@ -28,9 +28,9 @@ opt_onestage <- minimize(ess,subject_to(toer_cnstr,pow_cnstr),initial_design = i
 print(evaluate(ess,opt_onestage$design))
 ```
 
-Thus, the maximal sample size should not become larger than $105$.
+Thus, the maximal sample size should not become larger than $118$.
 ```{r}
-smplsize_cnstr <- MaximumSampleSize()<=105
+smplsize_cnstr <- MaximumSampleSize()<=118
 ```
 
 ### Initial Designs
@@ -41,26 +41,33 @@ init_twostage <- get_initial_design(0.5,alpha,1-min_power,type=c("two-stage"),di
 
 ### Optimization
 ```{r}
-opt_twostage <- minimize(ess,subject_to(toer_cnstr,pow_cnstr,smplsize_cnstr),initial_design = init_twostage)
+opt_twostage_cnstr <- minimize(ess,subject_to(toer_cnstr,pow_cnstr,smplsize_cnstr),initial_design = init_twostage)
 ```
 
 ### Testcases
 
-First, we verify the type one error rate and power constraints by simulation:
+At first, we verify the type one error rate and power constraints by simulation:
 
 ```{r}
-toer <- sim_pr_reject(opt_twostage,0.0,datadist)
-power <- sim_pr_reject(opt_twostage,0.5,datadist)
+toer <- sim_pr_reject(opt_twostage_cnstr$design,0.0,datadist)
+power <- sim_pr_reject(opt_twostage_cnstr$design,0.5,datadist)
 
-testthat::expect_true(toer<=alpha*(1+tol))
-testthat::expect_true(power>=min_power*(1-tol))
+testthat::expect_true(toer$prob<=alpha*(1+tol))
+testthat::expect_true(power$prob>=min_power*(1-tol))
 ```
 
-The $n_2$ function is not necessarily monotonously decreasing, but at least it should be non-decreasing:
+We now check that the maximal sample size is always smaller than $118$:
 ```{r}
-
+testthat::expect_true(evaluate(MaximumSampleSize(),opt_twostage_cnstr$design)<=118)
 ```
 
+Since we added a constraint to our minimization problem, the expected sample size of this design should be higher than the expected sample size without the constraint on the maximum sample size.
+
+```{r}
+opt_twostage <- minimize(ess,subject_to(toer_cnstr,pow_cnstr),initial_design = init_twostage)
+
+testthat::expect_true(evaluate(ess,opt_twostage_cnstr$design)>= evaluate(ess,opt_twostage$design))
+```
 
 
 
