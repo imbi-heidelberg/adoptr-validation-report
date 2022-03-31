@@ -34,7 +34,7 @@ smplsize_cnstr <- MaximumSampleSize()<=118
 ```
 
 ### Initial Designs
-As an initial design, we choose the `adoptr`-function `get_initial_data()`. 
+As an initial design, we choose the `adoptr`-function `get_initial_design()`. 
 ```{r}
 init_twostage <- get_initial_design(0.5,alpha,1-min_power,type=c("two-stage"),dist=datadist)
 ```
