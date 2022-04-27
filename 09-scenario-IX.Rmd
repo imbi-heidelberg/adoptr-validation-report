@@ -1,66 +1,40 @@
-# Scenario IX: Using further constraints
+# Scenario IX: time-to-event endpoints
 
-## General assumptions
+## Details
+In this scenario, we visit a different scenario: Instead of continuous or binary endpoints, we now consider time-to-event endpoints. Therefore, we conduct a log-rank test, for which `adoptr` provides the normal approximation of the test statistics. In order to obtain a one-parametric statistics, we need to fix the event probability $d$ during the trial. We assume that a hazard ratio $\theta>1$ implies favorable results. The null-hypothesis is given by $\mathcal{H}_0:\theta\leq 1$. In both of the following two scenarios, we assume a constant event rate of $d=0.7$ and the type one error should be bounded by $\alpha<2.5$ and a power of $0.8$ is necessary. 
 
-`adoptr` offers the possibility to use a variety of further constraints. This chapter is dedicated to show some scenarios in which further conditions on the trial need to be met. We always assume a classical two-arm trial with normal test statistic and known variance. The null hypothesis is given by $\mathcal{H}_0: \delta \leq 0$ and the alternative is assumed to be an effect size of $\delta=0.5$ with point prior distribution. The type one error rate should be lower than $\alpha=0.025$ and the power at the alternative must be at least $0.9$. The objective function to be minimized is the expected sample size under the alternative, i.e. $\boldsymbol{E}\big[n(\mathcal{D})\big]$. 
 ```{r}
-datadist <- Normal(two_armed=TRUE)
-H_0 <- PointMassPrior(.0,1)
-prior <- PointMassPrior(0.5,1)
-
+datadist <- Survival(0.7,two_armed = TRUE)
+H_0 <- PointMassPrior(1.0,1)
 alpha <- 0.025
-min_power <- 0.9
-toer_cnstr <- Power(datadist,H_0) <= alpha
-pow_cnstr <- Power(datadist,prior) >= min_power
+min_power <- 0.8
+```
 
+## Variant IX-1: Minimizing expected sample size under point prior
+
+Under the alternative, we us a hazard ratio of $\theta=1.4$ for the point prior of the alternative. 
+
+```{r}
+prior <- PointMassPrior(1.4,1)
+
+toer_cnstr <- Power(datadist,H_0)<=alpha
+pow_cnstr <- Power(datadist, prior)>=min_power
+```
+
+### Objective
+The expected sample size under the alternative is minimized.
+```{r}
 ess <- ExpectedSampleSize(datadist,prior)
 ```
 
-## Constraint IX-1: Maximal Sample Size
+### Constraints
+No additional constraints besides type one and type two error are considered in this variant. 
 
-### Details
+### Initial Design
+The initial design is chosen by using the `rpact` package.
 
-Even though the expected sample size of adaptive two-stage designs is generally lower than the expected sample size of classical one-stage designs, it is possible that the sample size of two-stage designs exceeds the sample size of one-stage designs in some cases. Thus, it is not absurd to assume that the maximum sample size should have an upper bound. We say this upper bound is given by $1.25$ times the sample size of the one-stage design.
-
-```{r}
-init_onestage <- OneStageDesign(100,2)
-opt_onestage <- minimize(ess,subject_to(toer_cnstr,pow_cnstr),initial_design = init_onestage)
-print(evaluate(ess,opt_onestage$design))
-```
-
-Thus, the maximal sample size should not become larger than $105$.
-```{r}
-smplsize_cnstr <- MaximumSampleSize()<=105
-```
-
-### Initial Designs
-As an initial design, we choose the `adoptr`-function `get_initial_data()`. 
-```{r}
-init_twostage <- get_initial_design(0.5,alpha,1-min_power,type=c("two-stage"),dist=datadist)
-```
-
-### Optimization
-```{r}
-opt_twostage <- minimize(ess,subject_to(toer_cnstr,pow_cnstr,smplsize_cnstr),initial_design = init_twostage)
-```
-
-### Testcases
-
-First, we verify the type one error rate and power constraints by simulation:
-
-```{r}
-toer <- sim_pr_reject(opt_twostage,0.0,datadist)
-power <- sim_pr_reject(opt_twostage,0.5,datadist)
-
-testthat::expect_true(toer<=alpha*(1+tol))
-testthat::expect_true(power>=min_power*(1-tol))
-```
-
-The $n_2$ function is not necessarily monotonously decreasing, but at least it should be non-decreasing:
 ```{r}
 
 ```
-
-
 
 
