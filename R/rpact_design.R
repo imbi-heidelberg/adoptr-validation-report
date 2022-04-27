@@ -12,7 +12,7 @@
 #'
 #' @export
 rpact_design <- function(
-    dist, effect, sig.level = 0.025, power = 0.8, two_armed = TRUE, order = 5L) {
+    dist, effect = 0, sig.level = 0.025, power = 0.8, two_armed = TRUE, order = 5L, hazardratio = 1) {
 
     design_rp <- rpact::getDesignInverseNormal(
         kMax = 2,
@@ -39,8 +39,12 @@ rpact_design <- function(
                 two_armed, 1, sqrt(2)
             )
         )
+    } else if (is(dist,"Survival")){
+        res <- rpact::getSampleSizeSurvival(
+            design_rp, hazardRatio = hazardratio
+        )
     } else {
-        break("Specified data distribution does not exist in adoptr!")
+        stop("Specified data distribution does not exist in adoptr!")
     }
 
     char <- rpact::getDesignCharacteristics(design_rp)
