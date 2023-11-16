@@ -1,0 +1,9 @@
+# Scenario XI: F-Distribution
+
+## Details
+
+In this scenario, we consider two cases. In the first one, we compute the necessary sample size of a one-way ANOVA, where the statistic follows a $F$-distribution. In the second case, we use adoptr to compute the necessary sample size when we want to compare the fit of two linear models, where one model is contained in the other. This means that one model is larger than the other, so more independent variables are included to explain the observed outcomes. We then use an F-test to conclude whether our model was improved by using these additional covariates.
+
+## Variant XI-1: ANOVA
+
+### Setup

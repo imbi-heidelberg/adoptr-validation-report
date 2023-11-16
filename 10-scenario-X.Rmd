@@ -1,73 +1,333 @@
-# Scenario X: Using further constraints
+# Scenario X: Chi-Squared Distribution
 
-## General assumptions
+## Details
 
-`adoptr` offers the possibility to use a variety of further constraints. This chapter is dedicated to show some scenarios in which further conditions on the trial need to be met. We always assume a classical two-arm trial with normal test statistic and known variance. The null hypothesis is given by $\mathcal{H}_0: \delta \leq 0$ and the alternative is assumed to be an effect size of $\delta=0.5$ with point prior distribution. The type one error rate should be lower than $\alpha=0.025$ and the power at the alternative must be at least $0.9$. The objective function to be minimized is the expected sample size under the alternative, i.e. $\boldsymbol{E}\big[n(\mathcal{D})\big]$. 
+In this scenario, we consider the case where the test statistic is Chi-squared distributed. It is useful when we conduct a test with more than two treatment arms or when we test two-sided with a normally distributed test statistic. In the first case, we assume binary endpoints, so we have a $2 \times k$ contingency table. In the second case, we conduct a two-sided Z-test. As the normal distribution is symmetric around $0$, this test is equivalent to a one-sided test with test statistic $Z^2$.
+
+## Variant X-1: Contingeny table with binary endpoints
+
+### Setup
+
+Under the alternative, we assume a response rate of $0.4$ in the first group, $0.5$ in the second and $0.6$ in the third group.
 ```{r}
-datadist <- Normal(two_armed=TRUE)
-H_0 <- PointMassPrior(.0,1)
-prior <- PointMassPrior(0.5,1)
+rate_vec <- c(0.4, 0.5, 0.6)
+theta <- get_tau_Pearson2xK(rate_vec)
+datadist <- Pearson2xK(3)
+H_0 <- PointMassPrior(.0, 1)
+prior <- PointMassPrior(theta, 1)
 
 alpha <- 0.025
 min_power <- 0.9
-toer_cnstr <- Power(datadist,H_0) <= alpha
+toer_cnstr <- Power(datadist, H_0) <= alpha
 pow_cnstr <- Power(datadist,prior) >= min_power
 
-ess <- ExpectedSampleSize(datadist,prior)
 ```
 
-## Constraint X-1: Maximal Sample Size
+### Objective
 
-### Details
-
-Even though the expected sample size of adaptive two-stage designs is generally lower than the expected sample size of classical one-stage designs, it is possible that the sample size of two-stage designs exceeds the sample size of one-stage designs in some cases. Thus, it is not absurd to assume that the maximum sample size should have an upper bound. We say this upper bound is given by $1.4$ times the sample size of the one-stage design.
-
+The expected sample size under the alternative shall be minimized.
 ```{r}
-init_onestage <- OneStageDesign(100,2)
-opt_onestage <- minimize(ess,subject_to(toer_cnstr,pow_cnstr),initial_design = init_onestage)
-print(evaluate(ess,opt_onestage$design))
+ess <- ExpectedSampleSize(datadist, prior)
 ```
 
-Thus, the maximal sample size should not become larger than $118$.
-```{r}
-smplsize_cnstr <- MaximumSampleSize()<=118
-```
+### Initial design
 
-### Initial Designs
-As an initial design, we choose the `adoptr`-function `get_initial_design()`. 
+The initial designs for the minimization process is chosen using the in-built function.
+
 ```{r}
-init_twostage <- get_initial_design(0.5,alpha,1-min_power,type=c("two-stage"),dist=datadist)
+tbl_designs <- tibble(
+    type    = c("one-stage", "group-sequential", "two-stage"),
+    initial = list(
+        get_initial_design(theta, alpha, 1- min_power, 
+                           dist = datadist, type_design = "one-stage"),
+        get_initial_design(theta, alpha, 1- min_power, 
+                           dist = datadist, type_design = "group-sequential"),
+        get_initial_design(theta, alpha, 1- min_power, 
+                           dist = datadist, type_design = "two-stage")))
+        
 ```
 
 ### Optimization
-```{r}
-opt_twostage_cnstr <- minimize(ess,subject_to(toer_cnstr,pow_cnstr,smplsize_cnstr),initial_design = init_twostage)
-```
-
-### Testcases
-
-At first, we verify the type one error rate and power constraints by simulation:
 
 ```{r}
-toer <- sim_pr_reject(opt_twostage_cnstr$design,0.0,datadist)
-power <- sim_pr_reject(opt_twostage_cnstr$design,0.5,datadist)
-
-testthat::expect_true(toer$prob<=alpha*(1+tol))
-testthat::expect_true(power$prob>=min_power*(1-tol))
-```
-
-We now check that the maximal sample size is always smaller than $118$:
-```{r}
-testthat::expect_true(evaluate(MaximumSampleSize(),opt_twostage_cnstr$design)<=118)
-```
-
-Since we added a constraint to our minimization problem, the expected sample size of this design should be higher than the expected sample size without the constraint on the maximum sample size.
-
-```{r}
-opt_twostage <- minimize(ess,subject_to(toer_cnstr,pow_cnstr),initial_design = init_twostage)
-
-testthat::expect_true(evaluate(ess,opt_twostage_cnstr$design)>= evaluate(ess,opt_twostage$design))
+tbl_designs <- tbl_designs %>% 
+    mutate(
+       optimal = purrr::map(initial, ~minimize(
+         
+          ess,
+          subject_to(
+              toer_cnstr,
+              pow_cnstr
+          ),
+          
+          initial_design = ., 
+          opts           = opts)) )
 ```
 
 
+### Test Cases
+
+We first verify that the number of iterations was not exceeded in any of the three cases.
+
+```{r}
+tbl_designs %>% 
+  transmute(
+      type, 
+      iterations = purrr::map_int(tbl_designs$optimal, 
+                                  ~.$nloptr_return$iterations) ) %>%
+  {print(.); .} %>% 
+  {testthat::expect_true(all(.$iterations < opts$maxeval))}
+```
+
+We then check via simulation that the type I error and power constraints are fulfilled.
+
+```{r}
+tbl_designs %>% 
+  transmute(
+      type, 
+      toer  = purrr::map(tbl_designs$optimal, 
+                         ~sim_pr_reject(.[[1]], .0, datadist)$prob), 
+      power = purrr::map(tbl_designs$optimal, 
+                         ~sim_pr_reject(.[[1]], theta , datadist)$prob) ) %>% 
+  unnest(., cols = c(toer, power)) %>% 
+  {print(.); .} %>% {
+  testthat::expect_true(all(.$toer  <= alpha * (1 + tol)))
+  testthat::expect_true(all(.$power >= min_power * (1 - tol))) }
+```
+
+We expect the sample size function $n_2$ to be monotonously decreasing.
+```{r}
+testthat::expect_true(
+    all(diff(
+        # get optimal two-stage design n2 pivots
+        tbl_designs %>% filter(type == "two-stage") %>%
+           {.[["optimal"]][[1]]$design@n2_pivots} 
+        ) < 0) )
+```
+
+
+Since the degrees of freedom of the three design classes are ordered as
+'two-stage' > 'group-sequential' > 'one-stage',
+the expected sample sizes (under the alternative) should be ordered 
+in reverse ('two-stage' smallest).
+Additionally, expected sample sizes under both null and alternative
+are computed both via `evaluate()` and simulation-based.
+
+```{r}
+ess0 <- ExpectedSampleSize(datadist, H_0)
+
+tbl_designs %>% 
+    mutate(
+        ess      = map_dbl(optimal,
+                           ~evaluate(ess, .$design) ),
+        ess_sim  = map_dbl(optimal,
+                           ~sim_n(.$design, theta, datadist)$n ),
+        ess0     = map_dbl(optimal,
+                           ~evaluate(ess0, .$design) ),
+        ess0_sim = map_dbl(optimal,
+                           ~sim_n(.$design, .0, datadist)$n ) ) %>% 
+    {print(.); .} %>% {
+    # sim/evaluate same under alternative?
+    testthat::expect_equal(.$ess, .$ess_sim, 
+                           tolerance = tol_n,
+                           scale = 1)
+    # sim/evaluate same under null?
+    testthat::expect_equal(.$ess0, .$ess0_sim, 
+                           tolerance = tol_n,
+                           scale = 1)
+    # monotonicity with respect to degrees of freedom
+    testthat::expect_true(all(diff(.$ess) < 0)) }
+```
+
+The expected sample size under the alternative of the optimized designs should be lower than the sample size of the initial designs.
+
+```{r}
+testthat::expect_lte(
+  evaluate(ess, 
+             tbl_designs %>% 
+                pull(optimal) %>% 
+                .[[1]]  %>%
+                .$design ),
+    evaluate(ess, 
+             tbl_designs %>% 
+                pull(initial) %>% 
+                .[[1]] ) )
+```
+
+## Variant X-2: Two-sided Z-test
+
+In the second variant, we want to conduct a two-sided test with normally distributed outcome. Unfortunately, a two-sided test in the setting of two-stage trials is more difficult to implement, as the decision whether to stop early or to continue cannot be expressed in the same way as usual ($Z < c_f$ for futility, $Z > c_e$ for efficacy, $Z \in [c_f, c_e]$ for continuation). In the two-sided test scenario, we would need to consider $|Z|$, so $|Z| < c_f$ for futility, $|Z| > c_e$ for efficacy, $|Z| \in [c_f, c_e]$ for continuation. Unfortunately, this would lead to $4$ necessary boundaries, which would not fit the adoptr-framework. 
+If $Z \sim \mathcal{N}(0,1)$ under the null, we can use the fact $Z^2 \sim \chi^2$ and transform our two-sided test problem to a one-sided test. Hence, we stop early for futility if $Z^2 < c_f$, for efficacy if $Z^2 > c_e$ and we continue if $Z^2 \in [c_f, c_e]$, where $c_f$ and $c_e$ are calculated by adoptr using a $\chi^2$-distribution.
+
+### Setup
+
+Under the alternative, we assume an effect size of $0.4$. We want to get a Type I error $\alpha \leq 0.05$ and our power should be higher than $0.8$
+
+```{r}
+theta <- get_tau_ZSquared(0.4)
+datadist <- ZSquared(two_armed = TRUE)
+H_0 <- PointMassPrior(.0, 1)
+prior <- PointMassPrior(theta, 1)
+
+alpha <- 0.05
+min_power <- 0.8
+toer_cnstr <- Power(datadist, H_0) <= alpha
+pow_cnstr <- Power(datadist,prior) >= min_power
+```
+
+### Objective
+
+We minimize the expected sample size under the alternative.
+```{r}
+ess <- ExpectedSampleSize(datadist, prior)
+```
+
+### Initial designs
+
+The initial designs for the minimization process is chosen using the in-built function.
+```{r}
+tbl_designs <- tibble(
+    type    = c("one-stage", "group-sequential", "two-stage"),
+    initial = list(
+        get_initial_design(theta, alpha, 1- min_power, 
+                           dist = datadist, type_design = "one-stage"),
+        get_initial_design(theta, alpha, 1- min_power, 
+                           dist = datadist, type_design = "group-sequential"),
+        get_initial_design(theta, alpha, 1- min_power, 
+                           dist = datadist, type_design = "two-stage")))
+```
+
+### Optimization
+
+```{r}
+tbl_designs <- tbl_designs %>% 
+    mutate(
+       optimal = purrr::map(initial, ~minimize(
+         
+          ess,
+          subject_to(
+              toer_cnstr,
+              pow_cnstr
+          ),
+          
+          initial_design = ., 
+          opts           = opts)) )
+```
+
+### Test
+
+We check that in none of the three cases the number of iterations was exceeded.
+```{r}
+tbl_designs %>% 
+  transmute(
+      type, 
+      iterations = purrr::map_int(tbl_designs$optimal, 
+                                  ~.$nloptr_return$iterations) ) %>%
+  {print(.); .} %>% 
+  {testthat::expect_true(all(.$iterations < opts$maxeval))}
+```
+
+We now verify the type I error and power constraints. To get better insights, we do not simulate the test statistic, but normally distributed outcomes and then square the test statistic.
+```{r}
+
+N <- 10^6
+simulation <- function(design, theta, dist){
+    count <- 0
+    for(i in 1:N){
+        n1 <- n1(design)
+        treatment <- rnorm(n1, mean = theta)
+        control <- rnorm(n1)
+    
+        Z_square <- (sqrt(n1 / 2) * (mean(treatment) - mean(control)))^2
+    
+        if(Z_square > design@c1e){
+            count <- count + 1
+        }
+    
+        if(Z_square >= design@c1f & Z_square <= design@c1e){
+            n2 <- n2(design, Z_square)
+            treatment2 <- rnorm(n2, mean = theta)
+            control2 <- rnorm(n2)
+    
+            Z_final <- (sqrt(n2 / 2) * (mean(treatment2) - mean(control2)))^2
+            if(Z_final > c2(design, Z_square)){
+                count <- count + 1
+            }
+        }
+    }
+    return(list(
+        prob = count / N))
+}
+
+
+tbl_designs %>% 
+  transmute(
+      type, 
+      toer  = purrr::map(tbl_designs$optimal, 
+                         ~simulation(.[[1]], .0, datadist)$prob), 
+      power = purrr::map(tbl_designs$optimal, 
+                         ~simulation(.[[1]], .4, datadist)$prob) ) %>% 
+  unnest(., cols = c(toer, power)) %>% 
+  {print(.); .} %>% {
+  testthat::expect_true(all(.$toer  <= alpha * (1 + tol)))
+  testthat::expect_true(all(.$power >= min_power * (1 - tol))) }
+```
+
+The $n_2$ function should be monotonously decreasing.
+
+```{r}
+testthat::expect_true(
+    all(diff(
+        # get optimal two-stage design n2 pivots
+        tbl_designs %>% filter(type == "two-stage") %>%
+           {.[["optimal"]][[1]]$design@n2_pivots} 
+        ) < 0) )
+```
+
+Since the degrees of freedom of the three design classes are ordered as
+'two-stage' > 'group-sequential' > 'one-stage',
+the expected sample sizes (under the alternative) should be ordered 
+in reverse ('two-stage' smallest).
+Additionally, expected sample sizes under both null and alternative
+are computed both via `evaluate()` and simulation-based.
+
+```{r}
+ess0 <- ExpectedSampleSize(datadist, H_0)
+
+tbl_designs %>% 
+    mutate(
+        ess      = map_dbl(optimal,
+                           ~evaluate(ess, .$design) ),
+        ess_sim  = map_dbl(optimal,
+                           ~sim_n(.$design, theta, datadist)$n ),
+        ess0     = map_dbl(optimal,
+                           ~evaluate(ess0, .$design) ),
+        ess0_sim = map_dbl(optimal,
+                           ~sim_n(.$design, .0, datadist)$n ) ) %>% 
+    {print(.); .} %>% {
+    # sim/evaluate same under alternative?
+    testthat::expect_equal(.$ess, .$ess_sim, 
+                           tolerance = tol_n,
+                           scale = 1)
+    # sim/evaluate same under null?
+    testthat::expect_equal(.$ess0, .$ess0_sim, 
+                           tolerance = tol_n,
+                           scale = 1)
+    # monotonicity with respect to degrees of freedom
+    testthat::expect_true(all(diff(.$ess) < 0)) }
+```
+
+The optimized design should have a lower expected sample size than the initial designs.
+```{r}
+testthat::expect_lte(
+  evaluate(ess, 
+             tbl_designs %>% 
+                pull(optimal) %>% 
+                .[[1]]  %>%
+                .$design ),
+    evaluate(ess, 
+             tbl_designs %>% 
+                pull(initial) %>% 
+                .[[1]] ) )
+```
 

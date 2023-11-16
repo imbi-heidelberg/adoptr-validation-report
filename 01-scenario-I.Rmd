@@ -129,7 +129,7 @@ tbl_designs %>%
 The $n_2$ function of the optimal two-stage design is expected to be 
 monotonously decreasing:
 ```{r}
-expect_true(
+testthat::expect_true(
     all(diff(
         # get optimal two-stage design n2 pivots
         tbl_designs %>% filter(type == "two-stage") %>%

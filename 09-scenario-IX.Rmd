@@ -1,30 +1,32 @@
 # Scenario IX: time-to-event endpoints
 
 ## Details
-In this scenario, we visit a different scenario: Instead of continuous or binary endpoints, we now consider time-to-event endpoints. Therefore, we conduct a log-rank test, for which `adoptr` provides the normal approximation of the test statistics. In order to obtain a one-parametric statistics, we need to fix the event probability $d$ during the trial. We assume that a hazard ratio $\theta>1$ implies favorable results. The null-hypothesis is given by $\mathcal{H}_0:\theta\leq 1$. In both of the following two scenarios, we assume a constant event rate of $d=0.7$ and the type one error should be bounded by $\alpha<2.5$ and a power of $0.8$ is necessary. 
+In this scenario, we visit a different scenario: Instead of continuous or binary endpoints, we now consider time-to-event endpoints. Therefore, we conduct a log-rank test, for which `adoptr` provides the normal approximation of the test statistic. In order to obtain a one-parametric statistic, we need to fix the event probability $d$ during the trial. We assume that a hazard ratio $\theta>1$ implies favorable results. The null-hypothesis is given by $\mathcal{H}_0:\theta\leq 1$. In both of the following two scenarios, we assume a constant event rate of $d=0.7$ and the type one error should be bounded by $\alpha<0.025$ and a power of $0.8$ is necessary. 
+Attention: `adoptr` calculates the number of necessary events, not the sample size. Thus, e.g. the function `ExpectedSampleSize` does not really represent the expected sample size, but the expected number of events. 
+The sample size can be calculated by dividing the number of events by the event rate. 
 
 ```{r}
-datadist <- Survival(0.7,two_armed = TRUE)
-H_0 <- PointMassPrior(1.0,1)
+datadist <- Survival(0.7, two_armed = TRUE)
+H_0 <- PointMassPrior(1.0, 1)
 alpha <- 0.025
 min_power <- 0.8
 ```
 
-## Variant IX-1: Minimizing expected sample size under point prior
+## Variant IX-1: Minimizing expected number of events under point prior
 
 Under the alternative, we us a hazard ratio of $\theta=1.4$ for the point prior of the alternative. 
 
 ```{r}
-prior <- PointMassPrior(1.4,1)
+prior <- PointMassPrior(1.4, 1)
 
-toer_cnstr <- Power(datadist,H_0)<=alpha
-pow_cnstr <- Power(datadist, prior)>=min_power
+toer_cnstr <- Power(datadist, H_0) <= alpha
+pow_cnstr <- Power(datadist, prior) >= min_power
 ```
 
 ### Objective
-The expected sample size under the alternative is minimized.
+The expected number of events under the alternative is minimized.
 ```{r}
-ess <- ExpectedSampleSize(datadist,prior)
+ess <- ExpectedNumberOfEvents(datadist, prior)
 ```
 
 ### Constraints
@@ -32,7 +34,7 @@ No additional constraints besides type one and type two error are considered in 
 
 ### Initial Design
 
-The initial group-sequential and two-stage designs are chosen by using the `rpact` package, which calculates group-sequential designs. The one-stage design is chosen heuristically. 
+The initial group sequential, two-stage and one-stage designs are chosen heuristically. 
 
 ```{r}
 order <- 7L
@@ -40,10 +42,14 @@ order <- 7L
 tbl_designs <- tibble(
     type    = c("one-stage", "group-sequential", "two-stage"),
     initial = list(
-        OneStageDesign(150, 2.0),
-        rpact_design(datadist, sig.level=0.025,power=0.8, two_armed=TRUE, order=order,hazardratio=1.4),
-        TwoStageDesign(rpact_design(datadist, sig.level=0.025,power=0.8, two_armed=TRUE, 
-                                    order=order,hazardratio=1.4))) )
+        OneStageDesign(150, 2.0, event_rate = 0.7),
+        GroupSequentialDesign(75, 0.8, 2.3, 170, 
+                              c2_pivots=c(0.9, 1.1, 1.3, 1.5, 1.7, 1.9, 2.1), 
+                              event_rate = 0.7),
+        TwoStageDesign(75, 0.8, 2.3, 
+                       c(220, 200, 170, 150, 140, 130, 120), 
+                       c2_pivots = c(0.9, 1.1, 1.3, 1.5, 1.7, 1.9, 2.1), 
+                       event_rate = 0.7)) )
 ```
 
 The order of the integration is set to 7.

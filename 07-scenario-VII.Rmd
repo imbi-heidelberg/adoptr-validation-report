@@ -7,24 +7,25 @@ We assume $p_C=0.3$ for the event rate in the control group. The parameter which
 
 In order to fulfill regulatory considerations, the type one error rate is still protected under the point prior $\delta=0$ at the level of significance $\alpha=0.025$.
 
-Since effect sizes less than a minimal clincally relevant effect do not show evidene against the null hypothesis, we assume a clinically relevant effect size $\delta =0.0$ and condition the prior on values $\delta > 0$ in order to compute the expected power. We assume a minimal expected power of at least $0.8$. 
+Since effect sizes less than a minimal clinically relevant effect do not show evidence against the null hypothesis, we assume a clinically relevant effect size $\delta =0.0$ and condition the prior on values $\delta > 0$ in order to compute the expected power. We assume a minimal expected power of at least $0.8$. 
 
 ```{r}
 # data distribution and priors
-datadist   <- Binomial(rate_control=0.3, two_armed = TRUE)
+datadist   <- Binomial(rate_control = 0.3, two_armed = TRUE)
 H_0        <- PointMassPrior(.0, 1)
-prior      <- ContinuousPrior(function(x) 1/(pnorm(0.69,0.2,0.2)-pnorm(-0.29,0.2,0.2))*dnorm(x,0.2,0.2),
-                              support = c(-0.29,0.69),
+prior      <- ContinuousPrior(function(x) 1 / 
+                                  (pnorm(0.69, 0.2, 0.2) - pnorm(-0.29, 0.2, 0.2)) * dnorm(x, 0.2, 0.2),
+                              support = c(-0.29, 0.69),
                               tighten_support = TRUE)
 
 # define constraints on type one error rate and expected power
 alpha      <- 0.025
 min_epower <- 0.8
 toer_cnstr <- Power(datadist, H_0) <= alpha
-epow_cnstr <- Power(datadist, condition(prior, c(0.0,0.69))) >= min_epower
+epow_cnstr <- Power(datadist, condition(prior, c(0.0, 0.69))) >= min_epower
 ```
 
-## Variant II-1: Minimizing Expected Sample Size under Point Prior {#variantVII-1}
+## Variant VII-1: Minimizing Expected Sample Size under Continuous Prior {#variantVII-1}
 
 ### Objective
 
@@ -124,7 +125,7 @@ tbl_designs %>%
 In this scenario, the expected sample size conditioned on negative effect sizes is minimized, i.e.,
 
 ```{r}
-ess_0 <- ExpectedSampleSize(datadist, condition(prior, c(-0.29,0)))
+ess_0 <- ExpectedSampleSize(datadist, condition(prior, c(-0.29, 0)))
 ```
 
 ### Constraints

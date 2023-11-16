@@ -2,19 +2,19 @@
 
 ## Details
 
-In this scenario, we investigate the scenario of a large effect with unknown common variance $\sigma$. The test statistics then follows a $t$-distribution. For a large sample size, the $t$-distribution can be approximated by the normal distribution and we find ourselves in [Scenario I](#scenarioI).
+In this scenario, we investigate the scenario of a large effect with unknown common variance $\sigma$. The test statistic then follows a $t$-distribution. For a large sample size, the $t$-distribution can be approximated by the normal distribution and we find ourselves in [Scenario I](#scenarioI).
 The larger the assumed effect size in the alternative, the lower the necessary number of subjects to achieve a minimum power. Thus, we choose an effect size of $\delta=1$ with point prior distribution. The null hypothesis is given by $\mathcal{H}_0: \delta \leq 0$. The maximal type one error is bounded by $\alpha=0.025$ and at the point alternative of $\delta=1$ the power should be at least $0.9$. 
 
 ```{r}
 #data distributions and hypothesis
 datadist <- Student(two_armed=TRUE)
-H_0 <- PointMassPrior(.0,1)
-prior <- PointMassPrior(1.0,1)
+H_0 <- PointMassPrior(.0, 1)
+prior <- PointMassPrior(1.0, 1)
 
 #define constraints
 alpha <- 0.025
 min_power <- 0.9
-toer_cnstr <- Power(datadist,H_0)<= alpha
+toer_cnstr <- Power(datadist,H_0) <= alpha
 pow_cnstr <- Power(datadist,prior) >= min_power
 ```
 
@@ -25,7 +25,7 @@ pow_cnstr <- Power(datadist,prior) >= min_power
 
 Firstly, we minimize the expected sample size under the alternative, e.g. $\boldsymbol{E}\big[n(\mathcal{D})\big]$.
 ```{r}
-ess <- ExpectedSampleSize(datadist,prior)
+ess <- ExpectedSampleSize(datadist, prior)
 ```
 
 ### Constraints
@@ -154,7 +154,7 @@ testthat::expect_lte(
 ## Variant VIII-2: Comparison to Normal Distribution
 
 ### Generate Comparison Design
-We now compare the expected sample size of this scenario to the expected sample size when we assume that the variance is known. Thus, we need to find the optimal designs with normal distributed test statistics. These steps are completely analogous to scenario I. 
+We now compare the expected sample size of this scenario to the expected sample size when we assume that the variance is known. Thus, we need to find the optimal designs with normal distributed test statistic. These steps are completely analogous to scenario I. 
 
 ```{r}
 datadistnorm <- Normal(two_armed=TRUE)
@@ -196,7 +196,7 @@ tbl_designsnorm <- tbl_designsnorm %>%
 ```
 
 ### Test Cases
-In all of the three designs, we should see that the expected sample size under the normal distributed test statistics is lower than the expected sample size when we use the $t$-distribution.
+In all of the three designs, we should see that the expected sample size under the normal distributed test statistic is lower than the expected sample size when we use the $t$-distribution.
 
 ```{r}
 essstudent <- map_dbl(tbl_designs$optimal,~evaluate(ess,.$design))
@@ -210,7 +210,7 @@ cat("Normal","\n",essnorm)
 
 ```{r}
 diff <- essstudent-essnorm
-testthat::expect_true(all(diff>0))
+testthat::expect_true(all(diff > 0))
 ```
 
 
