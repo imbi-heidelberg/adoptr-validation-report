@@ -70,7 +70,8 @@ jobs:
 
       - name: Build report
         run: |
-          remotes::install_github("imbi-heidelberg/adoptr")
+          remotes::install_deps(dependencies = TRUE)
+          remotes::install_github("https://github.com/imbi-heidelberg/adoptr.git")
           bookdown::render_book("index.Rmd", output_format = "all")
         shell: Rscript {0}
 
