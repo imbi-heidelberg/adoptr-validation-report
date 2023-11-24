@@ -70,6 +70,7 @@ jobs:
 
       - name: Build report
         run: |
+          remotes::install_github("imbi-heidelberg/adoptr")
           bookdown::render_book("index.Rmd", output_format = "all")
         shell: Rscript {0}
 
