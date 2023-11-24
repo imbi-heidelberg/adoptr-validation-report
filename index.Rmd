@@ -505,7 +505,7 @@ The control rate is assumed to equal $p_C = 0.3$.
         externally computed group-sequential design using the [rpact](https://rpact.org/) package.
     5. Are the $ESS$ values obtained from simulation the same as the ones 
         obtained by using numerical integration via `adoptr::evaluate`?
-
+        
 
 
 ## Technical Setup
