@@ -65,13 +65,12 @@ jobs:
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
+          remotes::install_github("https://github.com/imbi-heidelberg/adoptr.git")
           tinytex::install_tinytex()
         shell: Rscript {0}
 
       - name: Build report
         run: |
-          remotes::install_deps(dependencies = TRUE)
-          remotes::install_github("https://github.com/imbi-heidelberg/adoptr.git")
           bookdown::render_book("index.Rmd", output_format = "all")
         shell: Rscript {0}
 
