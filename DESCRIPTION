@@ -1,5 +1,12 @@
 Package: adoptrValidationReport
-Type: Website
+Title: Validation report for the adoptr package
+Version: 1.1
+Authors@R: 
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This repository contains the validation report of the adoptr package
+License: MIT + file LICENSE
+Encoding: UTF-8
 Depends:
     devtools,
     tidyverse, 
