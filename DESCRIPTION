@@ -1,6 +1,5 @@
 Type: Website
 Depends:
-    adoptr,
     devtools,
     tidyverse, 
     bookdown,
@@ -8,3 +7,5 @@ Depends:
     testthat,
     pwr,
     tinytex
+Remotes:
+    github::imbi-heidelberg/adoptr
