@@ -231,7 +231,7 @@ Expected sample size under the null hypothesis is minimized.
 The constraints remain unchanged.
 
 ### Initial design
-Since optimization under the null favours a monotonically increasing sample size function, and thus also a different shape of the $c_2$ function, the `rpact`initial design is a suboptimal starting point. Instead, we start with a constant $c_2$ function by heuristically setting it to $2$ on the continuation area. Also, optimizing under the null favours extremely conservative boundaries for early efficacy stopping and we thus impose a fairly liberal upper bound of $3$ for early efficacy stopping.
+Optimization under the null favors a monotonically increasing sample size function, and thus also a different shape of the $c_2$ function. Thus, we start with a constant $c_2$ function by heuristically setting it to $2$ on the continuation area. Also, optimizing under the null favors extremely conservative boundaries for early efficacy stopping and we thus impose a fairly liberal upper bound of $3$ for early efficacy stopping.
 ```{r}
 init_design_h0 <- tbl_designs %>% 
     filter(type == "two-stage") %>% 

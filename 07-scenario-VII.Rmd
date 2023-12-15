@@ -51,7 +51,8 @@ tbl_designs <- tibble(
     initial = list(
         OneStageDesign(200, 2.0),
         rpact_design(datadist, 0.2, 0.025, 0.8, TRUE, order),
-        TwoStageDesign(rpact_design(datadist, 0.2, 0.025, 0.8, TRUE, order))) )
+        TwoStageDesign(get_initial_design(0.2, 0.025, 0.2, "two-stage", dist = datadist) )))
+
 ```
 The order of integration is set to 7.
 
@@ -97,7 +98,7 @@ tbl_designs %>%
   testthat::expect_true(all(.$toer <= alpha * (1 + tol))) }
 ```
 
-The optimal two-stage design is more flexible than the other two designs, so the expected sample sizes under the prior should be ordered upwards as follows: optimal two-stage design < group sequential < one-stage. 
+The optimal two-stage design is more flexible than the other two designs, so the expected sample sizes under the prior should be ordered upwards as follows: optimal two-stage design < group sequential < one-stage. We additionally compare the simulated and theoretical outcomes of the sample size under the null.
 
 ```{r}
 essh0 <- ExpectedSampleSize(datadist, H_0)
@@ -119,84 +120,7 @@ tbl_designs %>%
     testthat::expect_true(all(diff(.$ess) < 0)) }
 ```
 
-## Variant VII-2: Minimizing Expected Sample Size under Null Hypothesis
-
-### Objective
-In this scenario, the expected sample size conditioned on negative effect sizes is minimized, i.e.,
-
-```{r}
-ess_0 <- ExpectedSampleSize(datadist, condition(prior, c(-0.29, 0)))
-```
-
-### Constraints
-No additional constraints besides type one error rate and expected power are considered in this variant.
-
-### Initial Design
-When minimizing the expected sample size under the null, one may expect an increasing sample size function, and thus also a different shape of the $c_2$ function. Thus, the `rpact` initial design is a suboptimal starting point. Instead, we use a constant $c_2$ function by heuristically setting it to 2 on the continuation area. Since optimization under the null hypothesis favours conservative boundaries for early efficacy stopping, we set the upper bound to 3.
-
-```{r}
-init_design_h0 <- tbl_designs %>% 
-    filter(type == "two-stage") %>% 
-    pull(initial) %>% 
-    .[[1]]
-init_design_h0@c2_pivots <- rep(2, order)
-
-ub_design <- TwoStageDesign(
-    3 * init_design_h0@n1,
-    2,
-    3,
-    rep(600, order),
-    rep(3.0, order)
-)
-```
-
-### Optimization
-```{r}
-opt_neg <- minimize(
-        ess_0,
-        subject_to(
-          
-            toer_cnstr,
-            epow_cnstr
-        ),
-        
-        initial_design = init_design_h0,
-        upper_boundary_design = ub_design,
-        opts = opts
-)
-```
-
-### Test Cases
-First of al, verify that the maximum number of iterations was not exceeded:
-```{r}
-testthat::expect_true(opt_neg$nloptr_return$iterations < opts$maxeval)
-print(opt_neg$nloptr_return$iterations)
-```
-
-Test the type one error rate under the point null hypothesis $\delta=0$ via simulation.
-```{r}
-tbl_toer <- tibble(
-  toer     = evaluate(Power(datadist, H_0), opt_neg$design),
-  toer_sim = sim_pr_reject(opt_neg$design, .0, datadist)$prob
-)
-
-print(tbl_toer)
-```
-The expected sample size under the prior conditioned on $\delta\leq 0$ should be lower for the optimal design derived in this variant than in the previous one where we minimized the expected sample size under the full prior.
-
-```{r}
-testthat::expect_lte(
-    evaluate(ess_0, opt_neg$design),
-    evaluate(
-        ess_0, 
-        tbl_designs %>% 
-            filter(type == "two-stage") %>% 
-            pull(optimal) %>% 
-            .[[1]] %>% 
-            .$design )
-)
-```
-## Variant VII-3: conditional Power Constraint
+## Variant VII-2: Conditional Power Constraint
 
 ### Objective
 As in [VariantVII-1](#variantVII-1), the expected sample size under the full prior is minimized. 
@@ -280,7 +204,6 @@ x1 <- seq(0, 4, by = .01)
 tibble(
     type  = c(
         "ESS under prior", 
-        "ESS under null", 
         "ESS under prior + CP constraint" ), 
     design = list(
         tbl_designs %>% 
@@ -288,7 +211,6 @@ tibble(
             pull(optimal) %>% 
             .[[1]] %>% 
             .$design, 
-        opt_neg$design, 
         opt_cp$design ) ) %>% 
     group_by(type) %>% 
     do(

@@ -132,7 +132,7 @@ to the newly created folder
 git clone https://github.com/kkmann/adoptr-validation-report.git
 cd adoptr-validation-report
 ```
-Make sure that all packages requied for building the report are
+Make sure that all packages required for building the report are
 available, i.e., install all dependencies listed in the top-level
 `DESCRIPTION` file, e.g.,
 ```r
@@ -213,7 +213,7 @@ This is the default scenario.
 
 
 
-#### [Variant I.3: Condtional Power Constraint](#variantI_3)
+#### [Variant I.3: Conditional Power Constraint](#variantI_3)
 
 * **Objective:** $ESS := \boldsymbol{E}\big[n(X_1)\,|\,\delta=0.4\big]$
 * **Constraints:** 
@@ -505,8 +505,8 @@ The control rate is assumed to equal $p_C = 0.3$.
         externally computed group-sequential design using the [rpact](https://rpact.org/) package.
     5. Are the $ESS$ values obtained from simulation the same as the ones 
         obtained by using numerical integration via `adoptr::evaluate`?
-        
 
+        
 
 ## Technical Setup
 
