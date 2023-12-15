@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>8 Scenario VII: binomial distribution, Gaussian prior | Validation Report for adoptr package</title>
   <meta name="description" content="This is an automatically generated validation report for the adoptr R package published via bookdown." />
-  <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
   <meta property="og:title" content="8 Scenario VII: binomial distribution, Gaussian prior | Validation Report for adoptr package" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Kevin Kunzmann, Maximilian Pilz &amp; Nico Bruder" />
 
 
-<meta name="date" content="2022-03-31" />
+<meta name="date" content="2023-12-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -49,25 +49,24 @@
 
 
 
-<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -87,13 +86,13 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {   }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +105,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -120,6 +119,32 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -137,210 +162,281 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Validation Report for adoptr Package</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction<span></span></a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#preliminaries"><i class="fa fa-check"></i><b>1.1</b> Preliminaries<span></span></a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#scope"><i class="fa fa-check"></i><b>1.2</b> Scope<span></span></a><ul>
-<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#validating-a-local-installation-of-adoptr"><i class="fa fa-check"></i><b>1.2.1</b> Validating a local installation of adoptr<span></span></a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#preliminaries"><i class="fa fa-check"></i><b>1.1</b> Preliminaries</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#scope"><i class="fa fa-check"></i><b>1.2</b> Scope</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#validating-a-local-installation-of-adoptr"><i class="fa fa-check"></i><b>1.2.1</b> Validating a local installation of adoptr</a></li>
 </ul></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#validation-scenarios"><i class="fa fa-check"></i><b>1.3</b> Validation Scenarios<span></span></a><ul>
-<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#scenario-i-large-effect-point-prior"><i class="fa fa-check"></i><b>1.3.1</b> <span>Scenario I: Large effect, point prior</span><span></span></a></li>
-<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#scenario-ii-large-effect-gaussian-prior"><i class="fa fa-check"></i><b>1.3.2</b> <span>Scenario II: Large effect, Gaussian prior</span><span></span></a></li>
-<li class="chapter" data-level="1.3.3" data-path="index.html"><a href="index.html#scenario-iii-large-effect-uniform-prior"><i class="fa fa-check"></i><b>1.3.3</b> <span>Scenario III: Large effect, uniform prior</span><span></span></a></li>
-<li class="chapter" data-level="1.3.4" data-path="index.html"><a href="index.html#scenario-iv-smaller-effect-size-larger-trials"><i class="fa fa-check"></i><b>1.3.4</b> <span>Scenario IV: Smaller effect size, larger trials</span><span></span></a></li>
-<li class="chapter" data-level="1.3.5" data-path="index.html"><a href="index.html#scenario-v-single-arm-design-medium-effect-size"><i class="fa fa-check"></i><b>1.3.5</b> <span>Scenario V: Single-arm design, medium effect size</span><span></span></a></li>
-<li class="chapter" data-level="1.3.6" data-path="index.html"><a href="index.html#scenario-vi-binomial-distribution"><i class="fa fa-check"></i><b>1.3.6</b> <span>Scenario VI: Binomial distribution</span><span></span></a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#validation-scenarios"><i class="fa fa-check"></i><b>1.3</b> Validation Scenarios</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#scenario-i-large-effect-point-prior"><i class="fa fa-check"></i><b>1.3.1</b> Scenario I: Large effect, point prior</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#scenario-ii-large-effect-gaussian-prior"><i class="fa fa-check"></i><b>1.3.2</b> Scenario II: Large effect, Gaussian prior</a></li>
+<li class="chapter" data-level="1.3.3" data-path="index.html"><a href="index.html#scenario-iii-large-effect-uniform-prior"><i class="fa fa-check"></i><b>1.3.3</b> Scenario III: Large effect, uniform prior</a></li>
+<li class="chapter" data-level="1.3.4" data-path="index.html"><a href="index.html#scenario-iv-smaller-effect-size-larger-trials"><i class="fa fa-check"></i><b>1.3.4</b> Scenario IV: Smaller effect size, larger trials</a></li>
+<li class="chapter" data-level="1.3.5" data-path="index.html"><a href="index.html#scenario-v-single-arm-design-medium-effect-size"><i class="fa fa-check"></i><b>1.3.5</b> Scenario V: Single-arm design, medium effect size</a></li>
+<li class="chapter" data-level="1.3.6" data-path="index.html"><a href="index.html#scenario-vi-binomial-distribution"><i class="fa fa-check"></i><b>1.3.6</b> Scenario VI: Binomial distribution</a></li>
 </ul></li>
-<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#technical-setup"><i class="fa fa-check"></i><b>1.4</b> Technical Setup<span></span></a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#technical-setup"><i class="fa fa-check"></i><b>1.4</b> Technical Setup</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="scenarioI.html"><a href="scenarioI.html"><i class="fa fa-check"></i><b>2</b> Scenario I: large effect, point prior<span></span></a><ul>
-<li class="chapter" data-level="2.1" data-path="scenarioI.html"><a href="scenarioI.html#details"><i class="fa fa-check"></i><b>2.1</b> Details<span></span></a></li>
-<li class="chapter" data-level="2.2" data-path="scenarioI.html"><a href="scenarioI.html#variantI_1"><i class="fa fa-check"></i><b>2.2</b> Variant I-1: Minimizing Expected Sample Size under Point Prior<span></span></a><ul>
-<li class="chapter" data-level="2.2.1" data-path="scenarioI.html"><a href="scenarioI.html#objective"><i class="fa fa-check"></i><b>2.2.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="2.2.2" data-path="scenarioI.html"><a href="scenarioI.html#constraints"><i class="fa fa-check"></i><b>2.2.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="2.2.3" data-path="scenarioI.html"><a href="scenarioI.html#initial-designs"><i class="fa fa-check"></i><b>2.2.3</b> Initial Designs<span></span></a></li>
-<li class="chapter" data-level="2.2.4" data-path="scenarioI.html"><a href="scenarioI.html#optimization"><i class="fa fa-check"></i><b>2.2.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="2.2.5" data-path="scenarioI.html"><a href="scenarioI.html#test-cases"><i class="fa fa-check"></i><b>2.2.5</b> Test Cases<span></span></a></li>
+<li class="chapter" data-level="2" data-path="scenarioI.html"><a href="scenarioI.html"><i class="fa fa-check"></i><b>2</b> Scenario I: large effect, point prior</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="scenarioI.html"><a href="scenarioI.html#details"><i class="fa fa-check"></i><b>2.1</b> Details</a></li>
+<li class="chapter" data-level="2.2" data-path="scenarioI.html"><a href="scenarioI.html#variantI_1"><i class="fa fa-check"></i><b>2.2</b> Variant I-1: Minimizing Expected Sample Size under Point Prior</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="scenarioI.html"><a href="scenarioI.html#objective"><i class="fa fa-check"></i><b>2.2.1</b> Objective</a></li>
+<li class="chapter" data-level="2.2.2" data-path="scenarioI.html"><a href="scenarioI.html#constraints"><i class="fa fa-check"></i><b>2.2.2</b> Constraints</a></li>
+<li class="chapter" data-level="2.2.3" data-path="scenarioI.html"><a href="scenarioI.html#initial-designs"><i class="fa fa-check"></i><b>2.2.3</b> Initial Designs</a></li>
+<li class="chapter" data-level="2.2.4" data-path="scenarioI.html"><a href="scenarioI.html#optimization"><i class="fa fa-check"></i><b>2.2.4</b> Optimization</a></li>
+<li class="chapter" data-level="2.2.5" data-path="scenarioI.html"><a href="scenarioI.html#test-cases"><i class="fa fa-check"></i><b>2.2.5</b> Test Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="2.3" data-path="scenarioI.html"><a href="scenarioI.html#variantI_2"><i class="fa fa-check"></i><b>2.3</b> Variant I-2: Minimizing Expected Sample Size under Null Hypothesis<span></span></a><ul>
-<li class="chapter" data-level="2.3.1" data-path="scenarioI.html"><a href="scenarioI.html#objective-1"><i class="fa fa-check"></i><b>2.3.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="2.3.2" data-path="scenarioI.html"><a href="scenarioI.html#constraints-1"><i class="fa fa-check"></i><b>2.3.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="2.3.3" data-path="scenarioI.html"><a href="scenarioI.html#initial-design"><i class="fa fa-check"></i><b>2.3.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="2.3.4" data-path="scenarioI.html"><a href="scenarioI.html#optimization-1"><i class="fa fa-check"></i><b>2.3.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="2.3.5" data-path="scenarioI.html"><a href="scenarioI.html#test-cases-1"><i class="fa fa-check"></i><b>2.3.5</b> Test Cases<span></span></a></li>
+<li class="chapter" data-level="2.3" data-path="scenarioI.html"><a href="scenarioI.html#variantI_2"><i class="fa fa-check"></i><b>2.3</b> Variant I-2: Minimizing Expected Sample Size under Null Hypothesis</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="scenarioI.html"><a href="scenarioI.html#objective-1"><i class="fa fa-check"></i><b>2.3.1</b> Objective</a></li>
+<li class="chapter" data-level="2.3.2" data-path="scenarioI.html"><a href="scenarioI.html#constraints-1"><i class="fa fa-check"></i><b>2.3.2</b> Constraints</a></li>
+<li class="chapter" data-level="2.3.3" data-path="scenarioI.html"><a href="scenarioI.html#initial-design"><i class="fa fa-check"></i><b>2.3.3</b> Initial Design</a></li>
+<li class="chapter" data-level="2.3.4" data-path="scenarioI.html"><a href="scenarioI.html#optimization-1"><i class="fa fa-check"></i><b>2.3.4</b> Optimization</a></li>
+<li class="chapter" data-level="2.3.5" data-path="scenarioI.html"><a href="scenarioI.html#test-cases-1"><i class="fa fa-check"></i><b>2.3.5</b> Test Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="2.4" data-path="scenarioI.html"><a href="scenarioI.html#variantI_3"><i class="fa fa-check"></i><b>2.4</b> Variant I-3: Conditional Power Constraint<span></span></a><ul>
-<li class="chapter" data-level="2.4.1" data-path="scenarioI.html"><a href="scenarioI.html#objective-2"><i class="fa fa-check"></i><b>2.4.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="2.4.2" data-path="scenarioI.html"><a href="scenarioI.html#constraints-2"><i class="fa fa-check"></i><b>2.4.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="2.4.3" data-path="scenarioI.html"><a href="scenarioI.html#initial-design-1"><i class="fa fa-check"></i><b>2.4.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="2.4.4" data-path="scenarioI.html"><a href="scenarioI.html#optimization-2"><i class="fa fa-check"></i><b>2.4.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="2.4.5" data-path="scenarioI.html"><a href="scenarioI.html#test-cases-2"><i class="fa fa-check"></i><b>2.4.5</b> Test Cases<span></span></a></li>
+<li class="chapter" data-level="2.4" data-path="scenarioI.html"><a href="scenarioI.html#variantI_3"><i class="fa fa-check"></i><b>2.4</b> Variant I-3: Conditional Power Constraint</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="scenarioI.html"><a href="scenarioI.html#objective-2"><i class="fa fa-check"></i><b>2.4.1</b> Objective</a></li>
+<li class="chapter" data-level="2.4.2" data-path="scenarioI.html"><a href="scenarioI.html#constraints-2"><i class="fa fa-check"></i><b>2.4.2</b> Constraints</a></li>
+<li class="chapter" data-level="2.4.3" data-path="scenarioI.html"><a href="scenarioI.html#initial-design-1"><i class="fa fa-check"></i><b>2.4.3</b> Initial Design</a></li>
+<li class="chapter" data-level="2.4.4" data-path="scenarioI.html"><a href="scenarioI.html#optimization-2"><i class="fa fa-check"></i><b>2.4.4</b> Optimization</a></li>
+<li class="chapter" data-level="2.4.5" data-path="scenarioI.html"><a href="scenarioI.html#test-cases-2"><i class="fa fa-check"></i><b>2.4.5</b> Test Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="scenarioI.html"><a href="scenarioI.html#plot-two-stage-designs"><i class="fa fa-check"></i><b>2.5</b> Plot Two-Stage Designs<span></span></a></li>
+<li class="chapter" data-level="2.5" data-path="scenarioI.html"><a href="scenarioI.html#plot-two-stage-designs"><i class="fa fa-check"></i><b>2.5</b> Plot Two-Stage Designs</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="scenarioII.html"><a href="scenarioII.html"><i class="fa fa-check"></i><b>3</b> Scenario II: large effect, Gaussian prior<span></span></a><ul>
-<li class="chapter" data-level="3.1" data-path="scenarioII.html"><a href="scenarioII.html#details-1"><i class="fa fa-check"></i><b>3.1</b> Details<span></span></a></li>
-<li class="chapter" data-level="3.2" data-path="scenarioII.html"><a href="scenarioII.html#variantII_1"><i class="fa fa-check"></i><b>3.2</b> Variant II-1: Minimizing Expected Sample Size under Point Prior<span></span></a><ul>
-<li class="chapter" data-level="3.2.1" data-path="scenarioII.html"><a href="scenarioII.html#objective-3"><i class="fa fa-check"></i><b>3.2.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="3.2.2" data-path="scenarioII.html"><a href="scenarioII.html#constraints-3"><i class="fa fa-check"></i><b>3.2.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="3.2.3" data-path="scenarioII.html"><a href="scenarioII.html#initial-design-2"><i class="fa fa-check"></i><b>3.2.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="3.2.4" data-path="scenarioII.html"><a href="scenarioII.html#optimization-3"><i class="fa fa-check"></i><b>3.2.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="3.2.5" data-path="scenarioII.html"><a href="scenarioII.html#test-cases-3"><i class="fa fa-check"></i><b>3.2.5</b> Test Cases<span></span></a></li>
+<li class="chapter" data-level="3" data-path="scenarioII.html"><a href="scenarioII.html"><i class="fa fa-check"></i><b>3</b> Scenario II: large effect, Gaussian prior</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="scenarioII.html"><a href="scenarioII.html#details-1"><i class="fa fa-check"></i><b>3.1</b> Details</a></li>
+<li class="chapter" data-level="3.2" data-path="scenarioII.html"><a href="scenarioII.html#variantII_1"><i class="fa fa-check"></i><b>3.2</b> Variant II-1: Minimizing Expected Sample Size under Point Prior</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="scenarioII.html"><a href="scenarioII.html#objective-3"><i class="fa fa-check"></i><b>3.2.1</b> Objective</a></li>
+<li class="chapter" data-level="3.2.2" data-path="scenarioII.html"><a href="scenarioII.html#constraints-3"><i class="fa fa-check"></i><b>3.2.2</b> Constraints</a></li>
+<li class="chapter" data-level="3.2.3" data-path="scenarioII.html"><a href="scenarioII.html#initial-design-2"><i class="fa fa-check"></i><b>3.2.3</b> Initial Design</a></li>
+<li class="chapter" data-level="3.2.4" data-path="scenarioII.html"><a href="scenarioII.html#optimization-3"><i class="fa fa-check"></i><b>3.2.4</b> Optimization</a></li>
+<li class="chapter" data-level="3.2.5" data-path="scenarioII.html"><a href="scenarioII.html#test-cases-3"><i class="fa fa-check"></i><b>3.2.5</b> Test Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="scenarioII.html"><a href="scenarioII.html#variantII_2"><i class="fa fa-check"></i><b>3.3</b> Variant II-2: Minimizing Expected Sample Size under Null Hypothesis<span></span></a><ul>
-<li class="chapter" data-level="3.3.1" data-path="scenarioII.html"><a href="scenarioII.html#objective-4"><i class="fa fa-check"></i><b>3.3.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="3.3.2" data-path="scenarioII.html"><a href="scenarioII.html#constraints-4"><i class="fa fa-check"></i><b>3.3.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="3.3.3" data-path="scenarioII.html"><a href="scenarioII.html#initial-design-3"><i class="fa fa-check"></i><b>3.3.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="3.3.4" data-path="scenarioII.html"><a href="scenarioII.html#optimization-4"><i class="fa fa-check"></i><b>3.3.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="3.3.5" data-path="scenarioII.html"><a href="scenarioII.html#test-cases-4"><i class="fa fa-check"></i><b>3.3.5</b> Test Cases<span></span></a></li>
+<li class="chapter" data-level="3.3" data-path="scenarioII.html"><a href="scenarioII.html#variantII_2"><i class="fa fa-check"></i><b>3.3</b> Variant II-2: Minimizing Expected Sample Size under Null Hypothesis</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="scenarioII.html"><a href="scenarioII.html#objective-4"><i class="fa fa-check"></i><b>3.3.1</b> Objective</a></li>
+<li class="chapter" data-level="3.3.2" data-path="scenarioII.html"><a href="scenarioII.html#constraints-4"><i class="fa fa-check"></i><b>3.3.2</b> Constraints</a></li>
+<li class="chapter" data-level="3.3.3" data-path="scenarioII.html"><a href="scenarioII.html#initial-design-3"><i class="fa fa-check"></i><b>3.3.3</b> Initial Design</a></li>
+<li class="chapter" data-level="3.3.4" data-path="scenarioII.html"><a href="scenarioII.html#optimization-4"><i class="fa fa-check"></i><b>3.3.4</b> Optimization</a></li>
+<li class="chapter" data-level="3.3.5" data-path="scenarioII.html"><a href="scenarioII.html#test-cases-4"><i class="fa fa-check"></i><b>3.3.5</b> Test Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="scenarioII.html"><a href="scenarioII.html#variantII_3"><i class="fa fa-check"></i><b>3.4</b> Variant II-3: Conditional Power Constraint<span></span></a><ul>
-<li class="chapter" data-level="3.4.1" data-path="scenarioII.html"><a href="scenarioII.html#objective-5"><i class="fa fa-check"></i><b>3.4.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="3.4.2" data-path="scenarioII.html"><a href="scenarioII.html#constraints-5"><i class="fa fa-check"></i><b>3.4.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="3.4.3" data-path="scenarioII.html"><a href="scenarioII.html#initial-design-4"><i class="fa fa-check"></i><b>3.4.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="3.4.4" data-path="scenarioII.html"><a href="scenarioII.html#optimization-5"><i class="fa fa-check"></i><b>3.4.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="3.4.5" data-path="scenarioII.html"><a href="scenarioII.html#test-cases-5"><i class="fa fa-check"></i><b>3.4.5</b> Test Cases<span></span></a></li>
+<li class="chapter" data-level="3.4" data-path="scenarioII.html"><a href="scenarioII.html#variantII_3"><i class="fa fa-check"></i><b>3.4</b> Variant II-3: Conditional Power Constraint</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="scenarioII.html"><a href="scenarioII.html#objective-5"><i class="fa fa-check"></i><b>3.4.1</b> Objective</a></li>
+<li class="chapter" data-level="3.4.2" data-path="scenarioII.html"><a href="scenarioII.html#constraints-5"><i class="fa fa-check"></i><b>3.4.2</b> Constraints</a></li>
+<li class="chapter" data-level="3.4.3" data-path="scenarioII.html"><a href="scenarioII.html#initial-design-4"><i class="fa fa-check"></i><b>3.4.3</b> Initial Design</a></li>
+<li class="chapter" data-level="3.4.4" data-path="scenarioII.html"><a href="scenarioII.html#optimization-5"><i class="fa fa-check"></i><b>3.4.4</b> Optimization</a></li>
+<li class="chapter" data-level="3.4.5" data-path="scenarioII.html"><a href="scenarioII.html#test-cases-5"><i class="fa fa-check"></i><b>3.4.5</b> Test Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="3.5" data-path="scenarioII.html"><a href="scenarioII.html#plot-two-stage-designs-1"><i class="fa fa-check"></i><b>3.5</b> Plot Two-Stage Designs<span></span></a></li>
+<li class="chapter" data-level="3.5" data-path="scenarioII.html"><a href="scenarioII.html#plot-two-stage-designs-1"><i class="fa fa-check"></i><b>3.5</b> Plot Two-Stage Designs</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="scenarioIII.html"><a href="scenarioIII.html"><i class="fa fa-check"></i><b>4</b> Scenario III: large effect, uniform prior<span></span></a><ul>
-<li class="chapter" data-level="4.1" data-path="scenarioIII.html"><a href="scenarioIII.html#details-2"><i class="fa fa-check"></i><b>4.1</b> Details<span></span></a></li>
-<li class="chapter" data-level="4.2" data-path="scenarioIII.html"><a href="scenarioIII.html#variantIII_1"><i class="fa fa-check"></i><b>4.2</b> Variant III.1: Convergence under prior concentration<span></span></a><ul>
-<li class="chapter" data-level="4.2.1" data-path="scenarioIII.html"><a href="scenarioIII.html#objective-6"><i class="fa fa-check"></i><b>4.2.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="4.2.2" data-path="scenarioIII.html"><a href="scenarioIII.html#constraints-6"><i class="fa fa-check"></i><b>4.2.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="4.2.3" data-path="scenarioIII.html"><a href="scenarioIII.html#optimization-problem"><i class="fa fa-check"></i><b>4.2.3</b> Optimization problem<span></span></a></li>
-<li class="chapter" data-level="4.2.4" data-path="scenarioIII.html"><a href="scenarioIII.html#test-cases-6"><i class="fa fa-check"></i><b>4.2.4</b> Test cases<span></span></a></li>
-<li class="chapter" data-level="4.2.5" data-path="scenarioIII.html"><a href="scenarioIII.html#plot-designs"><i class="fa fa-check"></i><b>4.2.5</b> Plot designs<span></span></a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="scenarioIV.html"><a href="scenarioIV.html"><i class="fa fa-check"></i><b>5</b> Scenario IV: smaller effect, point prior<span></span></a><ul>
-<li class="chapter" data-level="5.1" data-path="scenarioIV.html"><a href="scenarioIV.html#details-3"><i class="fa fa-check"></i><b>5.1</b> Details<span></span></a></li>
-<li class="chapter" data-level="5.2" data-path="scenarioIV.html"><a href="scenarioIV.html#variantIV_1"><i class="fa fa-check"></i><b>5.2</b> Variant IV-1: Minimizing Expected Sample Size under Point Prior<span></span></a><ul>
-<li class="chapter" data-level="5.2.1" data-path="scenarioIV.html"><a href="scenarioIV.html#objective-7"><i class="fa fa-check"></i><b>5.2.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="5.2.2" data-path="scenarioIV.html"><a href="scenarioIV.html#constraints-7"><i class="fa fa-check"></i><b>5.2.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="5.2.3" data-path="scenarioIV.html"><a href="scenarioIV.html#initial-design-5"><i class="fa fa-check"></i><b>5.2.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="5.2.4" data-path="scenarioIV.html"><a href="scenarioIV.html#optimization-6"><i class="fa fa-check"></i><b>5.2.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="5.2.5" data-path="scenarioIV.html"><a href="scenarioIV.html#test-cases-7"><i class="fa fa-check"></i><b>5.2.5</b> Test Cases<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="scenarioIV.html"><a href="scenarioIV.html#variantIV_2"><i class="fa fa-check"></i><b>5.3</b> Variant IV-2: Increase Power<span></span></a><ul>
-<li class="chapter" data-level="5.3.1" data-path="scenarioIV.html"><a href="scenarioIV.html#objective-8"><i class="fa fa-check"></i><b>5.3.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="5.3.2" data-path="scenarioIV.html"><a href="scenarioIV.html#constraints-8"><i class="fa fa-check"></i><b>5.3.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="5.3.3" data-path="scenarioIV.html"><a href="scenarioIV.html#initial-design-6"><i class="fa fa-check"></i><b>5.3.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="5.3.4" data-path="scenarioIV.html"><a href="scenarioIV.html#optimization-7"><i class="fa fa-check"></i><b>5.3.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="5.3.5" data-path="scenarioIV.html"><a href="scenarioIV.html#test-cases-8"><i class="fa fa-check"></i><b>5.3.5</b> Test Cases<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="scenarioIV.html"><a href="scenarioIV.html#variantIV_3"><i class="fa fa-check"></i><b>5.4</b> Variant IV-3: Increase Type One Error rate<span></span></a><ul>
-<li class="chapter" data-level="5.4.1" data-path="scenarioIV.html"><a href="scenarioIV.html#objective-9"><i class="fa fa-check"></i><b>5.4.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="5.4.2" data-path="scenarioIV.html"><a href="scenarioIV.html#constraints-9"><i class="fa fa-check"></i><b>5.4.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="5.4.3" data-path="scenarioIV.html"><a href="scenarioIV.html#initial-design-7"><i class="fa fa-check"></i><b>5.4.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="5.4.4" data-path="scenarioIV.html"><a href="scenarioIV.html#optimization-8"><i class="fa fa-check"></i><b>5.4.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="5.4.5" data-path="scenarioIV.html"><a href="scenarioIV.html#test-cases-9"><i class="fa fa-check"></i><b>5.4.5</b> Test Cases<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="5.5" data-path="scenarioIV.html"><a href="scenarioIV.html#plot-two-stage-designs-2"><i class="fa fa-check"></i><b>5.5</b> Plot Two-Stage Designs<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="scenarioV.html"><a href="scenarioV.html"><i class="fa fa-check"></i><b>6</b> Scenario V: single-arm design, medium effect size<span></span></a><ul>
-<li class="chapter" data-level="6.1" data-path="scenarioV.html"><a href="scenarioV.html#details-4"><i class="fa fa-check"></i><b>6.1</b> Details<span></span></a></li>
-<li class="chapter" data-level="6.2" data-path="scenarioV.html"><a href="scenarioV.html#variantV_1"><i class="fa fa-check"></i><b>6.2</b> Variant V-1, sensitivity to integration order<span></span></a><ul>
-<li class="chapter" data-level="6.2.1" data-path="scenarioV.html"><a href="scenarioV.html#objective-10"><i class="fa fa-check"></i><b>6.2.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="6.2.2" data-path="scenarioV.html"><a href="scenarioV.html#constraints-10"><i class="fa fa-check"></i><b>6.2.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="6.2.3" data-path="scenarioV.html"><a href="scenarioV.html#initial-design-8"><i class="fa fa-check"></i><b>6.2.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="6.2.4" data-path="scenarioV.html"><a href="scenarioV.html#optimization-9"><i class="fa fa-check"></i><b>6.2.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="6.2.5" data-path="scenarioV.html"><a href="scenarioV.html#test-cases-10"><i class="fa fa-check"></i><b>6.2.5</b> Test cases<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="6.3" data-path="scenarioV.html"><a href="scenarioV.html#variantV_2"><i class="fa fa-check"></i><b>6.3</b> Variant V-2, utility maximization<span></span></a><ul>
-<li class="chapter" data-level="6.3.1" data-path="scenarioV.html"><a href="scenarioV.html#objective-11"><i class="fa fa-check"></i><b>6.3.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="6.3.2" data-path="scenarioV.html"><a href="scenarioV.html#constraints-11"><i class="fa fa-check"></i><b>6.3.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="6.3.3" data-path="scenarioV.html"><a href="scenarioV.html#initial-design-9"><i class="fa fa-check"></i><b>6.3.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="6.3.4" data-path="scenarioV.html"><a href="scenarioV.html#optimization-10"><i class="fa fa-check"></i><b>6.3.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="6.3.5" data-path="scenarioV.html"><a href="scenarioV.html#test-cases-11"><i class="fa fa-check"></i><b>6.3.5</b> Test cases<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="6.4" data-path="scenarioV.html"><a href="scenarioV.html#variantV_3"><i class="fa fa-check"></i><b>6.4</b> Variant V-3, n1-penalty<span></span></a><ul>
-<li class="chapter" data-level="6.4.1" data-path="scenarioV.html"><a href="scenarioV.html#objective-12"><i class="fa fa-check"></i><b>6.4.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="6.4.2" data-path="scenarioV.html"><a href="scenarioV.html#constraints-12"><i class="fa fa-check"></i><b>6.4.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="6.4.3" data-path="scenarioV.html"><a href="scenarioV.html#initial-design-10"><i class="fa fa-check"></i><b>6.4.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="6.4.4" data-path="scenarioV.html"><a href="scenarioV.html#optimization-11"><i class="fa fa-check"></i><b>6.4.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="6.4.5" data-path="scenarioV.html"><a href="scenarioV.html#test-cases-12"><i class="fa fa-check"></i><b>6.4.5</b> Test cases<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="6.5" data-path="scenarioV.html"><a href="scenarioV.html#variantV_4"><i class="fa fa-check"></i><b>6.5</b> Variant V-4, n2-penalty<span></span></a><ul>
-<li class="chapter" data-level="6.5.1" data-path="scenarioV.html"><a href="scenarioV.html#objective-13"><i class="fa fa-check"></i><b>6.5.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="6.5.2" data-path="scenarioV.html"><a href="scenarioV.html#constraints-13"><i class="fa fa-check"></i><b>6.5.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="6.5.3" data-path="scenarioV.html"><a href="scenarioV.html#initial-design-11"><i class="fa fa-check"></i><b>6.5.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="6.5.4" data-path="scenarioV.html"><a href="scenarioV.html#optimization-12"><i class="fa fa-check"></i><b>6.5.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="6.5.5" data-path="scenarioV.html"><a href="scenarioV.html#test-cases-13"><i class="fa fa-check"></i><b>6.5.5</b> Test cases<span></span></a></li>
+<li class="chapter" data-level="4" data-path="scenarioIII.html"><a href="scenarioIII.html"><i class="fa fa-check"></i><b>4</b> Scenario III: large effect, uniform prior</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="scenarioIII.html"><a href="scenarioIII.html#details-2"><i class="fa fa-check"></i><b>4.1</b> Details</a></li>
+<li class="chapter" data-level="4.2" data-path="scenarioIII.html"><a href="scenarioIII.html#variantIII_1"><i class="fa fa-check"></i><b>4.2</b> Variant III.1: Convergence under prior concentration</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="scenarioIII.html"><a href="scenarioIII.html#objective-6"><i class="fa fa-check"></i><b>4.2.1</b> Objective</a></li>
+<li class="chapter" data-level="4.2.2" data-path="scenarioIII.html"><a href="scenarioIII.html#constraints-6"><i class="fa fa-check"></i><b>4.2.2</b> Constraints</a></li>
+<li class="chapter" data-level="4.2.3" data-path="scenarioIII.html"><a href="scenarioIII.html#optimization-problem"><i class="fa fa-check"></i><b>4.2.3</b> Optimization problem</a></li>
+<li class="chapter" data-level="4.2.4" data-path="scenarioIII.html"><a href="scenarioIII.html#test-cases-6"><i class="fa fa-check"></i><b>4.2.4</b> Test cases</a></li>
+<li class="chapter" data-level="4.2.5" data-path="scenarioIII.html"><a href="scenarioIII.html#plot-designs"><i class="fa fa-check"></i><b>4.2.5</b> Plot designs</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="scenarioVI.html"><a href="scenarioVI.html"><i class="fa fa-check"></i><b>7</b> Scenario VI: binomial distribution, point prior<span></span></a><ul>
-<li class="chapter" data-level="7.1" data-path="scenarioVI.html"><a href="scenarioVI.html#details-5"><i class="fa fa-check"></i><b>7.1</b> Details<span></span></a></li>
-<li class="chapter" data-level="7.2" data-path="scenarioVI.html"><a href="scenarioVI.html#variantVI_1"><i class="fa fa-check"></i><b>7.2</b> Variant VI-1: Minimizing Expected Sample Size Under Point Prior<span></span></a><ul>
-<li class="chapter" data-level="7.2.1" data-path="scenarioVI.html"><a href="scenarioVI.html#objective-14"><i class="fa fa-check"></i><b>7.2.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="7.2.2" data-path="scenarioVI.html"><a href="scenarioVI.html#constraints-14"><i class="fa fa-check"></i><b>7.2.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="7.2.3" data-path="scenarioVI.html"><a href="scenarioVI.html#initial-designs-1"><i class="fa fa-check"></i><b>7.2.3</b> Initial Designs<span></span></a></li>
-<li class="chapter" data-level="7.2.4" data-path="scenarioVI.html"><a href="scenarioVI.html#optimization-13"><i class="fa fa-check"></i><b>7.2.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="7.2.5" data-path="scenarioVI.html"><a href="scenarioVI.html#test-cases-14"><i class="fa fa-check"></i><b>7.2.5</b> Test Cases<span></span></a></li>
+<li class="chapter" data-level="5" data-path="scenarioIV.html"><a href="scenarioIV.html"><i class="fa fa-check"></i><b>5</b> Scenario IV: smaller effect, point prior</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="scenarioIV.html"><a href="scenarioIV.html#details-3"><i class="fa fa-check"></i><b>5.1</b> Details</a></li>
+<li class="chapter" data-level="5.2" data-path="scenarioIV.html"><a href="scenarioIV.html#variantIV_1"><i class="fa fa-check"></i><b>5.2</b> Variant IV-1: Minimizing Expected Sample Size under Point Prior</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="scenarioIV.html"><a href="scenarioIV.html#objective-7"><i class="fa fa-check"></i><b>5.2.1</b> Objective</a></li>
+<li class="chapter" data-level="5.2.2" data-path="scenarioIV.html"><a href="scenarioIV.html#constraints-7"><i class="fa fa-check"></i><b>5.2.2</b> Constraints</a></li>
+<li class="chapter" data-level="5.2.3" data-path="scenarioIV.html"><a href="scenarioIV.html#initial-design-5"><i class="fa fa-check"></i><b>5.2.3</b> Initial Design</a></li>
+<li class="chapter" data-level="5.2.4" data-path="scenarioIV.html"><a href="scenarioIV.html#optimization-6"><i class="fa fa-check"></i><b>5.2.4</b> Optimization</a></li>
+<li class="chapter" data-level="5.2.5" data-path="scenarioIV.html"><a href="scenarioIV.html#test-cases-7"><i class="fa fa-check"></i><b>5.2.5</b> Test Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="7.3" data-path="scenarioVI.html"><a href="scenarioVI.html#variantVI_2"><i class="fa fa-check"></i><b>7.3</b> Variant VI-2: Minimizing Expected Sample Size under Null Hypothesis<span></span></a><ul>
-<li class="chapter" data-level="7.3.1" data-path="scenarioVI.html"><a href="scenarioVI.html#objective-15"><i class="fa fa-check"></i><b>7.3.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="7.3.2" data-path="scenarioVI.html"><a href="scenarioVI.html#constraints-15"><i class="fa fa-check"></i><b>7.3.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="7.3.3" data-path="scenarioVI.html"><a href="scenarioVI.html#initial-design-12"><i class="fa fa-check"></i><b>7.3.3</b> Initial design<span></span></a></li>
-<li class="chapter" data-level="7.3.4" data-path="scenarioVI.html"><a href="scenarioVI.html#optimization-14"><i class="fa fa-check"></i><b>7.3.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="7.3.5" data-path="scenarioVI.html"><a href="scenarioVI.html#test-cases-15"><i class="fa fa-check"></i><b>7.3.5</b> Test cases<span></span></a></li>
+<li class="chapter" data-level="5.3" data-path="scenarioIV.html"><a href="scenarioIV.html#variantIV_2"><i class="fa fa-check"></i><b>5.3</b> Variant IV-2: Increase Power</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="scenarioIV.html"><a href="scenarioIV.html#objective-8"><i class="fa fa-check"></i><b>5.3.1</b> Objective</a></li>
+<li class="chapter" data-level="5.3.2" data-path="scenarioIV.html"><a href="scenarioIV.html#constraints-8"><i class="fa fa-check"></i><b>5.3.2</b> Constraints</a></li>
+<li class="chapter" data-level="5.3.3" data-path="scenarioIV.html"><a href="scenarioIV.html#initial-design-6"><i class="fa fa-check"></i><b>5.3.3</b> Initial Design</a></li>
+<li class="chapter" data-level="5.3.4" data-path="scenarioIV.html"><a href="scenarioIV.html#optimization-7"><i class="fa fa-check"></i><b>5.3.4</b> Optimization</a></li>
+<li class="chapter" data-level="5.3.5" data-path="scenarioIV.html"><a href="scenarioIV.html#test-cases-8"><i class="fa fa-check"></i><b>5.3.5</b> Test Cases</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4" data-path="scenarioVI.html"><a href="scenarioVI.html#variant-vi-3-conditional-power-constraint"><i class="fa fa-check"></i><b>7.4</b> Variant VI-3: Conditional Power constraint<span></span></a><ul>
-<li class="chapter" data-level="7.4.1" data-path="scenarioVI.html"><a href="scenarioVI.html#objective-16"><i class="fa fa-check"></i><b>7.4.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="7.4.2" data-path="scenarioVI.html"><a href="scenarioVI.html#constraints-16"><i class="fa fa-check"></i><b>7.4.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="7.4.3" data-path="scenarioVI.html"><a href="scenarioVI.html#initial-design-13"><i class="fa fa-check"></i><b>7.4.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="7.4.4" data-path="scenarioVI.html"><a href="scenarioVI.html#optimization-15"><i class="fa fa-check"></i><b>7.4.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="7.4.5" data-path="scenarioVI.html"><a href="scenarioVI.html#test-cases-16"><i class="fa fa-check"></i><b>7.4.5</b> Test Cases<span></span></a></li>
+<li class="chapter" data-level="5.4" data-path="scenarioIV.html"><a href="scenarioIV.html#variantIV_3"><i class="fa fa-check"></i><b>5.4</b> Variant IV-3: Increase Type One Error rate</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="scenarioIV.html"><a href="scenarioIV.html#objective-9"><i class="fa fa-check"></i><b>5.4.1</b> Objective</a></li>
+<li class="chapter" data-level="5.4.2" data-path="scenarioIV.html"><a href="scenarioIV.html#constraints-9"><i class="fa fa-check"></i><b>5.4.2</b> Constraints</a></li>
+<li class="chapter" data-level="5.4.3" data-path="scenarioIV.html"><a href="scenarioIV.html#initial-design-7"><i class="fa fa-check"></i><b>5.4.3</b> Initial Design</a></li>
+<li class="chapter" data-level="5.4.4" data-path="scenarioIV.html"><a href="scenarioIV.html#optimization-8"><i class="fa fa-check"></i><b>5.4.4</b> Optimization</a></li>
+<li class="chapter" data-level="5.4.5" data-path="scenarioIV.html"><a href="scenarioIV.html#test-cases-9"><i class="fa fa-check"></i><b>5.4.5</b> Test Cases</a></li>
 </ul></li>
+<li class="chapter" data-level="5.5" data-path="scenarioIV.html"><a href="scenarioIV.html#plot-two-stage-designs-2"><i class="fa fa-check"></i><b>5.5</b> Plot Two-Stage Designs</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="scenarioVII.html"><a href="scenarioVII.html"><i class="fa fa-check"></i><b>8</b> Scenario VII: binomial distribution, Gaussian prior<span></span></a><ul>
-<li class="chapter" data-level="8.1" data-path="scenarioVII.html"><a href="scenarioVII.html#details-6"><i class="fa fa-check"></i><b>8.1</b> Details<span></span></a></li>
-<li class="chapter" data-level="8.2" data-path="scenarioVII.html"><a href="scenarioVII.html#variantVII-1"><i class="fa fa-check"></i><b>8.2</b> Variant II-1: Minimizing Expected Sample Size under Point Prior<span></span></a><ul>
-<li class="chapter" data-level="8.2.1" data-path="scenarioVII.html"><a href="scenarioVII.html#objective-17"><i class="fa fa-check"></i><b>8.2.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="8.2.2" data-path="scenarioVII.html"><a href="scenarioVII.html#constraints-17"><i class="fa fa-check"></i><b>8.2.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="8.2.3" data-path="scenarioVII.html"><a href="scenarioVII.html#initial-designs-2"><i class="fa fa-check"></i><b>8.2.3</b> Initial Designs<span></span></a></li>
-<li class="chapter" data-level="8.2.4" data-path="scenarioVII.html"><a href="scenarioVII.html#optimization-16"><i class="fa fa-check"></i><b>8.2.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="8.2.5" data-path="scenarioVII.html"><a href="scenarioVII.html#test-cases-17"><i class="fa fa-check"></i><b>8.2.5</b> Test Cases<span></span></a></li>
+<li class="chapter" data-level="6" data-path="scenarioV.html"><a href="scenarioV.html"><i class="fa fa-check"></i><b>6</b> Scenario V: single-arm design, medium effect size</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="scenarioV.html"><a href="scenarioV.html#details-4"><i class="fa fa-check"></i><b>6.1</b> Details</a></li>
+<li class="chapter" data-level="6.2" data-path="scenarioV.html"><a href="scenarioV.html#variantV_1"><i class="fa fa-check"></i><b>6.2</b> Variant V-1, sensitivity to integration order</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="scenarioV.html"><a href="scenarioV.html#objective-10"><i class="fa fa-check"></i><b>6.2.1</b> Objective</a></li>
+<li class="chapter" data-level="6.2.2" data-path="scenarioV.html"><a href="scenarioV.html#constraints-10"><i class="fa fa-check"></i><b>6.2.2</b> Constraints</a></li>
+<li class="chapter" data-level="6.2.3" data-path="scenarioV.html"><a href="scenarioV.html#initial-design-8"><i class="fa fa-check"></i><b>6.2.3</b> Initial Design</a></li>
+<li class="chapter" data-level="6.2.4" data-path="scenarioV.html"><a href="scenarioV.html#optimization-9"><i class="fa fa-check"></i><b>6.2.4</b> Optimization</a></li>
+<li class="chapter" data-level="6.2.5" data-path="scenarioV.html"><a href="scenarioV.html#test-cases-10"><i class="fa fa-check"></i><b>6.2.5</b> Test cases</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="scenarioVII.html"><a href="scenarioVII.html#variant-vii-2-minimizing-expected-sample-size-under-null-hypothesis"><i class="fa fa-check"></i><b>8.3</b> Variant VII-2: Minimizing Expected Sample Size under Null Hypothesis<span></span></a><ul>
-<li class="chapter" data-level="8.3.1" data-path="scenarioVII.html"><a href="scenarioVII.html#objective-18"><i class="fa fa-check"></i><b>8.3.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="8.3.2" data-path="scenarioVII.html"><a href="scenarioVII.html#constraints-18"><i class="fa fa-check"></i><b>8.3.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="8.3.3" data-path="scenarioVII.html"><a href="scenarioVII.html#initial-design-14"><i class="fa fa-check"></i><b>8.3.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="8.3.4" data-path="scenarioVII.html"><a href="scenarioVII.html#optimization-17"><i class="fa fa-check"></i><b>8.3.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="8.3.5" data-path="scenarioVII.html"><a href="scenarioVII.html#test-cases-18"><i class="fa fa-check"></i><b>8.3.5</b> Test Cases<span></span></a></li>
+<li class="chapter" data-level="6.3" data-path="scenarioV.html"><a href="scenarioV.html#variantV_2"><i class="fa fa-check"></i><b>6.3</b> Variant V-2, utility maximization</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="scenarioV.html"><a href="scenarioV.html#objective-11"><i class="fa fa-check"></i><b>6.3.1</b> Objective</a></li>
+<li class="chapter" data-level="6.3.2" data-path="scenarioV.html"><a href="scenarioV.html#constraints-11"><i class="fa fa-check"></i><b>6.3.2</b> Constraints</a></li>
+<li class="chapter" data-level="6.3.3" data-path="scenarioV.html"><a href="scenarioV.html#initial-design-9"><i class="fa fa-check"></i><b>6.3.3</b> Initial Design</a></li>
+<li class="chapter" data-level="6.3.4" data-path="scenarioV.html"><a href="scenarioV.html#optimization-10"><i class="fa fa-check"></i><b>6.3.4</b> Optimization</a></li>
+<li class="chapter" data-level="6.3.5" data-path="scenarioV.html"><a href="scenarioV.html#test-cases-11"><i class="fa fa-check"></i><b>6.3.5</b> Test cases</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="scenarioVII.html"><a href="scenarioVII.html#variant-vii-3-conditional-power-constraint"><i class="fa fa-check"></i><b>8.4</b> Variant VII-3: conditional Power Constraint<span></span></a><ul>
-<li class="chapter" data-level="8.4.1" data-path="scenarioVII.html"><a href="scenarioVII.html#objective-19"><i class="fa fa-check"></i><b>8.4.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="8.4.2" data-path="scenarioVII.html"><a href="scenarioVII.html#constraints-19"><i class="fa fa-check"></i><b>8.4.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="8.4.3" data-path="scenarioVII.html"><a href="scenarioVII.html#initial-design-15"><i class="fa fa-check"></i><b>8.4.3</b> Initial Design<span></span></a></li>
-<li class="chapter" data-level="8.4.4" data-path="scenarioVII.html"><a href="scenarioVII.html#optimization-18"><i class="fa fa-check"></i><b>8.4.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="8.4.5" data-path="scenarioVII.html"><a href="scenarioVII.html#test-cases-19"><i class="fa fa-check"></i><b>8.4.5</b> Test Cases<span></span></a></li>
+<li class="chapter" data-level="6.4" data-path="scenarioV.html"><a href="scenarioV.html#variantV_3"><i class="fa fa-check"></i><b>6.4</b> Variant V-3, n1-penalty</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="scenarioV.html"><a href="scenarioV.html#objective-12"><i class="fa fa-check"></i><b>6.4.1</b> Objective</a></li>
+<li class="chapter" data-level="6.4.2" data-path="scenarioV.html"><a href="scenarioV.html#constraints-12"><i class="fa fa-check"></i><b>6.4.2</b> Constraints</a></li>
+<li class="chapter" data-level="6.4.3" data-path="scenarioV.html"><a href="scenarioV.html#initial-design-10"><i class="fa fa-check"></i><b>6.4.3</b> Initial Design</a></li>
+<li class="chapter" data-level="6.4.4" data-path="scenarioV.html"><a href="scenarioV.html#optimization-11"><i class="fa fa-check"></i><b>6.4.4</b> Optimization</a></li>
+<li class="chapter" data-level="6.4.5" data-path="scenarioV.html"><a href="scenarioV.html#test-cases-12"><i class="fa fa-check"></i><b>6.4.5</b> Test cases</a></li>
 </ul></li>
-<li class="chapter" data-level="8.5" data-path="scenarioVII.html"><a href="scenarioVII.html#plot-two-stage-designs-3"><i class="fa fa-check"></i><b>8.5</b> Plot Two-Stage Designs<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="scenarioVIII.html"><a href="scenarioVIII.html"><i class="fa fa-check"></i><b>9</b> Scenario VIII: large effect, unknown variance<span></span></a><ul>
-<li class="chapter" data-level="9.1" data-path="scenarioVIII.html"><a href="scenarioVIII.html#details-7"><i class="fa fa-check"></i><b>9.1</b> Details<span></span></a></li>
-<li class="chapter" data-level="9.2" data-path="scenarioVIII.html"><a href="scenarioVIII.html#variantVIII_1"><i class="fa fa-check"></i><b>9.2</b> Variant VIII-1: Minimizing Expected Sample Size under Point Prior<span></span></a><ul>
-<li class="chapter" data-level="9.2.1" data-path="scenarioVIII.html"><a href="scenarioVIII.html#objective-20"><i class="fa fa-check"></i><b>9.2.1</b> Objective<span></span></a></li>
-<li class="chapter" data-level="9.2.2" data-path="scenarioVIII.html"><a href="scenarioVIII.html#constraints-20"><i class="fa fa-check"></i><b>9.2.2</b> Constraints<span></span></a></li>
-<li class="chapter" data-level="9.2.3" data-path="scenarioVIII.html"><a href="scenarioVIII.html#initial-designs-3"><i class="fa fa-check"></i><b>9.2.3</b> Initial Designs<span></span></a></li>
-<li class="chapter" data-level="9.2.4" data-path="scenarioVIII.html"><a href="scenarioVIII.html#optimization-19"><i class="fa fa-check"></i><b>9.2.4</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="9.2.5" data-path="scenarioVIII.html"><a href="scenarioVIII.html#test-cases-20"><i class="fa fa-check"></i><b>9.2.5</b> Test Cases<span></span></a></li>
-</ul></li>
-<li class="chapter" data-level="9.3" data-path="scenarioVIII.html"><a href="scenarioVIII.html#variant-viii-2-comparison-to-normal-distribution"><i class="fa fa-check"></i><b>9.3</b> Variant VIII-2: Comparison to Normal Distribution<span></span></a><ul>
-<li class="chapter" data-level="9.3.1" data-path="scenarioVIII.html"><a href="scenarioVIII.html#generate-comparison-design"><i class="fa fa-check"></i><b>9.3.1</b> Generate Comparison Design<span></span></a></li>
-<li class="chapter" data-level="9.3.2" data-path="scenarioVIII.html"><a href="scenarioVIII.html#test-cases-21"><i class="fa fa-check"></i><b>9.3.2</b> Test Cases<span></span></a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="10" data-path="scenario-ix-using-further-constraints.html"><a href="scenario-ix-using-further-constraints.html"><i class="fa fa-check"></i><b>10</b> Scenario IX: Using further constraints<span></span></a><ul>
-<li class="chapter" data-level="10.1" data-path="scenario-ix-using-further-constraints.html"><a href="scenario-ix-using-further-constraints.html#general-assumptions"><i class="fa fa-check"></i><b>10.1</b> General assumptions<span></span></a></li>
-<li class="chapter" data-level="10.2" data-path="scenario-ix-using-further-constraints.html"><a href="scenario-ix-using-further-constraints.html#constraint-ix-1-maximal-sample-size"><i class="fa fa-check"></i><b>10.2</b> Constraint IX-1: Maximal Sample Size<span></span></a><ul>
-<li class="chapter" data-level="10.2.1" data-path="scenario-ix-using-further-constraints.html"><a href="scenario-ix-using-further-constraints.html#details-8"><i class="fa fa-check"></i><b>10.2.1</b> Details<span></span></a></li>
-<li class="chapter" data-level="10.2.2" data-path="scenario-ix-using-further-constraints.html"><a href="scenario-ix-using-further-constraints.html#initial-designs-4"><i class="fa fa-check"></i><b>10.2.2</b> Initial Designs<span></span></a></li>
-<li class="chapter" data-level="10.2.3" data-path="scenario-ix-using-further-constraints.html"><a href="scenario-ix-using-further-constraints.html#optimization-20"><i class="fa fa-check"></i><b>10.2.3</b> Optimization<span></span></a></li>
-<li class="chapter" data-level="10.2.4" data-path="scenario-ix-using-further-constraints.html"><a href="scenario-ix-using-further-constraints.html#testcases"><i class="fa fa-check"></i><b>10.2.4</b> Testcases<span></span></a></li>
+<li class="chapter" data-level="6.5" data-path="scenarioV.html"><a href="scenarioV.html#variantV_4"><i class="fa fa-check"></i><b>6.5</b> Variant V-4, n2-penalty</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="scenarioV.html"><a href="scenarioV.html#objective-13"><i class="fa fa-check"></i><b>6.5.1</b> Objective</a></li>
+<li class="chapter" data-level="6.5.2" data-path="scenarioV.html"><a href="scenarioV.html#constraints-13"><i class="fa fa-check"></i><b>6.5.2</b> Constraints</a></li>
+<li class="chapter" data-level="6.5.3" data-path="scenarioV.html"><a href="scenarioV.html#initial-design-11"><i class="fa fa-check"></i><b>6.5.3</b> Initial Design</a></li>
+<li class="chapter" data-level="6.5.4" data-path="scenarioV.html"><a href="scenarioV.html#optimization-12"><i class="fa fa-check"></i><b>6.5.4</b> Optimization</a></li>
+<li class="chapter" data-level="6.5.5" data-path="scenarioV.html"><a href="scenarioV.html#test-cases-13"><i class="fa fa-check"></i><b>6.5.5</b> Test cases</a></li>
 </ul></li>
 </ul></li>
-<li><a href="references.html#references">References<span></span></a></li>
+<li class="chapter" data-level="7" data-path="scenarioVI.html"><a href="scenarioVI.html"><i class="fa fa-check"></i><b>7</b> Scenario VI: binomial distribution, point prior</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="scenarioVI.html"><a href="scenarioVI.html#details-5"><i class="fa fa-check"></i><b>7.1</b> Details</a></li>
+<li class="chapter" data-level="7.2" data-path="scenarioVI.html"><a href="scenarioVI.html#variantVI_1"><i class="fa fa-check"></i><b>7.2</b> Variant VI-1: Minimizing Expected Sample Size Under Point Prior</a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="scenarioVI.html"><a href="scenarioVI.html#objective-14"><i class="fa fa-check"></i><b>7.2.1</b> Objective</a></li>
+<li class="chapter" data-level="7.2.2" data-path="scenarioVI.html"><a href="scenarioVI.html#constraints-14"><i class="fa fa-check"></i><b>7.2.2</b> Constraints</a></li>
+<li class="chapter" data-level="7.2.3" data-path="scenarioVI.html"><a href="scenarioVI.html#initial-designs-1"><i class="fa fa-check"></i><b>7.2.3</b> Initial Designs</a></li>
+<li class="chapter" data-level="7.2.4" data-path="scenarioVI.html"><a href="scenarioVI.html#optimization-13"><i class="fa fa-check"></i><b>7.2.4</b> Optimization</a></li>
+<li class="chapter" data-level="7.2.5" data-path="scenarioVI.html"><a href="scenarioVI.html#test-cases-14"><i class="fa fa-check"></i><b>7.2.5</b> Test Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="scenarioVI.html"><a href="scenarioVI.html#variantVI_2"><i class="fa fa-check"></i><b>7.3</b> Variant VI-2: Minimizing Expected Sample Size under Null Hypothesis</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="scenarioVI.html"><a href="scenarioVI.html#objective-15"><i class="fa fa-check"></i><b>7.3.1</b> Objective</a></li>
+<li class="chapter" data-level="7.3.2" data-path="scenarioVI.html"><a href="scenarioVI.html#constraints-15"><i class="fa fa-check"></i><b>7.3.2</b> Constraints</a></li>
+<li class="chapter" data-level="7.3.3" data-path="scenarioVI.html"><a href="scenarioVI.html#initial-design-12"><i class="fa fa-check"></i><b>7.3.3</b> Initial design</a></li>
+<li class="chapter" data-level="7.3.4" data-path="scenarioVI.html"><a href="scenarioVI.html#optimization-14"><i class="fa fa-check"></i><b>7.3.4</b> Optimization</a></li>
+<li class="chapter" data-level="7.3.5" data-path="scenarioVI.html"><a href="scenarioVI.html#test-cases-15"><i class="fa fa-check"></i><b>7.3.5</b> Test cases</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="scenarioVI.html"><a href="scenarioVI.html#variant-vi-3-conditional-power-constraint"><i class="fa fa-check"></i><b>7.4</b> Variant VI-3: Conditional Power constraint</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="scenarioVI.html"><a href="scenarioVI.html#objective-16"><i class="fa fa-check"></i><b>7.4.1</b> Objective</a></li>
+<li class="chapter" data-level="7.4.2" data-path="scenarioVI.html"><a href="scenarioVI.html#constraints-16"><i class="fa fa-check"></i><b>7.4.2</b> Constraints</a></li>
+<li class="chapter" data-level="7.4.3" data-path="scenarioVI.html"><a href="scenarioVI.html#initial-design-13"><i class="fa fa-check"></i><b>7.4.3</b> Initial Design</a></li>
+<li class="chapter" data-level="7.4.4" data-path="scenarioVI.html"><a href="scenarioVI.html#optimization-15"><i class="fa fa-check"></i><b>7.4.4</b> Optimization</a></li>
+<li class="chapter" data-level="7.4.5" data-path="scenarioVI.html"><a href="scenarioVI.html#test-cases-16"><i class="fa fa-check"></i><b>7.4.5</b> Test Cases</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="scenarioVII.html"><a href="scenarioVII.html"><i class="fa fa-check"></i><b>8</b> Scenario VII: binomial distribution, Gaussian prior</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="scenarioVII.html"><a href="scenarioVII.html#details-6"><i class="fa fa-check"></i><b>8.1</b> Details</a></li>
+<li class="chapter" data-level="8.2" data-path="scenarioVII.html"><a href="scenarioVII.html#variantVII-1"><i class="fa fa-check"></i><b>8.2</b> Variant VII-1: Minimizing Expected Sample Size under Continuous Prior</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="scenarioVII.html"><a href="scenarioVII.html#objective-17"><i class="fa fa-check"></i><b>8.2.1</b> Objective</a></li>
+<li class="chapter" data-level="8.2.2" data-path="scenarioVII.html"><a href="scenarioVII.html#constraints-17"><i class="fa fa-check"></i><b>8.2.2</b> Constraints</a></li>
+<li class="chapter" data-level="8.2.3" data-path="scenarioVII.html"><a href="scenarioVII.html#initial-designs-2"><i class="fa fa-check"></i><b>8.2.3</b> Initial Designs</a></li>
+<li class="chapter" data-level="8.2.4" data-path="scenarioVII.html"><a href="scenarioVII.html#optimization-16"><i class="fa fa-check"></i><b>8.2.4</b> Optimization</a></li>
+<li class="chapter" data-level="8.2.5" data-path="scenarioVII.html"><a href="scenarioVII.html#test-cases-17"><i class="fa fa-check"></i><b>8.2.5</b> Test Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="scenarioVII.html"><a href="scenarioVII.html#variant-vii-2-conditional-power-constraint"><i class="fa fa-check"></i><b>8.3</b> Variant VII-2: Conditional Power Constraint</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="scenarioVII.html"><a href="scenarioVII.html#objective-18"><i class="fa fa-check"></i><b>8.3.1</b> Objective</a></li>
+<li class="chapter" data-level="8.3.2" data-path="scenarioVII.html"><a href="scenarioVII.html#constraints-18"><i class="fa fa-check"></i><b>8.3.2</b> Constraints</a></li>
+<li class="chapter" data-level="8.3.3" data-path="scenarioVII.html"><a href="scenarioVII.html#initial-design-14"><i class="fa fa-check"></i><b>8.3.3</b> Initial Design</a></li>
+<li class="chapter" data-level="8.3.4" data-path="scenarioVII.html"><a href="scenarioVII.html#optimization-17"><i class="fa fa-check"></i><b>8.3.4</b> Optimization</a></li>
+<li class="chapter" data-level="8.3.5" data-path="scenarioVII.html"><a href="scenarioVII.html#test-cases-18"><i class="fa fa-check"></i><b>8.3.5</b> Test Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="scenarioVII.html"><a href="scenarioVII.html#plot-two-stage-designs-3"><i class="fa fa-check"></i><b>8.4</b> Plot Two-Stage Designs</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="scenarioVIII.html"><a href="scenarioVIII.html"><i class="fa fa-check"></i><b>9</b> Scenario VIII: large effect, unknown variance</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="scenarioVIII.html"><a href="scenarioVIII.html#details-7"><i class="fa fa-check"></i><b>9.1</b> Details</a></li>
+<li class="chapter" data-level="9.2" data-path="scenarioVIII.html"><a href="scenarioVIII.html#variantVIII_1"><i class="fa fa-check"></i><b>9.2</b> Variant VIII-1: Minimizing Expected Sample Size under Point Prior</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="scenarioVIII.html"><a href="scenarioVIII.html#objective-19"><i class="fa fa-check"></i><b>9.2.1</b> Objective</a></li>
+<li class="chapter" data-level="9.2.2" data-path="scenarioVIII.html"><a href="scenarioVIII.html#constraints-19"><i class="fa fa-check"></i><b>9.2.2</b> Constraints</a></li>
+<li class="chapter" data-level="9.2.3" data-path="scenarioVIII.html"><a href="scenarioVIII.html#initial-designs-3"><i class="fa fa-check"></i><b>9.2.3</b> Initial Designs</a></li>
+<li class="chapter" data-level="9.2.4" data-path="scenarioVIII.html"><a href="scenarioVIII.html#optimization-18"><i class="fa fa-check"></i><b>9.2.4</b> Optimization</a></li>
+<li class="chapter" data-level="9.2.5" data-path="scenarioVIII.html"><a href="scenarioVIII.html#test-cases-19"><i class="fa fa-check"></i><b>9.2.5</b> Test Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="scenarioVIII.html"><a href="scenarioVIII.html#variant-viii-2-comparison-to-normal-distribution"><i class="fa fa-check"></i><b>9.3</b> Variant VIII-2: Comparison to Normal Distribution</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="scenarioVIII.html"><a href="scenarioVIII.html#generate-comparison-design"><i class="fa fa-check"></i><b>9.3.1</b> Generate Comparison Design</a></li>
+<li class="chapter" data-level="9.3.2" data-path="scenarioVIII.html"><a href="scenarioVIII.html#test-cases-20"><i class="fa fa-check"></i><b>9.3.2</b> Test Cases</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="scenario-ix-time-to-event-endpoints.html"><a href="scenario-ix-time-to-event-endpoints.html"><i class="fa fa-check"></i><b>10</b> Scenario IX: time-to-event endpoints</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="scenario-ix-time-to-event-endpoints.html"><a href="scenario-ix-time-to-event-endpoints.html#details-8"><i class="fa fa-check"></i><b>10.1</b> Details</a></li>
+<li class="chapter" data-level="10.2" data-path="scenario-ix-time-to-event-endpoints.html"><a href="scenario-ix-time-to-event-endpoints.html#variant-ix-1-minimizing-expected-number-of-events-under-point-prior"><i class="fa fa-check"></i><b>10.2</b> Variant IX-1: Minimizing expected number of events under point prior</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="scenario-ix-time-to-event-endpoints.html"><a href="scenario-ix-time-to-event-endpoints.html#objective-20"><i class="fa fa-check"></i><b>10.2.1</b> Objective</a></li>
+<li class="chapter" data-level="10.2.2" data-path="scenario-ix-time-to-event-endpoints.html"><a href="scenario-ix-time-to-event-endpoints.html#constraints-20"><i class="fa fa-check"></i><b>10.2.2</b> Constraints</a></li>
+<li class="chapter" data-level="10.2.3" data-path="scenario-ix-time-to-event-endpoints.html"><a href="scenario-ix-time-to-event-endpoints.html#initial-design-15"><i class="fa fa-check"></i><b>10.2.3</b> Initial Design</a></li>
+<li class="chapter" data-level="10.2.4" data-path="scenario-ix-time-to-event-endpoints.html"><a href="scenario-ix-time-to-event-endpoints.html#optimization-19"><i class="fa fa-check"></i><b>10.2.4</b> Optimization</a></li>
+<li class="chapter" data-level="10.2.5" data-path="scenario-ix-time-to-event-endpoints.html"><a href="scenario-ix-time-to-event-endpoints.html#test-cases-21"><i class="fa fa-check"></i><b>10.2.5</b> Test cases</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html"><i class="fa fa-check"></i><b>11</b> Scenario X: Chi-Squared Distribution</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#details-9"><i class="fa fa-check"></i><b>11.1</b> Details</a></li>
+<li class="chapter" data-level="11.2" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#variant-x-1-contingeny-table-with-binary-endpoints"><i class="fa fa-check"></i><b>11.2</b> Variant X-1: Contingeny table with binary endpoints</a>
+<ul>
+<li class="chapter" data-level="11.2.1" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#setup"><i class="fa fa-check"></i><b>11.2.1</b> Setup</a></li>
+<li class="chapter" data-level="11.2.2" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#objective-21"><i class="fa fa-check"></i><b>11.2.2</b> Objective</a></li>
+<li class="chapter" data-level="11.2.3" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#initial-design-16"><i class="fa fa-check"></i><b>11.2.3</b> Initial design</a></li>
+<li class="chapter" data-level="11.2.4" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#optimization-20"><i class="fa fa-check"></i><b>11.2.4</b> Optimization</a></li>
+<li class="chapter" data-level="11.2.5" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#test-cases-22"><i class="fa fa-check"></i><b>11.2.5</b> Test Cases</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#variant-x-2-two-sided-z-test"><i class="fa fa-check"></i><b>11.3</b> Variant X-2: Two-sided Z-test</a>
+<ul>
+<li class="chapter" data-level="11.3.1" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#setup-1"><i class="fa fa-check"></i><b>11.3.1</b> Setup</a></li>
+<li class="chapter" data-level="11.3.2" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#objective-22"><i class="fa fa-check"></i><b>11.3.2</b> Objective</a></li>
+<li class="chapter" data-level="11.3.3" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#initial-designs-4"><i class="fa fa-check"></i><b>11.3.3</b> Initial designs</a></li>
+<li class="chapter" data-level="11.3.4" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#optimization-21"><i class="fa fa-check"></i><b>11.3.4</b> Optimization</a></li>
+<li class="chapter" data-level="11.3.5" data-path="scenario-x-chi-squared-distribution.html"><a href="scenario-x-chi-squared-distribution.html#test"><i class="fa fa-check"></i><b>11.3.5</b> Test</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="scenario-xi-f-distribution.html"><a href="scenario-xi-f-distribution.html"><i class="fa fa-check"></i><b>12</b> Scenario XI: F-Distribution</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="scenario-xi-f-distribution.html"><a href="scenario-xi-f-distribution.html#details-10"><i class="fa fa-check"></i><b>12.1</b> Details</a></li>
+<li class="chapter" data-level="12.2" data-path="scenario-xi-f-distribution.html"><a href="scenario-xi-f-distribution.html#variant-xi-1-anova"><i class="fa fa-check"></i><b>12.2</b> Variant XI-1: ANOVA</a>
+<ul>
+<li class="chapter" data-level="12.2.1" data-path="scenario-xi-f-distribution.html"><a href="scenario-xi-f-distribution.html#setup-2"><i class="fa fa-check"></i><b>12.2.1</b> Setup</a></li>
+<li class="chapter" data-level="12.2.2" data-path="scenario-xi-f-distribution.html"><a href="scenario-xi-f-distribution.html#objective-23"><i class="fa fa-check"></i><b>12.2.2</b> Objective</a></li>
+<li class="chapter" data-level="12.2.3" data-path="scenario-xi-f-distribution.html"><a href="scenario-xi-f-distribution.html#initial-design-17"><i class="fa fa-check"></i><b>12.2.3</b> Initial Design</a></li>
+<li class="chapter" data-level="12.2.4" data-path="scenario-xi-f-distribution.html"><a href="scenario-xi-f-distribution.html#optimization-22"><i class="fa fa-check"></i><b>12.2.4</b> Optimization</a></li>
+<li class="chapter" data-level="12.2.5" data-path="scenario-xi-f-distribution.html"><a href="scenario-xi-f-distribution.html#test-cases-23"><i class="fa fa-check"></i><b>12.2.5</b> Test Cases</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="scenario-xii-using-further-constraints.html"><a href="scenario-xii-using-further-constraints.html"><i class="fa fa-check"></i><b>13</b> Scenario XII: Using further constraints</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="scenario-xii-using-further-constraints.html"><a href="scenario-xii-using-further-constraints.html#general-assumptions"><i class="fa fa-check"></i><b>13.1</b> General assumptions</a></li>
+<li class="chapter" data-level="13.2" data-path="scenario-xii-using-further-constraints.html"><a href="scenario-xii-using-further-constraints.html#constraint-x-1-maximal-sample-size"><i class="fa fa-check"></i><b>13.2</b> Constraint X-1: Maximal Sample Size</a>
+<ul>
+<li class="chapter" data-level="13.2.1" data-path="scenario-xii-using-further-constraints.html"><a href="scenario-xii-using-further-constraints.html#details-11"><i class="fa fa-check"></i><b>13.2.1</b> Details</a></li>
+<li class="chapter" data-level="13.2.2" data-path="scenario-xii-using-further-constraints.html"><a href="scenario-xii-using-further-constraints.html#initial-designs-5"><i class="fa fa-check"></i><b>13.2.2</b> Initial Designs</a></li>
+<li class="chapter" data-level="13.2.3" data-path="scenario-xii-using-further-constraints.html"><a href="scenario-xii-using-further-constraints.html#optimization-23"><i class="fa fa-check"></i><b>13.2.3</b> Optimization</a></li>
+<li class="chapter" data-level="13.2.4" data-path="scenario-xii-using-further-constraints.html"><a href="scenario-xii-using-further-constraints.html#testcases"><i class="fa fa-check"></i><b>13.2.4</b> Testcases</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -361,280 +457,208 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="scenarioVII" class="section level1 hasAnchor">
+<div id="scenarioVII" class="section level1 hasAnchor" number="8">
 <h1><span class="header-section-number">8</span> Scenario VII: binomial distribution, Gaussian prior<a href="scenarioVII.html#scenarioVII" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="details-6" class="section level2 hasAnchor">
+<div id="details-6" class="section level2 hasAnchor" number="8.1">
 <h2><span class="header-section-number">8.1</span> Details<a href="scenarioVII.html#details-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this scenario, we revisit the case from <a href="#variantVI">ScenarioVI</a>, but are not assuming a point prior anymore.
 We assume <span class="math inline">\(p_C=0.3\)</span> for the event rate in the control group. The parameter which can be varied is the event rate in the experimental group <span class="math inline">\(p_E\)</span> and we assume that the rate difference <span class="math inline">\(p_E-p_C \sim \textbf{1}_{(-0.29,0.69)} \mathcal{N}(0.2,0.2)\)</span>.The restriction to the interval <span class="math inline">\((-0.29,0.69)\)</span> is necessary to ensure that the parameter <span class="math inline">\(p_E\)</span> does not become smaller than <span class="math inline">\(0\)</span> or larger than <span class="math inline">\(1\)</span>.</p>
 <p>In order to fulfill regulatory considerations, the type one error rate is still protected under the point prior <span class="math inline">\(\delta=0\)</span> at the level of significance <span class="math inline">\(\alpha=0.025\)</span>.</p>
-<p>Since effect sizes less than a minimal clincally relevant effect do not show evidene against the null hypothesis, we assume a clinically relevant effect size <span class="math inline">\(\delta =0.0\)</span> and condition the prior on values <span class="math inline">\(\delta &gt; 0\)</span> in order to compute the expected power. We assume a minimal expected power of at least <span class="math inline">\(0.8\)</span>.</p>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="scenarioVII.html#cb184-1"></a><span class="co"># data distribution and priors</span></span>
-<span id="cb184-2"><a href="scenarioVII.html#cb184-2"></a>datadist   &lt;-<span class="st"> </span><span class="kw">Binomial</span>(<span class="dt">rate_control=</span><span class="fl">0.3</span>, <span class="dt">two_armed =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb184-3"><a href="scenarioVII.html#cb184-3"></a>H_<span class="dv">0</span>        &lt;-<span class="st"> </span><span class="kw">PointMassPrior</span>(.<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb184-4"><a href="scenarioVII.html#cb184-4"></a>prior      &lt;-<span class="st"> </span><span class="kw">ContinuousPrior</span>(<span class="cf">function</span>(x) <span class="dv">1</span><span class="op">/</span>(<span class="kw">pnorm</span>(<span class="fl">0.69</span>,<span class="fl">0.2</span>,<span class="fl">0.2</span>)<span class="op">-</span><span class="kw">pnorm</span>(<span class="op">-</span><span class="fl">0.29</span>,<span class="fl">0.2</span>,<span class="fl">0.2</span>))<span class="op">*</span><span class="kw">dnorm</span>(x,<span class="fl">0.2</span>,<span class="fl">0.2</span>),</span>
-<span id="cb184-5"><a href="scenarioVII.html#cb184-5"></a>                              <span class="dt">support =</span> <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.29</span>,<span class="fl">0.69</span>),</span>
-<span id="cb184-6"><a href="scenarioVII.html#cb184-6"></a>                              <span class="dt">tighten_support =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb184-7"><a href="scenarioVII.html#cb184-7"></a></span>
-<span id="cb184-8"><a href="scenarioVII.html#cb184-8"></a><span class="co"># define constraints on type one error rate and expected power</span></span>
-<span id="cb184-9"><a href="scenarioVII.html#cb184-9"></a>alpha      &lt;-<span class="st"> </span><span class="fl">0.025</span></span>
-<span id="cb184-10"><a href="scenarioVII.html#cb184-10"></a>min_epower &lt;-<span class="st"> </span><span class="fl">0.8</span></span>
-<span id="cb184-11"><a href="scenarioVII.html#cb184-11"></a>toer_cnstr &lt;-<span class="st"> </span><span class="kw">Power</span>(datadist, H_<span class="dv">0</span>) <span class="op">&lt;=</span><span class="st"> </span>alpha</span>
-<span id="cb184-12"><a href="scenarioVII.html#cb184-12"></a>epow_cnstr &lt;-<span class="st"> </span><span class="kw">Power</span>(datadist, <span class="kw">condition</span>(prior, <span class="kw">c</span>(<span class="fl">0.0</span>,<span class="fl">0.69</span>))) <span class="op">&gt;=</span><span class="st"> </span>min_epower</span></code></pre></div>
+<p>Since effect sizes less than a minimal clinically relevant effect do not show evidence against the null hypothesis, we assume a clinically relevant effect size <span class="math inline">\(\delta =0.0\)</span> and condition the prior on values <span class="math inline">\(\delta &gt; 0\)</span> in order to compute the expected power. We assume a minimal expected power of at least <span class="math inline">\(0.8\)</span>.</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="scenarioVII.html#cb177-1" aria-hidden="true" tabindex="-1"></a><span class="co"># data distribution and priors</span></span>
+<span id="cb177-2"><a href="scenarioVII.html#cb177-2" aria-hidden="true" tabindex="-1"></a>datadist   <span class="ot">&lt;-</span> <span class="fu">Binomial</span>(<span class="at">rate_control =</span> <span class="fl">0.3</span>, <span class="at">two_armed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb177-3"><a href="scenarioVII.html#cb177-3" aria-hidden="true" tabindex="-1"></a>H_0        <span class="ot">&lt;-</span> <span class="fu">PointMassPrior</span>(.<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb177-4"><a href="scenarioVII.html#cb177-4" aria-hidden="true" tabindex="-1"></a>prior      <span class="ot">&lt;-</span> <span class="fu">ContinuousPrior</span>(<span class="cf">function</span>(x) <span class="dv">1</span> <span class="sc">/</span> </span>
+<span id="cb177-5"><a href="scenarioVII.html#cb177-5" aria-hidden="true" tabindex="-1"></a>                                  (<span class="fu">pnorm</span>(<span class="fl">0.69</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>) <span class="sc">-</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fl">0.29</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>)) <span class="sc">*</span> <span class="fu">dnorm</span>(x, <span class="fl">0.2</span>, <span class="fl">0.2</span>),</span>
+<span id="cb177-6"><a href="scenarioVII.html#cb177-6" aria-hidden="true" tabindex="-1"></a>                              <span class="at">support =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.29</span>, <span class="fl">0.69</span>),</span>
+<span id="cb177-7"><a href="scenarioVII.html#cb177-7" aria-hidden="true" tabindex="-1"></a>                              <span class="at">tighten_support =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb177-8"><a href="scenarioVII.html#cb177-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb177-9"><a href="scenarioVII.html#cb177-9" aria-hidden="true" tabindex="-1"></a><span class="co"># define constraints on type one error rate and expected power</span></span>
+<span id="cb177-10"><a href="scenarioVII.html#cb177-10" aria-hidden="true" tabindex="-1"></a>alpha      <span class="ot">&lt;-</span> <span class="fl">0.025</span></span>
+<span id="cb177-11"><a href="scenarioVII.html#cb177-11" aria-hidden="true" tabindex="-1"></a>min_epower <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
+<span id="cb177-12"><a href="scenarioVII.html#cb177-12" aria-hidden="true" tabindex="-1"></a>toer_cnstr <span class="ot">&lt;-</span> <span class="fu">Power</span>(datadist, H_0) <span class="sc">&lt;=</span> alpha</span>
+<span id="cb177-13"><a href="scenarioVII.html#cb177-13" aria-hidden="true" tabindex="-1"></a>epow_cnstr <span class="ot">&lt;-</span> <span class="fu">Power</span>(datadist, <span class="fu">condition</span>(prior, <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.69</span>))) <span class="sc">&gt;=</span> min_epower</span></code></pre></div>
 </div>
-<div id="variantVII-1" class="section level2 hasAnchor">
-<h2><span class="header-section-number">8.2</span> Variant II-1: Minimizing Expected Sample Size under Point Prior<a href="scenarioVII.html#variantVII-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="objective-17" class="section level3 hasAnchor">
+<div id="variantVII-1" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Variant VII-1: Minimizing Expected Sample Size under Continuous Prior<a href="scenarioVII.html#variantVII-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="objective-17" class="section level3 hasAnchor" number="8.2.1">
 <h3><span class="header-section-number">8.2.1</span> Objective<a href="scenarioVII.html#objective-17" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Expected sample size under the full prior is minimized, i.e., <span class="math inline">\(\boldsymbol{E}\big[n(\mathscr{D})\big]\)</span>.</p>
-<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="scenarioVII.html#cb185-1"></a>ess &lt;-<span class="st"> </span><span class="kw">ExpectedSampleSize</span>(datadist, prior)</span></code></pre></div>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="scenarioVII.html#cb178-1" aria-hidden="true" tabindex="-1"></a>ess <span class="ot">&lt;-</span> <span class="fu">ExpectedSampleSize</span>(datadist, prior)</span></code></pre></div>
 </div>
-<div id="constraints-17" class="section level3 hasAnchor">
+<div id="constraints-17" class="section level3 hasAnchor" number="8.2.2">
 <h3><span class="header-section-number">8.2.2</span> Constraints<a href="scenarioVII.html#constraints-17" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>No additional constraints are considered.</p>
 </div>
-<div id="initial-designs-2" class="section level3 hasAnchor">
+<div id="initial-designs-2" class="section level3 hasAnchor" number="8.2.3">
 <h3><span class="header-section-number">8.2.3</span> Initial Designs<a href="scenarioVII.html#initial-designs-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>For this example, the optimal one-stage, group-sequential, and generic two-stage designs are computed. The initial design for the one-stage case is determined heuristically and both the group sequential and the generic two-stage designs are optimized starting from the corresponding group-sequential design as computed by the <code>rpact</code> package.</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="scenarioVII.html#cb186-1"></a>order &lt;-<span class="st"> </span>7L</span>
-<span id="cb186-2"><a href="scenarioVII.html#cb186-2"></a><span class="co"># data frame of initial designs </span></span>
-<span id="cb186-3"><a href="scenarioVII.html#cb186-3"></a>tbl_designs &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
-<span id="cb186-4"><a href="scenarioVII.html#cb186-4"></a>    <span class="dt">type    =</span> <span class="kw">c</span>(<span class="st">&quot;one-stage&quot;</span>, <span class="st">&quot;group-sequential&quot;</span>, <span class="st">&quot;two-stage&quot;</span>),</span>
-<span id="cb186-5"><a href="scenarioVII.html#cb186-5"></a>    <span class="dt">initial =</span> <span class="kw">list</span>(</span>
-<span id="cb186-6"><a href="scenarioVII.html#cb186-6"></a>        <span class="kw">OneStageDesign</span>(<span class="dv">200</span>, <span class="fl">2.0</span>),</span>
-<span id="cb186-7"><a href="scenarioVII.html#cb186-7"></a>        <span class="kw">rpact_design</span>(datadist, <span class="fl">0.2</span>, <span class="fl">0.025</span>, <span class="fl">0.8</span>, <span class="ot">TRUE</span>, order),</span>
-<span id="cb186-8"><a href="scenarioVII.html#cb186-8"></a>        <span class="kw">TwoStageDesign</span>(<span class="kw">rpact_design</span>(datadist, <span class="fl">0.2</span>, <span class="fl">0.025</span>, <span class="fl">0.8</span>, <span class="ot">TRUE</span>, order))) )</span></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="scenarioVII.html#cb179-1" aria-hidden="true" tabindex="-1"></a>order <span class="ot">&lt;-</span> 7L</span>
+<span id="cb179-2"><a href="scenarioVII.html#cb179-2" aria-hidden="true" tabindex="-1"></a><span class="co"># data frame of initial designs </span></span>
+<span id="cb179-3"><a href="scenarioVII.html#cb179-3" aria-hidden="true" tabindex="-1"></a>tbl_designs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb179-4"><a href="scenarioVII.html#cb179-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">type    =</span> <span class="fu">c</span>(<span class="st">&quot;one-stage&quot;</span>, <span class="st">&quot;group-sequential&quot;</span>, <span class="st">&quot;two-stage&quot;</span>),</span>
+<span id="cb179-5"><a href="scenarioVII.html#cb179-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">initial =</span> <span class="fu">list</span>(</span>
+<span id="cb179-6"><a href="scenarioVII.html#cb179-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">OneStageDesign</span>(<span class="dv">200</span>, <span class="fl">2.0</span>),</span>
+<span id="cb179-7"><a href="scenarioVII.html#cb179-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">rpact_design</span>(datadist, <span class="fl">0.2</span>, <span class="fl">0.025</span>, <span class="fl">0.8</span>, <span class="cn">TRUE</span>, order),</span>
+<span id="cb179-8"><a href="scenarioVII.html#cb179-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">TwoStageDesign</span>(<span class="fu">get_initial_design</span>(<span class="fl">0.2</span>, <span class="fl">0.025</span>, <span class="fl">0.2</span>, <span class="st">&quot;two-stage&quot;</span>, <span class="at">dist =</span> datadist) )))</span></code></pre></div>
 <p>The order of integration is set to 7.</p>
 </div>
-<div id="optimization-16" class="section level3 hasAnchor">
+<div id="optimization-16" class="section level3 hasAnchor" number="8.2.4">
 <h3><span class="header-section-number">8.2.4</span> Optimization<a href="scenarioVII.html#optimization-16" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="scenarioVII.html#cb187-1"></a>tbl_designs &lt;-<span class="st"> </span>tbl_designs <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb187-2"><a href="scenarioVII.html#cb187-2"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
-<span id="cb187-3"><a href="scenarioVII.html#cb187-3"></a>       <span class="dt">optimal =</span> purrr<span class="op">::</span><span class="kw">map</span>(initial, <span class="op">~</span><span class="kw">minimize</span>(</span>
-<span id="cb187-4"><a href="scenarioVII.html#cb187-4"></a>          ess,</span>
-<span id="cb187-5"><a href="scenarioVII.html#cb187-5"></a>          <span class="kw">subject_to</span>(</span>
-<span id="cb187-6"><a href="scenarioVII.html#cb187-6"></a>              toer_cnstr,</span>
-<span id="cb187-7"><a href="scenarioVII.html#cb187-7"></a>              epow_cnstr</span>
-<span id="cb187-8"><a href="scenarioVII.html#cb187-8"></a>          ),</span>
-<span id="cb187-9"><a href="scenarioVII.html#cb187-9"></a>          </span>
-<span id="cb187-10"><a href="scenarioVII.html#cb187-10"></a>          <span class="dt">initial_design =</span> ., </span>
-<span id="cb187-11"><a href="scenarioVII.html#cb187-11"></a>          <span class="dt">opts           =</span> opts)) )</span></code></pre></div>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="scenarioVII.html#cb180-1" aria-hidden="true" tabindex="-1"></a>tbl_designs <span class="ot">&lt;-</span> tbl_designs <span class="sc">%&gt;%</span> </span>
+<span id="cb180-2"><a href="scenarioVII.html#cb180-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb180-3"><a href="scenarioVII.html#cb180-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">optimal =</span> purrr<span class="sc">::</span><span class="fu">map</span>(initial, <span class="sc">~</span><span class="fu">minimize</span>(</span>
+<span id="cb180-4"><a href="scenarioVII.html#cb180-4" aria-hidden="true" tabindex="-1"></a>          ess,</span>
+<span id="cb180-5"><a href="scenarioVII.html#cb180-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">subject_to</span>(</span>
+<span id="cb180-6"><a href="scenarioVII.html#cb180-6" aria-hidden="true" tabindex="-1"></a>              toer_cnstr,</span>
+<span id="cb180-7"><a href="scenarioVII.html#cb180-7" aria-hidden="true" tabindex="-1"></a>              epow_cnstr</span>
+<span id="cb180-8"><a href="scenarioVII.html#cb180-8" aria-hidden="true" tabindex="-1"></a>          ),</span>
+<span id="cb180-9"><a href="scenarioVII.html#cb180-9" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb180-10"><a href="scenarioVII.html#cb180-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">initial_design =</span> ., </span>
+<span id="cb180-11"><a href="scenarioVII.html#cb180-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">opts           =</span> opts)) )</span></code></pre></div>
 </div>
-<div id="test-cases-17" class="section level3 hasAnchor">
+<div id="test-cases-17" class="section level3 hasAnchor" number="8.2.5">
 <h3><span class="header-section-number">8.2.5</span> Test Cases<a href="scenarioVII.html#test-cases-17" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To avoid improper solutions, it is first verified that the maximum number of iterations was not exceeded in any of the three cases.</p>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="scenarioVII.html#cb188-1"></a>tbl_designs <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb188-2"><a href="scenarioVII.html#cb188-2"></a><span class="st">  </span><span class="kw">transmute</span>(</span>
-<span id="cb188-3"><a href="scenarioVII.html#cb188-3"></a>      type, </span>
-<span id="cb188-4"><a href="scenarioVII.html#cb188-4"></a>      <span class="dt">iterations =</span> purrr<span class="op">::</span><span class="kw">map_int</span>(tbl_designs<span class="op">$</span>optimal, </span>
-<span id="cb188-5"><a href="scenarioVII.html#cb188-5"></a>                                  <span class="op">~</span>.<span class="op">$</span>nloptr_return<span class="op">$</span>iterations) ) <span class="op">%&gt;%</span></span>
-<span id="cb188-6"><a href="scenarioVII.html#cb188-6"></a><span class="st">  </span>{<span class="kw">print</span>(.); .} <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb188-7"><a href="scenarioVII.html#cb188-7"></a><span class="st">  </span>{testthat<span class="op">::</span><span class="kw">expect_true</span>(<span class="kw">all</span>(.<span class="op">$</span>iterations <span class="op">&lt;</span><span class="st"> </span>opts<span class="op">$</span>maxeval))}</span></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="scenarioVII.html#cb181-1" aria-hidden="true" tabindex="-1"></a>tbl_designs <span class="sc">%&gt;%</span> </span>
+<span id="cb181-2"><a href="scenarioVII.html#cb181-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb181-3"><a href="scenarioVII.html#cb181-3" aria-hidden="true" tabindex="-1"></a>      type, </span>
+<span id="cb181-4"><a href="scenarioVII.html#cb181-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">iterations =</span> purrr<span class="sc">::</span><span class="fu">map_int</span>(tbl_designs<span class="sc">$</span>optimal, </span>
+<span id="cb181-5"><a href="scenarioVII.html#cb181-5" aria-hidden="true" tabindex="-1"></a>                                  <span class="sc">~</span>.<span class="sc">$</span>nloptr_return<span class="sc">$</span>iterations) ) <span class="sc">%&gt;%</span></span>
+<span id="cb181-6"><a href="scenarioVII.html#cb181-6" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">print</span>(.); .} <span class="sc">%&gt;%</span> </span>
+<span id="cb181-7"><a href="scenarioVII.html#cb181-7" aria-hidden="true" tabindex="-1"></a>  {testthat<span class="sc">::</span><span class="fu">expect_true</span>(<span class="fu">all</span>(.<span class="sc">$</span>iterations <span class="sc">&lt;</span> opts<span class="sc">$</span>maxeval))}</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 2
 ##   type             iterations
 ##   &lt;chr&gt;                 &lt;int&gt;
 ## 1 one-stage                21
-## 2 group-sequential        744
-## 3 two-stage              5426</code></pre>
+## 2 group-sequential        642
+## 3 two-stage             22550</code></pre>
 <p>Furthermore, the type one error rate constraint needs to be tested.</p>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="scenarioVII.html#cb190-1"></a>tbl_designs <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb190-2"><a href="scenarioVII.html#cb190-2"></a><span class="st">  </span><span class="kw">transmute</span>(</span>
-<span id="cb190-3"><a href="scenarioVII.html#cb190-3"></a>      type, </span>
-<span id="cb190-4"><a href="scenarioVII.html#cb190-4"></a>      <span class="dt">toer =</span> purrr<span class="op">::</span><span class="kw">map</span>(tbl_designs<span class="op">$</span>optimal, </span>
-<span id="cb190-5"><a href="scenarioVII.html#cb190-5"></a>                        <span class="op">~</span><span class="kw">sim_pr_reject</span>(.[[<span class="dv">1</span>]], <span class="fl">.0</span>, datadist)<span class="op">$</span>prob) ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb190-6"><a href="scenarioVII.html#cb190-6"></a><span class="st">  </span><span class="kw">unnest</span>(., <span class="dt">cols =</span> <span class="kw">c</span>(toer)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb190-7"><a href="scenarioVII.html#cb190-7"></a><span class="st">  </span>{<span class="kw">print</span>(.); .} <span class="op">%&gt;%</span><span class="st"> </span>{</span>
-<span id="cb190-8"><a href="scenarioVII.html#cb190-8"></a>  testthat<span class="op">::</span><span class="kw">expect_true</span>(<span class="kw">all</span>(.<span class="op">$</span>toer <span class="op">&lt;=</span><span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>tol))) }</span></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="scenarioVII.html#cb183-1" aria-hidden="true" tabindex="-1"></a>tbl_designs <span class="sc">%&gt;%</span> </span>
+<span id="cb183-2"><a href="scenarioVII.html#cb183-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb183-3"><a href="scenarioVII.html#cb183-3" aria-hidden="true" tabindex="-1"></a>      type, </span>
+<span id="cb183-4"><a href="scenarioVII.html#cb183-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">toer =</span> purrr<span class="sc">::</span><span class="fu">map</span>(tbl_designs<span class="sc">$</span>optimal, </span>
+<span id="cb183-5"><a href="scenarioVII.html#cb183-5" aria-hidden="true" tabindex="-1"></a>                        <span class="sc">~</span><span class="fu">sim_pr_reject</span>(.[[<span class="dv">1</span>]], .<span class="dv">0</span>, datadist)<span class="sc">$</span>prob) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb183-6"><a href="scenarioVII.html#cb183-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(., <span class="at">cols =</span> <span class="fu">c</span>(toer)) <span class="sc">%&gt;%</span> </span>
+<span id="cb183-7"><a href="scenarioVII.html#cb183-7" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">print</span>(.); .} <span class="sc">%&gt;%</span> {</span>
+<span id="cb183-8"><a href="scenarioVII.html#cb183-8" aria-hidden="true" tabindex="-1"></a>  testthat<span class="sc">::</span><span class="fu">expect_true</span>(<span class="fu">all</span>(.<span class="sc">$</span>toer <span class="sc">&lt;=</span> alpha <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> tol))) }</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 2
 ##   type               toer
 ##   &lt;chr&gt;             &lt;dbl&gt;
 ## 1 one-stage        0.0251
 ## 2 group-sequential 0.0250
 ## 3 two-stage        0.0249</code></pre>
-<p>The optimal two-stage design is more flexible than the other two designs, so the expected sample sizes under the prior should be ordered upwards as follows: optimal two-stage design &lt; group sequential &lt; one-stage.</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="scenarioVII.html#cb192-1"></a>essh0 &lt;-<span class="st"> </span><span class="kw">ExpectedSampleSize</span>(datadist, H_<span class="dv">0</span>)</span>
-<span id="cb192-2"><a href="scenarioVII.html#cb192-2"></a></span>
-<span id="cb192-3"><a href="scenarioVII.html#cb192-3"></a>tbl_designs <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb192-4"><a href="scenarioVII.html#cb192-4"></a><span class="st">    </span><span class="kw">mutate</span>(</span>
-<span id="cb192-5"><a href="scenarioVII.html#cb192-5"></a>        <span class="dt">ess       =</span> <span class="kw">map_dbl</span>(optimal,</span>
-<span id="cb192-6"><a href="scenarioVII.html#cb192-6"></a>                            <span class="op">~</span><span class="kw">evaluate</span>(ess, .<span class="op">$</span>design) ),</span>
-<span id="cb192-7"><a href="scenarioVII.html#cb192-7"></a>        <span class="dt">essh0     =</span> <span class="kw">map_dbl</span>(optimal,</span>
-<span id="cb192-8"><a href="scenarioVII.html#cb192-8"></a>                            <span class="op">~</span><span class="kw">evaluate</span>(essh0, .<span class="op">$</span>design) ),</span>
-<span id="cb192-9"><a href="scenarioVII.html#cb192-9"></a>        <span class="dt">essh0_sim =</span> <span class="kw">map_dbl</span>(optimal,</span>
-<span id="cb192-10"><a href="scenarioVII.html#cb192-10"></a>                            <span class="op">~</span><span class="kw">sim_n</span>(.<span class="op">$</span>design, <span class="fl">.0</span>, datadist)<span class="op">$</span>n ) ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb192-11"><a href="scenarioVII.html#cb192-11"></a><span class="st">    </span>{<span class="kw">print</span>(.); .} <span class="op">%&gt;%</span><span class="st"> </span>{</span>
-<span id="cb192-12"><a href="scenarioVII.html#cb192-12"></a>    <span class="co"># sim/evaluate same under null?</span></span>
-<span id="cb192-13"><a href="scenarioVII.html#cb192-13"></a>    testthat<span class="op">::</span><span class="kw">expect_equal</span>(.<span class="op">$</span>essh0, .<span class="op">$</span>essh0_sim, </span>
-<span id="cb192-14"><a href="scenarioVII.html#cb192-14"></a>                           <span class="dt">tolerance =</span> tol_n,</span>
-<span id="cb192-15"><a href="scenarioVII.html#cb192-15"></a>                           <span class="dt">scale =</span> <span class="dv">1</span>)</span>
-<span id="cb192-16"><a href="scenarioVII.html#cb192-16"></a>    <span class="co"># monotonicity with respect to degrees of freedom</span></span>
-<span id="cb192-17"><a href="scenarioVII.html#cb192-17"></a>    testthat<span class="op">::</span><span class="kw">expect_true</span>(<span class="kw">all</span>(<span class="kw">diff</span>(.<span class="op">$</span>ess) <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>)) }</span></code></pre></div>
+<p>The optimal two-stage design is more flexible than the other two designs, so the expected sample sizes under the prior should be ordered upwards as follows: optimal two-stage design &lt; group sequential &lt; one-stage. We additionally compare the simulated and theoretical outcomes of the sample size under the null.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="scenarioVII.html#cb185-1" aria-hidden="true" tabindex="-1"></a>essh0 <span class="ot">&lt;-</span> <span class="fu">ExpectedSampleSize</span>(datadist, H_0)</span>
+<span id="cb185-2"><a href="scenarioVII.html#cb185-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb185-3"><a href="scenarioVII.html#cb185-3" aria-hidden="true" tabindex="-1"></a>tbl_designs <span class="sc">%&gt;%</span> </span>
+<span id="cb185-4"><a href="scenarioVII.html#cb185-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb185-5"><a href="scenarioVII.html#cb185-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ess       =</span> <span class="fu">map_dbl</span>(optimal,</span>
+<span id="cb185-6"><a href="scenarioVII.html#cb185-6" aria-hidden="true" tabindex="-1"></a>                            <span class="sc">~</span><span class="fu">evaluate</span>(ess, .<span class="sc">$</span>design) ),</span>
+<span id="cb185-7"><a href="scenarioVII.html#cb185-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">essh0     =</span> <span class="fu">map_dbl</span>(optimal,</span>
+<span id="cb185-8"><a href="scenarioVII.html#cb185-8" aria-hidden="true" tabindex="-1"></a>                            <span class="sc">~</span><span class="fu">evaluate</span>(essh0, .<span class="sc">$</span>design) ),</span>
+<span id="cb185-9"><a href="scenarioVII.html#cb185-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">essh0_sim =</span> <span class="fu">map_dbl</span>(optimal,</span>
+<span id="cb185-10"><a href="scenarioVII.html#cb185-10" aria-hidden="true" tabindex="-1"></a>                            <span class="sc">~</span><span class="fu">sim_n</span>(.<span class="sc">$</span>design, .<span class="dv">0</span>, datadist)<span class="sc">$</span>n ) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb185-11"><a href="scenarioVII.html#cb185-11" aria-hidden="true" tabindex="-1"></a>    {<span class="fu">print</span>(.); .} <span class="sc">%&gt;%</span> {</span>
+<span id="cb185-12"><a href="scenarioVII.html#cb185-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sim/evaluate same under null?</span></span>
+<span id="cb185-13"><a href="scenarioVII.html#cb185-13" aria-hidden="true" tabindex="-1"></a>    testthat<span class="sc">::</span><span class="fu">expect_equal</span>(.<span class="sc">$</span>essh0, .<span class="sc">$</span>essh0_sim, </span>
+<span id="cb185-14"><a href="scenarioVII.html#cb185-14" aria-hidden="true" tabindex="-1"></a>                           <span class="at">tolerance =</span> tol_n,</span>
+<span id="cb185-15"><a href="scenarioVII.html#cb185-15" aria-hidden="true" tabindex="-1"></a>                           <span class="at">scale =</span> <span class="dv">1</span>)</span>
+<span id="cb185-16"><a href="scenarioVII.html#cb185-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># monotonicity with respect to degrees of freedom</span></span>
+<span id="cb185-17"><a href="scenarioVII.html#cb185-17" aria-hidden="true" tabindex="-1"></a>    testthat<span class="sc">::</span><span class="fu">expect_true</span>(<span class="fu">all</span>(<span class="fu">diff</span>(.<span class="sc">$</span>ess) <span class="sc">&lt;</span> <span class="dv">0</span>)) }</span></code></pre></div>
 <pre><code>## # A tibble: 3 × 6
 ##   type             initial    optimal          ess essh0 essh0_sim
 ##   &lt;chr&gt;            &lt;list&gt;     &lt;list&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-## 1 one-stage        &lt;OnStgDsg&gt; &lt;adptrOpR [3]&gt;  254   254       254 
-## 2 group-sequential &lt;GrpSqntD&gt; &lt;adptrOpR [3]&gt;  129.  164.      164.
-## 3 two-stage        &lt;TwStgDsg&gt; &lt;adptrOpR [3]&gt;  125.  174.      174.</code></pre>
+## 1 one-stage        &lt;OnStgDsg&gt; &lt;adptrOpR [3]&gt; 238    238       238 
+## 2 group-sequential &lt;GrpSqntD&gt; &lt;adptrOpR [3]&gt; 103.   161.      161.
+## 3 two-stage        &lt;TwStgDsg&gt; &lt;adptrOpR [3]&gt;  99.2  169.      169.</code></pre>
 </div>
 </div>
-<div id="variant-vii-2-minimizing-expected-sample-size-under-null-hypothesis" class="section level2 hasAnchor">
-<h2><span class="header-section-number">8.3</span> Variant VII-2: Minimizing Expected Sample Size under Null Hypothesis<a href="scenarioVII.html#variant-vii-2-minimizing-expected-sample-size-under-null-hypothesis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="objective-18" class="section level3 hasAnchor">
+<div id="variant-vii-2-conditional-power-constraint" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Variant VII-2: Conditional Power Constraint<a href="scenarioVII.html#variant-vii-2-conditional-power-constraint" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="objective-18" class="section level3 hasAnchor" number="8.3.1">
 <h3><span class="header-section-number">8.3.1</span> Objective<a href="scenarioVII.html#objective-18" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In this scenario, the expected sample size conditioned on negative effect sizes is minimized, i.e.,</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="scenarioVII.html#cb194-1"></a>ess_<span class="dv">0</span> &lt;-<span class="st"> </span><span class="kw">ExpectedSampleSize</span>(datadist, <span class="kw">condition</span>(prior, <span class="kw">c</span>(<span class="op">-</span><span class="fl">0.29</span>,<span class="dv">0</span>)))</span></code></pre></div>
+<p>As in <a href="scenarioVII.html#variantVII-1">VariantVII-1</a>, the expected sample size under the full prior is minimized.</p>
 </div>
-<div id="constraints-18" class="section level3 hasAnchor">
+<div id="constraints-18" class="section level3 hasAnchor" number="8.3.2">
 <h3><span class="header-section-number">8.3.2</span> Constraints<a href="scenarioVII.html#constraints-18" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>No additional constraints besides type one error rate and expected power are considered in this variant.</p>
+<p>In addition to the constraints on type one error rate and expected power, a constraint on conditional power to be larger than <span class="math inline">\(0.7\)</span> is included.</p>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb187-1"><a href="scenarioVII.html#cb187-1" aria-hidden="true" tabindex="-1"></a>cp       <span class="ot">&lt;-</span> <span class="fu">ConditionalPower</span>(datadist, <span class="fu">condition</span>(prior, <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.69</span>)))</span>
+<span id="cb187-2"><a href="scenarioVII.html#cb187-2" aria-hidden="true" tabindex="-1"></a>cp_cnstr <span class="ot">&lt;-</span> cp <span class="sc">&gt;=</span> <span class="fl">0.7</span></span></code></pre></div>
 </div>
-<div id="initial-design-14" class="section level3 hasAnchor">
+<div id="initial-design-14" class="section level3 hasAnchor" number="8.3.3">
 <h3><span class="header-section-number">8.3.3</span> Initial Design<a href="scenarioVII.html#initial-design-14" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>When minimizing the expected sample size under the null, one may expect an increasing sample size function, and thus also a different shape of the <span class="math inline">\(c_2\)</span> function. Thus, the <code>rpact</code> initial design is a suboptimal starting point. Instead, we use a constant <span class="math inline">\(c_2\)</span> function by heuristically setting it to 2 on the continuation area. Since optimization under the null hypothesis favours conservative boundaries for early efficacy stopping, we set the upper bound to 3.</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb195-1"><a href="scenarioVII.html#cb195-1"></a>init_design_h0 &lt;-<span class="st"> </span>tbl_designs <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb195-2"><a href="scenarioVII.html#cb195-2"></a><span class="st">    </span><span class="kw">filter</span>(type <span class="op">==</span><span class="st"> &quot;two-stage&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb195-3"><a href="scenarioVII.html#cb195-3"></a><span class="st">    </span><span class="kw">pull</span>(initial) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb195-4"><a href="scenarioVII.html#cb195-4"></a><span class="st">    </span>.[[<span class="dv">1</span>]]</span>
-<span id="cb195-5"><a href="scenarioVII.html#cb195-5"></a>init_design_h0<span class="op">@</span>c2_pivots &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">2</span>, order)</span>
-<span id="cb195-6"><a href="scenarioVII.html#cb195-6"></a></span>
-<span id="cb195-7"><a href="scenarioVII.html#cb195-7"></a>ub_design &lt;-<span class="st"> </span><span class="kw">TwoStageDesign</span>(</span>
-<span id="cb195-8"><a href="scenarioVII.html#cb195-8"></a>    <span class="dv">3</span> <span class="op">*</span><span class="st"> </span>init_design_h0<span class="op">@</span>n1,</span>
-<span id="cb195-9"><a href="scenarioVII.html#cb195-9"></a>    <span class="dv">2</span>,</span>
-<span id="cb195-10"><a href="scenarioVII.html#cb195-10"></a>    <span class="dv">3</span>,</span>
-<span id="cb195-11"><a href="scenarioVII.html#cb195-11"></a>    <span class="kw">rep</span>(<span class="dv">600</span>, order),</span>
-<span id="cb195-12"><a href="scenarioVII.html#cb195-12"></a>    <span class="kw">rep</span>(<span class="fl">3.0</span>, order)</span>
-<span id="cb195-13"><a href="scenarioVII.html#cb195-13"></a>)</span></code></pre></div>
+<p>We reuse the previous inital design.</p>
 </div>
-<div id="optimization-17" class="section level3 hasAnchor">
+<div id="optimization-17" class="section level3 hasAnchor" number="8.3.4">
 <h3><span class="header-section-number">8.3.4</span> Optimization<a href="scenarioVII.html#optimization-17" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="scenarioVII.html#cb196-1"></a>opt_neg &lt;-<span class="st"> </span><span class="kw">minimize</span>(</span>
-<span id="cb196-2"><a href="scenarioVII.html#cb196-2"></a>        ess_<span class="dv">0</span>,</span>
-<span id="cb196-3"><a href="scenarioVII.html#cb196-3"></a>        <span class="kw">subject_to</span>(</span>
-<span id="cb196-4"><a href="scenarioVII.html#cb196-4"></a>          </span>
-<span id="cb196-5"><a href="scenarioVII.html#cb196-5"></a>            toer_cnstr,</span>
-<span id="cb196-6"><a href="scenarioVII.html#cb196-6"></a>            epow_cnstr</span>
-<span id="cb196-7"><a href="scenarioVII.html#cb196-7"></a>        ),</span>
-<span id="cb196-8"><a href="scenarioVII.html#cb196-8"></a>        </span>
-<span id="cb196-9"><a href="scenarioVII.html#cb196-9"></a>        <span class="dt">initial_design =</span> init_design_h0,</span>
-<span id="cb196-10"><a href="scenarioVII.html#cb196-10"></a>        <span class="dt">upper_boundary_design =</span> ub_design,</span>
-<span id="cb196-11"><a href="scenarioVII.html#cb196-11"></a>        <span class="dt">opts =</span> opts</span>
-<span id="cb196-12"><a href="scenarioVII.html#cb196-12"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="scenarioVII.html#cb188-1" aria-hidden="true" tabindex="-1"></a>opt_cp <span class="ot">&lt;-</span> <span class="fu">minimize</span>(</span>
+<span id="cb188-2"><a href="scenarioVII.html#cb188-2" aria-hidden="true" tabindex="-1"></a>        ess,</span>
+<span id="cb188-3"><a href="scenarioVII.html#cb188-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">subject_to</span>(</span>
+<span id="cb188-4"><a href="scenarioVII.html#cb188-4" aria-hidden="true" tabindex="-1"></a>            toer_cnstr,</span>
+<span id="cb188-5"><a href="scenarioVII.html#cb188-5" aria-hidden="true" tabindex="-1"></a>            epow_cnstr,</span>
+<span id="cb188-6"><a href="scenarioVII.html#cb188-6" aria-hidden="true" tabindex="-1"></a>            cp_cnstr</span>
+<span id="cb188-7"><a href="scenarioVII.html#cb188-7" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb188-8"><a href="scenarioVII.html#cb188-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">initial_design =</span> tbl_designs<span class="sc">$</span>initial[[<span class="dv">3</span>]],</span>
+<span id="cb188-9"><a href="scenarioVII.html#cb188-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">opts =</span> opts</span>
+<span id="cb188-10"><a href="scenarioVII.html#cb188-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 </div>
-<div id="test-cases-18" class="section level3 hasAnchor">
+<div id="test-cases-18" class="section level3 hasAnchor" number="8.3.5">
 <h3><span class="header-section-number">8.3.5</span> Test Cases<a href="scenarioVII.html#test-cases-18" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>First of al, verify that the maximum number of iterations was not exceeded:</p>
-<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb197-1"><a href="scenarioVII.html#cb197-1"></a>testthat<span class="op">::</span><span class="kw">expect_true</span>(opt_neg<span class="op">$</span>nloptr_return<span class="op">$</span>iterations <span class="op">&lt;</span><span class="st"> </span>opts<span class="op">$</span>maxeval)</span>
-<span id="cb197-2"><a href="scenarioVII.html#cb197-2"></a><span class="kw">print</span>(opt_neg<span class="op">$</span>nloptr_return<span class="op">$</span>iterations)</span></code></pre></div>
-<pre><code>## [1] 35814</code></pre>
-<p>Test the type one error rate under the point null hypothesis <span class="math inline">\(\delta=0\)</span> via simulation.</p>
-<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb199-1"><a href="scenarioVII.html#cb199-1"></a>tbl_toer &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
-<span id="cb199-2"><a href="scenarioVII.html#cb199-2"></a>  <span class="dt">toer     =</span> <span class="kw">evaluate</span>(<span class="kw">Power</span>(datadist, H_<span class="dv">0</span>), opt_neg<span class="op">$</span>design),</span>
-<span id="cb199-3"><a href="scenarioVII.html#cb199-3"></a>  <span class="dt">toer_sim =</span> <span class="kw">sim_pr_reject</span>(opt_neg<span class="op">$</span>design, <span class="fl">.0</span>, datadist)<span class="op">$</span>prob</span>
-<span id="cb199-4"><a href="scenarioVII.html#cb199-4"></a>)</span>
-<span id="cb199-5"><a href="scenarioVII.html#cb199-5"></a></span>
-<span id="cb199-6"><a href="scenarioVII.html#cb199-6"></a><span class="kw">print</span>(tbl_toer)</span></code></pre></div>
+<p>As always, we start checking whether the maximum number of iterations was reached or not.</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb189-1"><a href="scenarioVII.html#cb189-1" aria-hidden="true" tabindex="-1"></a>testthat<span class="sc">::</span><span class="fu">expect_true</span>(opt_cp<span class="sc">$</span>nloptr_return<span class="sc">$</span>iterations <span class="sc">&lt;</span> opts<span class="sc">$</span>maxeval)</span>
+<span id="cb189-2"><a href="scenarioVII.html#cb189-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(opt_cp<span class="sc">$</span>nloptr_return<span class="sc">$</span>iterations)</span></code></pre></div>
+<pre><code>## [1] 17551</code></pre>
+<p>The type one error rate is tested via simulation and compared to the value obtained by <code>evaluate()</code>.</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="scenarioVII.html#cb191-1" aria-hidden="true" tabindex="-1"></a>tbl_toer <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb191-2"><a href="scenarioVII.html#cb191-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">toer     =</span> <span class="fu">evaluate</span>(<span class="fu">Power</span>(datadist, H_0), opt_cp<span class="sc">$</span>design),</span>
+<span id="cb191-3"><a href="scenarioVII.html#cb191-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">toer_sim =</span> <span class="fu">sim_pr_reject</span>(opt_cp<span class="sc">$</span>design, .<span class="dv">0</span>, datadist)<span class="sc">$</span>prob</span>
+<span id="cb191-4"><a href="scenarioVII.html#cb191-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb191-5"><a href="scenarioVII.html#cb191-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb191-6"><a href="scenarioVII.html#cb191-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tbl_toer)</span></code></pre></div>
 <pre><code>## # A tibble: 1 × 2
 ##     toer toer_sim
 ##    &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 0.0250   0.0249</code></pre>
-<p>The expected sample size under the prior conditioned on <span class="math inline">\(\delta\leq 0\)</span> should be lower for the optimal design derived in this variant than in the previous one where we minimized the expected sample size under the full prior.</p>
-<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb201-1"><a href="scenarioVII.html#cb201-1"></a>testthat<span class="op">::</span><span class="kw">expect_lte</span>(</span>
-<span id="cb201-2"><a href="scenarioVII.html#cb201-2"></a>    <span class="kw">evaluate</span>(ess_<span class="dv">0</span>, opt_neg<span class="op">$</span>design),</span>
-<span id="cb201-3"><a href="scenarioVII.html#cb201-3"></a>    <span class="kw">evaluate</span>(</span>
-<span id="cb201-4"><a href="scenarioVII.html#cb201-4"></a>        ess_<span class="dv">0</span>, </span>
-<span id="cb201-5"><a href="scenarioVII.html#cb201-5"></a>        tbl_designs <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb201-6"><a href="scenarioVII.html#cb201-6"></a><span class="st">            </span><span class="kw">filter</span>(type <span class="op">==</span><span class="st"> &quot;two-stage&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb201-7"><a href="scenarioVII.html#cb201-7"></a><span class="st">            </span><span class="kw">pull</span>(optimal) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb201-8"><a href="scenarioVII.html#cb201-8"></a><span class="st">            </span>.[[<span class="dv">1</span>]] <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb201-9"><a href="scenarioVII.html#cb201-9"></a><span class="st">            </span>.<span class="op">$</span>design )</span>
-<span id="cb201-10"><a href="scenarioVII.html#cb201-10"></a>)</span></code></pre></div>
-</div>
-</div>
-<div id="variant-vii-3-conditional-power-constraint" class="section level2 hasAnchor">
-<h2><span class="header-section-number">8.4</span> Variant VII-3: conditional Power Constraint<a href="scenarioVII.html#variant-vii-3-conditional-power-constraint" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="objective-19" class="section level3 hasAnchor">
-<h3><span class="header-section-number">8.4.1</span> Objective<a href="scenarioVII.html#objective-19" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>As in <a href="scenarioVII.html#variantVII-1">VariantVII-1</a>, the expected sample size under the full prior is minimized.</p>
-</div>
-<div id="constraints-19" class="section level3 hasAnchor">
-<h3><span class="header-section-number">8.4.2</span> Constraints<a href="scenarioVII.html#constraints-19" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>In addition to the constraints on type one error rate and expected power, a constraint on conditional power to be larger than <span class="math inline">\(0.7\)</span> is included.</p>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="scenarioVII.html#cb202-1"></a>cp       &lt;-<span class="st"> </span><span class="kw">ConditionalPower</span>(datadist, <span class="kw">condition</span>(prior, <span class="kw">c</span>(<span class="dv">0</span>, <span class="fl">0.69</span>)))</span>
-<span id="cb202-2"><a href="scenarioVII.html#cb202-2"></a>cp_cnstr &lt;-<span class="st"> </span>cp <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.7</span></span></code></pre></div>
-</div>
-<div id="initial-design-15" class="section level3 hasAnchor">
-<h3><span class="header-section-number">8.4.3</span> Initial Design<a href="scenarioVII.html#initial-design-15" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>We reuse the previous inital design.</p>
-</div>
-<div id="optimization-18" class="section level3 hasAnchor">
-<h3><span class="header-section-number">8.4.4</span> Optimization<a href="scenarioVII.html#optimization-18" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="scenarioVII.html#cb203-1"></a>opt_cp &lt;-<span class="st"> </span><span class="kw">minimize</span>(</span>
-<span id="cb203-2"><a href="scenarioVII.html#cb203-2"></a>        ess,</span>
-<span id="cb203-3"><a href="scenarioVII.html#cb203-3"></a>        <span class="kw">subject_to</span>(</span>
-<span id="cb203-4"><a href="scenarioVII.html#cb203-4"></a>            toer_cnstr,</span>
-<span id="cb203-5"><a href="scenarioVII.html#cb203-5"></a>            epow_cnstr,</span>
-<span id="cb203-6"><a href="scenarioVII.html#cb203-6"></a>            cp_cnstr</span>
-<span id="cb203-7"><a href="scenarioVII.html#cb203-7"></a>        ),</span>
-<span id="cb203-8"><a href="scenarioVII.html#cb203-8"></a>        <span class="dt">initial_design =</span> tbl_designs<span class="op">$</span>initial[[<span class="dv">3</span>]],</span>
-<span id="cb203-9"><a href="scenarioVII.html#cb203-9"></a>        <span class="dt">opts =</span> opts</span>
-<span id="cb203-10"><a href="scenarioVII.html#cb203-10"></a>)</span></code></pre></div>
-</div>
-<div id="test-cases-19" class="section level3 hasAnchor">
-<h3><span class="header-section-number">8.4.5</span> Test Cases<a href="scenarioVII.html#test-cases-19" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>As always, we start checking whether the maximum number of iterations was reached or not.</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="scenarioVII.html#cb204-1"></a>testthat<span class="op">::</span><span class="kw">expect_true</span>(opt_cp<span class="op">$</span>nloptr_return<span class="op">$</span>iterations <span class="op">&lt;</span><span class="st"> </span>opts<span class="op">$</span>maxeval)</span>
-<span id="cb204-2"><a href="scenarioVII.html#cb204-2"></a><span class="kw">print</span>(opt_cp<span class="op">$</span>nloptr_return<span class="op">$</span>iterations)</span></code></pre></div>
-<pre><code>## [1] 3249</code></pre>
-<p>The type one error rate is tested via simulation and compared to the value obtained by <code>evaluate()</code>.</p>
-<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="scenarioVII.html#cb206-1"></a>tbl_toer &lt;-<span class="st"> </span><span class="kw">tibble</span>(</span>
-<span id="cb206-2"><a href="scenarioVII.html#cb206-2"></a>  <span class="dt">toer     =</span> <span class="kw">evaluate</span>(<span class="kw">Power</span>(datadist, H_<span class="dv">0</span>), opt_cp<span class="op">$</span>design),</span>
-<span id="cb206-3"><a href="scenarioVII.html#cb206-3"></a>  <span class="dt">toer_sim =</span> <span class="kw">sim_pr_reject</span>(opt_cp<span class="op">$</span>design, <span class="fl">.0</span>, datadist)<span class="op">$</span>prob</span>
-<span id="cb206-4"><a href="scenarioVII.html#cb206-4"></a>)</span>
-<span id="cb206-5"><a href="scenarioVII.html#cb206-5"></a></span>
-<span id="cb206-6"><a href="scenarioVII.html#cb206-6"></a><span class="kw">print</span>(tbl_toer)</span></code></pre></div>
-<pre><code>## # A tibble: 1 × 2
-##     toer toer_sim
-##    &lt;dbl&gt;    &lt;dbl&gt;
-## 1 0.0250   0.0250</code></pre>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="scenarioVII.html#cb208-1"></a>testthat<span class="op">::</span><span class="kw">expect_true</span>(tbl_toer<span class="op">$</span>toer <span class="op">&lt;=</span><span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>tol))</span>
-<span id="cb208-2"><a href="scenarioVII.html#cb208-2"></a>testthat<span class="op">::</span><span class="kw">expect_true</span>(tbl_toer<span class="op">$</span>toer_sim <span class="op">&lt;=</span><span class="st"> </span>alpha <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>tol))</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb193-1"><a href="scenarioVII.html#cb193-1" aria-hidden="true" tabindex="-1"></a>testthat<span class="sc">::</span><span class="fu">expect_true</span>(tbl_toer<span class="sc">$</span>toer <span class="sc">&lt;=</span> alpha <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> tol))</span>
+<span id="cb193-2"><a href="scenarioVII.html#cb193-2" aria-hidden="true" tabindex="-1"></a>testthat<span class="sc">::</span><span class="fu">expect_true</span>(tbl_toer<span class="sc">$</span>toer_sim <span class="sc">&lt;=</span> alpha <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> tol))</span></code></pre></div>
 <p>The conditional power is evaluated via numerical integration on several points inside the continuation region and it is tested whether the constraint is fulfilled on all these points.</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="scenarioVII.html#cb209-1"></a><span class="kw">tibble</span>(</span>
-<span id="cb209-2"><a href="scenarioVII.html#cb209-2"></a>    <span class="dt">x1 =</span> <span class="kw">seq</span>(opt_cp<span class="op">$</span>design<span class="op">@</span>c1f, opt_cp<span class="op">$</span>design<span class="op">@</span>c1e, <span class="dt">length.out =</span> <span class="dv">25</span>),</span>
-<span id="cb209-3"><a href="scenarioVII.html#cb209-3"></a>    <span class="dt">cp =</span> <span class="kw">map_dbl</span>(x1, <span class="op">~</span><span class="kw">evaluate</span>(cp, opt_cp<span class="op">$</span>design, .)) ) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb209-4"><a href="scenarioVII.html#cb209-4"></a><span class="st">  </span>{<span class="kw">print</span>(.); .} <span class="op">%&gt;%</span><span class="st"> </span>{</span>
-<span id="cb209-5"><a href="scenarioVII.html#cb209-5"></a>      testthat<span class="op">::</span><span class="kw">expect_true</span>(<span class="kw">all</span>(.<span class="op">$</span>cp <span class="op">&gt;=</span><span class="st"> </span><span class="fl">0.7</span> <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>tol))) }</span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="scenarioVII.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb194-2"><a href="scenarioVII.html#cb194-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">x1 =</span> <span class="fu">seq</span>(opt_cp<span class="sc">$</span>design<span class="sc">@</span>c1f, opt_cp<span class="sc">$</span>design<span class="sc">@</span>c1e, <span class="at">length.out =</span> <span class="dv">25</span>),</span>
+<span id="cb194-3"><a href="scenarioVII.html#cb194-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cp =</span> <span class="fu">map_dbl</span>(x1, <span class="sc">~</span><span class="fu">evaluate</span>(cp, opt_cp<span class="sc">$</span>design, .)) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb194-4"><a href="scenarioVII.html#cb194-4" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">print</span>(.); .} <span class="sc">%&gt;%</span> {</span>
+<span id="cb194-5"><a href="scenarioVII.html#cb194-5" aria-hidden="true" tabindex="-1"></a>      testthat<span class="sc">::</span><span class="fu">expect_true</span>(<span class="fu">all</span>(.<span class="sc">$</span>cp <span class="sc">&gt;=</span> <span class="fl">0.7</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> tol))) }</span></code></pre></div>
 <pre><code>## # A tibble: 25 × 2
 ##       x1    cp
 ##    &lt;dbl&gt; &lt;dbl&gt;
-##  1 0.397 0.699
-##  2 0.486 0.700
-##  3 0.575 0.700
-##  4 0.664 0.700
-##  5 0.753 0.700
-##  6 0.842 0.698
-##  7 0.930 0.696
-##  8 1.02  0.699
-##  9 1.11  0.709
-## 10 1.20  0.724
-## # … with 15 more rows</code></pre>
+##  1 0.190 0.699
+##  2 0.288 0.700
+##  3 0.387 0.700
+##  4 0.486 0.700
+##  5 0.585 0.700
+##  6 0.684 0.698
+##  7 0.783 0.697
+##  8 0.882 0.699
+##  9 0.981 0.709
+## 10 1.08  0.725
+## # ℹ 15 more rows</code></pre>
 <p>Due to the additional constraint, this variant should show a larger expected sample size.</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="scenarioVII.html#cb211-1"></a>testthat<span class="op">::</span><span class="kw">expect_gte</span>(</span>
-<span id="cb211-2"><a href="scenarioVII.html#cb211-2"></a>    <span class="kw">evaluate</span>(ess, opt_cp<span class="op">$</span>design),</span>
-<span id="cb211-3"><a href="scenarioVII.html#cb211-3"></a>    <span class="kw">evaluate</span>(</span>
-<span id="cb211-4"><a href="scenarioVII.html#cb211-4"></a>        ess, </span>
-<span id="cb211-5"><a href="scenarioVII.html#cb211-5"></a>        tbl_designs <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb211-6"><a href="scenarioVII.html#cb211-6"></a><span class="st">            </span><span class="kw">filter</span>(type <span class="op">==</span><span class="st"> &quot;two-stage&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb211-7"><a href="scenarioVII.html#cb211-7"></a><span class="st">            </span><span class="kw">pull</span>(optimal) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb211-8"><a href="scenarioVII.html#cb211-8"></a><span class="st">            </span>.[[<span class="dv">1</span>]] <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb211-9"><a href="scenarioVII.html#cb211-9"></a><span class="st">            </span>.<span class="op">$</span>design )</span>
-<span id="cb211-10"><a href="scenarioVII.html#cb211-10"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="scenarioVII.html#cb196-1" aria-hidden="true" tabindex="-1"></a>testthat<span class="sc">::</span><span class="fu">expect_gte</span>(</span>
+<span id="cb196-2"><a href="scenarioVII.html#cb196-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">evaluate</span>(ess, opt_cp<span class="sc">$</span>design),</span>
+<span id="cb196-3"><a href="scenarioVII.html#cb196-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">evaluate</span>(</span>
+<span id="cb196-4"><a href="scenarioVII.html#cb196-4" aria-hidden="true" tabindex="-1"></a>        ess, </span>
+<span id="cb196-5"><a href="scenarioVII.html#cb196-5" aria-hidden="true" tabindex="-1"></a>        tbl_designs <span class="sc">%&gt;%</span> </span>
+<span id="cb196-6"><a href="scenarioVII.html#cb196-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&quot;two-stage&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb196-7"><a href="scenarioVII.html#cb196-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">pull</span>(optimal) <span class="sc">%&gt;%</span> </span>
+<span id="cb196-8"><a href="scenarioVII.html#cb196-8" aria-hidden="true" tabindex="-1"></a>            .[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span> </span>
+<span id="cb196-9"><a href="scenarioVII.html#cb196-9" aria-hidden="true" tabindex="-1"></a>            .<span class="sc">$</span>design )</span>
+<span id="cb196-10"><a href="scenarioVII.html#cb196-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 </div>
 </div>
-<div id="plot-two-stage-designs-3" class="section level2 hasAnchor">
-<h2><span class="header-section-number">8.5</span> Plot Two-Stage Designs<a href="scenarioVII.html#plot-two-stage-designs-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="plot-two-stage-designs-3" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Plot Two-Stage Designs<a href="scenarioVII.html#plot-two-stage-designs-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The optimal two-stage designs are plotted together.
-<img src="adoptr-validation-report_files/figure-html/unnamed-chunk-143-1.png" width="672" /></p>
+<img src="adoptr-validation-report_files/figure-html/unnamed-chunk-137-1.png" width="672" /></p>
 
 </div>
 </div>
@@ -705,7 +729,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

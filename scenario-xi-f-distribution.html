@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>References | Validation Report for adoptr package</title>
+  <title>12 Scenario XI: F-Distribution | Validation Report for adoptr package</title>
   <meta name="description" content="This is an automatically generated validation report for the adoptr R package published via bookdown." />
   <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="References | Validation Report for adoptr package" />
+  <meta property="og:title" content="12 Scenario XI: F-Distribution | Validation Report for adoptr package" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This is an automatically generated validation report for the adoptr R package published via bookdown." />
   <meta name="github-repo" content="kkmann/adoptr-validation-report" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Validation Report for adoptr package" />
+  <meta name="twitter:title" content="12 Scenario XI: F-Distribution | Validation Report for adoptr package" />
   
   <meta name="twitter:description" content="This is an automatically generated validation report for the adoptr R package published via bookdown." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="scenario-xii-using-further-constraints.html"/>
-
+<link rel="prev" href="scenario-x-chi-squared-distribution.html"/>
+<link rel="next" href="scenario-xii-using-further-constraints.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -457,24 +457,151 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered hasAnchor">
-<h1>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="scenario-xi-f-distribution" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">12</span> Scenario XI: F-Distribution<a href="scenario-xi-f-distribution.html#scenario-xi-f-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="details-10" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> Details<a href="scenario-xi-f-distribution.html#details-10" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this scenario, we compute the necessary sample size for a one-way ANOVA with <span class="math inline">\(k\)</span> groups. The resulting test statistic is <span class="math inline">\(F\)</span>-distributed with <span class="math inline">\(k-1\)</span> and <span class="math inline">\(nk-k\)</span> degrees of freedom, where <span class="math inline">\(n\)</span> stands for the sample size per group.</p>
+</div>
+<div id="variant-xi-1-anova" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> Variant XI-1: ANOVA<a href="scenario-xi-f-distribution.html#variant-xi-1-anova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="setup-2" class="section level3 hasAnchor" number="12.2.1">
+<h3><span class="header-section-number">12.2.1</span> Setup<a href="scenario-xi-f-distribution.html#setup-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Under the alternative, we assume a mean of <span class="math inline">\(0.0\)</span> in the first group, <span class="math inline">\(0.4\)</span> in the second group and <span class="math inline">\(0.2\)</span> in the third group.</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="scenario-xi-f-distribution.html#cb253-1" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.4</span>, <span class="fl">0.2</span>)</span>
+<span id="cb253-2"><a href="scenario-xi-f-distribution.html#cb253-2" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">get_tau_ANOVA</span>(means)</span>
+<span id="cb253-3"><a href="scenario-xi-f-distribution.html#cb253-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-4"><a href="scenario-xi-f-distribution.html#cb253-4" aria-hidden="true" tabindex="-1"></a>datadist <span class="ot">&lt;-</span> <span class="fu">ANOVA</span>(<span class="dv">3</span>)</span>
+<span id="cb253-5"><a href="scenario-xi-f-distribution.html#cb253-5" aria-hidden="true" tabindex="-1"></a>H_0 <span class="ot">&lt;-</span> <span class="fu">PointMassPrior</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb253-6"><a href="scenario-xi-f-distribution.html#cb253-6" aria-hidden="true" tabindex="-1"></a>prior <span class="ot">&lt;-</span> <span class="fu">PointMassPrior</span>(theta, <span class="dv">1</span>)</span>
+<span id="cb253-7"><a href="scenario-xi-f-distribution.html#cb253-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-8"><a href="scenario-xi-f-distribution.html#cb253-8" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb253-9"><a href="scenario-xi-f-distribution.html#cb253-9" aria-hidden="true" tabindex="-1"></a>min_power <span class="ot">&lt;-</span> <span class="fl">0.8</span></span>
+<span id="cb253-10"><a href="scenario-xi-f-distribution.html#cb253-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb253-11"><a href="scenario-xi-f-distribution.html#cb253-11" aria-hidden="true" tabindex="-1"></a>toer_cnstr <span class="ot">&lt;-</span> <span class="fu">Power</span>(datadist, H_0)  <span class="sc">&lt;=</span> alpha</span>
+<span id="cb253-12"><a href="scenario-xi-f-distribution.html#cb253-12" aria-hidden="true" tabindex="-1"></a>pow_cnstr <span class="ot">&lt;-</span> <span class="fu">Power</span>(datadist, prior) <span class="sc">&gt;=</span> min_power</span></code></pre></div>
+</div>
+<div id="objective-23" class="section level3 hasAnchor" number="12.2.2">
+<h3><span class="header-section-number">12.2.2</span> Objective<a href="scenario-xi-f-distribution.html#objective-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We want to minimize the expected sample size under the alternative.</p>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="scenario-xi-f-distribution.html#cb254-1" aria-hidden="true" tabindex="-1"></a>ess <span class="ot">&lt;-</span> <span class="fu">ExpectedSampleSize</span>(datadist, prior)</span></code></pre></div>
+</div>
+<div id="initial-design-17" class="section level3 hasAnchor" number="12.2.3">
+<h3><span class="header-section-number">12.2.3</span> Initial Design<a href="scenario-xi-f-distribution.html#initial-design-17" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The initial designs are chosen via the in-built function to create initial designs.</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="scenario-xi-f-distribution.html#cb255-1" aria-hidden="true" tabindex="-1"></a>tbl_designs <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb255-2"><a href="scenario-xi-f-distribution.html#cb255-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">type    =</span> <span class="fu">c</span>(<span class="st">&quot;one-stage&quot;</span>, <span class="st">&quot;group-sequential&quot;</span>, <span class="st">&quot;two-stage&quot;</span>),</span>
+<span id="cb255-3"><a href="scenario-xi-f-distribution.html#cb255-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">initial =</span> <span class="fu">list</span>(</span>
+<span id="cb255-4"><a href="scenario-xi-f-distribution.html#cb255-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">get_initial_design</span>(theta, alpha, <span class="dv">1</span> <span class="sc">-</span> min_power, </span>
+<span id="cb255-5"><a href="scenario-xi-f-distribution.html#cb255-5" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;one-stage&quot;</span>, <span class="at">dist =</span> datadist),</span>
+<span id="cb255-6"><a href="scenario-xi-f-distribution.html#cb255-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">get_initial_design</span>(theta, alpha, <span class="dv">1</span> <span class="sc">-</span> min_power, </span>
+<span id="cb255-7"><a href="scenario-xi-f-distribution.html#cb255-7" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;group-sequential&quot;</span>, <span class="at">dist =</span> datadist),</span>
+<span id="cb255-8"><a href="scenario-xi-f-distribution.html#cb255-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">get_initial_design</span>(theta, alpha, <span class="dv">1</span> <span class="sc">-</span> min_power, </span>
+<span id="cb255-9"><a href="scenario-xi-f-distribution.html#cb255-9" aria-hidden="true" tabindex="-1"></a>                           <span class="st">&quot;two-stage&quot;</span>, <span class="at">dist =</span> datadist) ))</span></code></pre></div>
+</div>
+<div id="optimization-22" class="section level3 hasAnchor" number="12.2.4">
+<h3><span class="header-section-number">12.2.4</span> Optimization<a href="scenario-xi-f-distribution.html#optimization-22" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="scenario-xi-f-distribution.html#cb256-1" aria-hidden="true" tabindex="-1"></a>tbl_designs <span class="ot">&lt;-</span> tbl_designs <span class="sc">%&gt;%</span> </span>
+<span id="cb256-2"><a href="scenario-xi-f-distribution.html#cb256-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb256-3"><a href="scenario-xi-f-distribution.html#cb256-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">optimal =</span> purrr<span class="sc">::</span><span class="fu">map</span>(initial, <span class="sc">~</span><span class="fu">minimize</span>(</span>
+<span id="cb256-4"><a href="scenario-xi-f-distribution.html#cb256-4" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb256-5"><a href="scenario-xi-f-distribution.html#cb256-5" aria-hidden="true" tabindex="-1"></a>          ess,</span>
+<span id="cb256-6"><a href="scenario-xi-f-distribution.html#cb256-6" aria-hidden="true" tabindex="-1"></a>          <span class="fu">subject_to</span>(</span>
+<span id="cb256-7"><a href="scenario-xi-f-distribution.html#cb256-7" aria-hidden="true" tabindex="-1"></a>              toer_cnstr,</span>
+<span id="cb256-8"><a href="scenario-xi-f-distribution.html#cb256-8" aria-hidden="true" tabindex="-1"></a>              pow_cnstr </span>
+<span id="cb256-9"><a href="scenario-xi-f-distribution.html#cb256-9" aria-hidden="true" tabindex="-1"></a>          ),</span>
+<span id="cb256-10"><a href="scenario-xi-f-distribution.html#cb256-10" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb256-11"><a href="scenario-xi-f-distribution.html#cb256-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">initial_design =</span> ., </span>
+<span id="cb256-12"><a href="scenario-xi-f-distribution.html#cb256-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">opts           =</span> opts)) )</span></code></pre></div>
+</div>
+<div id="test-cases-23" class="section level3 hasAnchor" number="12.2.5">
+<h3><span class="header-section-number">12.2.5</span> Test Cases<a href="scenario-xi-f-distribution.html#test-cases-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We first verify that in none of the three cases, the maximal number of iterations was exceeded.</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="scenario-xi-f-distribution.html#cb257-1" aria-hidden="true" tabindex="-1"></a>tbl_designs <span class="sc">%&gt;%</span> </span>
+<span id="cb257-2"><a href="scenario-xi-f-distribution.html#cb257-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb257-3"><a href="scenario-xi-f-distribution.html#cb257-3" aria-hidden="true" tabindex="-1"></a>      type, </span>
+<span id="cb257-4"><a href="scenario-xi-f-distribution.html#cb257-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">iterations =</span> purrr<span class="sc">::</span><span class="fu">map_int</span>(tbl_designs<span class="sc">$</span>optimal, </span>
+<span id="cb257-5"><a href="scenario-xi-f-distribution.html#cb257-5" aria-hidden="true" tabindex="-1"></a>                                  <span class="sc">~</span>.<span class="sc">$</span>nloptr_return<span class="sc">$</span>iterations) ) <span class="sc">%&gt;%</span></span>
+<span id="cb257-6"><a href="scenario-xi-f-distribution.html#cb257-6" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">print</span>(.); .} <span class="sc">%&gt;%</span> </span>
+<span id="cb257-7"><a href="scenario-xi-f-distribution.html#cb257-7" aria-hidden="true" tabindex="-1"></a>  {testthat<span class="sc">::</span><span class="fu">expect_true</span>(<span class="fu">all</span>(.<span class="sc">$</span>iterations <span class="sc">&lt;</span> opts<span class="sc">$</span>maxeval))}</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 2
+##   type             iterations
+##   &lt;chr&gt;                 &lt;int&gt;
+## 1 one-stage                22
+## 2 group-sequential       1429
+## 3 two-stage              1913</code></pre>
+<p>We then check via simulations of the test statistic, that the type I error and power constraints are fulfilled.</p>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="scenario-xi-f-distribution.html#cb259-1" aria-hidden="true" tabindex="-1"></a>tbl_designs <span class="sc">%&gt;%</span> </span>
+<span id="cb259-2"><a href="scenario-xi-f-distribution.html#cb259-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb259-3"><a href="scenario-xi-f-distribution.html#cb259-3" aria-hidden="true" tabindex="-1"></a>      type, </span>
+<span id="cb259-4"><a href="scenario-xi-f-distribution.html#cb259-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">toer  =</span> purrr<span class="sc">::</span><span class="fu">map</span>(tbl_designs<span class="sc">$</span>optimal, </span>
+<span id="cb259-5"><a href="scenario-xi-f-distribution.html#cb259-5" aria-hidden="true" tabindex="-1"></a>                         <span class="sc">~</span><span class="fu">sim_pr_reject</span>(.[[<span class="dv">1</span>]], .<span class="dv">0</span>, datadist)<span class="sc">$</span>prob), </span>
+<span id="cb259-6"><a href="scenario-xi-f-distribution.html#cb259-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">power =</span> purrr<span class="sc">::</span><span class="fu">map</span>(tbl_designs<span class="sc">$</span>optimal, </span>
+<span id="cb259-7"><a href="scenario-xi-f-distribution.html#cb259-7" aria-hidden="true" tabindex="-1"></a>                         <span class="sc">~</span><span class="fu">sim_pr_reject</span>(.[[<span class="dv">1</span>]], theta , datadist)<span class="sc">$</span>prob) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb259-8"><a href="scenario-xi-f-distribution.html#cb259-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(., <span class="at">cols =</span> <span class="fu">c</span>(toer, power)) <span class="sc">%&gt;%</span> </span>
+<span id="cb259-9"><a href="scenario-xi-f-distribution.html#cb259-9" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">print</span>(.); .} <span class="sc">%&gt;%</span> {</span>
+<span id="cb259-10"><a href="scenario-xi-f-distribution.html#cb259-10" aria-hidden="true" tabindex="-1"></a>  testthat<span class="sc">::</span><span class="fu">expect_true</span>(<span class="fu">all</span>(.<span class="sc">$</span>toer  <span class="sc">&lt;=</span> alpha <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">+</span> tol)))</span>
+<span id="cb259-11"><a href="scenario-xi-f-distribution.html#cb259-11" aria-hidden="true" tabindex="-1"></a>  testthat<span class="sc">::</span><span class="fu">expect_true</span>(<span class="fu">all</span>(.<span class="sc">$</span>power <span class="sc">&gt;=</span> min_power <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> tol))) }</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 3
+##   type               toer power
+##   &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt;
+## 1 one-stage        0.0503 0.799
+## 2 group-sequential 0.0502 0.798
+## 3 two-stage        0.0500 0.799</code></pre>
+<p>The sample size function <span class="math inline">\(n_2\)</span> should be monotonously decreasing.</p>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="scenario-xi-f-distribution.html#cb261-1" aria-hidden="true" tabindex="-1"></a>testthat<span class="sc">::</span><span class="fu">expect_true</span>(</span>
+<span id="cb261-2"><a href="scenario-xi-f-distribution.html#cb261-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">all</span>(<span class="fu">diff</span>(</span>
+<span id="cb261-3"><a href="scenario-xi-f-distribution.html#cb261-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># get optimal two-stage design n2 pivots</span></span>
+<span id="cb261-4"><a href="scenario-xi-f-distribution.html#cb261-4" aria-hidden="true" tabindex="-1"></a>        tbl_designs <span class="sc">%&gt;%</span> <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&quot;two-stage&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb261-5"><a href="scenario-xi-f-distribution.html#cb261-5" aria-hidden="true" tabindex="-1"></a>           {.[[<span class="st">&quot;optimal&quot;</span>]][[<span class="dv">1</span>]]<span class="sc">$</span>design<span class="sc">@</span>n2_pivots} </span>
+<span id="cb261-6"><a href="scenario-xi-f-distribution.html#cb261-6" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">&lt;</span> <span class="dv">0</span>) )</span></code></pre></div>
+<p>Since the degrees of freedom of the three design classes are ordered as
+‘two-stage’ &gt; ‘group-sequential’ &gt; ‘one-stage’,
+the expected sample sizes (under the alternative) should be ordered
+in reverse (‘two-stage’ smallest).
+Additionally, expected sample sizes under both null and alternative
+are computed both via <code>evaluate()</code> and simulation-based.</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="scenario-xi-f-distribution.html#cb262-1" aria-hidden="true" tabindex="-1"></a>ess0 <span class="ot">&lt;-</span> <span class="fu">ExpectedSampleSize</span>(datadist, H_0)</span>
+<span id="cb262-2"><a href="scenario-xi-f-distribution.html#cb262-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb262-3"><a href="scenario-xi-f-distribution.html#cb262-3" aria-hidden="true" tabindex="-1"></a>tbl_designs <span class="sc">%&gt;%</span> </span>
+<span id="cb262-4"><a href="scenario-xi-f-distribution.html#cb262-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb262-5"><a href="scenario-xi-f-distribution.html#cb262-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ess      =</span> <span class="fu">map_dbl</span>(optimal,</span>
+<span id="cb262-6"><a href="scenario-xi-f-distribution.html#cb262-6" aria-hidden="true" tabindex="-1"></a>                           <span class="sc">~</span><span class="fu">evaluate</span>(ess, .<span class="sc">$</span>design) ),</span>
+<span id="cb262-7"><a href="scenario-xi-f-distribution.html#cb262-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ess_sim  =</span> <span class="fu">map_dbl</span>(optimal,</span>
+<span id="cb262-8"><a href="scenario-xi-f-distribution.html#cb262-8" aria-hidden="true" tabindex="-1"></a>                           <span class="sc">~</span><span class="fu">sim_n</span>(.<span class="sc">$</span>design, theta, datadist)<span class="sc">$</span>n ),</span>
+<span id="cb262-9"><a href="scenario-xi-f-distribution.html#cb262-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">ess0     =</span> <span class="fu">map_dbl</span>(optimal,</span>
+<span id="cb262-10"><a href="scenario-xi-f-distribution.html#cb262-10" aria-hidden="true" tabindex="-1"></a>                           <span class="sc">~</span><span class="fu">evaluate</span>(ess0, .<span class="sc">$</span>design) ),</span>
+<span id="cb262-11"><a href="scenario-xi-f-distribution.html#cb262-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">ess0_sim =</span> <span class="fu">map_dbl</span>(optimal,</span>
+<span id="cb262-12"><a href="scenario-xi-f-distribution.html#cb262-12" aria-hidden="true" tabindex="-1"></a>                           <span class="sc">~</span><span class="fu">sim_n</span>(.<span class="sc">$</span>design, .<span class="dv">0</span>, datadist)<span class="sc">$</span>n ) ) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-13"><a href="scenario-xi-f-distribution.html#cb262-13" aria-hidden="true" tabindex="-1"></a>    {<span class="fu">print</span>(.); .} <span class="sc">%&gt;%</span> {</span>
+<span id="cb262-14"><a href="scenario-xi-f-distribution.html#cb262-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sim/evaluate same under alternative?</span></span>
+<span id="cb262-15"><a href="scenario-xi-f-distribution.html#cb262-15" aria-hidden="true" tabindex="-1"></a>    testthat<span class="sc">::</span><span class="fu">expect_equal</span>(.<span class="sc">$</span>ess, .<span class="sc">$</span>ess_sim, </span>
+<span id="cb262-16"><a href="scenario-xi-f-distribution.html#cb262-16" aria-hidden="true" tabindex="-1"></a>                           <span class="at">tolerance =</span> tol_n,</span>
+<span id="cb262-17"><a href="scenario-xi-f-distribution.html#cb262-17" aria-hidden="true" tabindex="-1"></a>                           <span class="at">scale =</span> <span class="dv">1</span>)</span>
+<span id="cb262-18"><a href="scenario-xi-f-distribution.html#cb262-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sim/evaluate same under null?</span></span>
+<span id="cb262-19"><a href="scenario-xi-f-distribution.html#cb262-19" aria-hidden="true" tabindex="-1"></a>    testthat<span class="sc">::</span><span class="fu">expect_equal</span>(.<span class="sc">$</span>ess0, .<span class="sc">$</span>ess0_sim, </span>
+<span id="cb262-20"><a href="scenario-xi-f-distribution.html#cb262-20" aria-hidden="true" tabindex="-1"></a>                           <span class="at">tolerance =</span> tol_n,</span>
+<span id="cb262-21"><a href="scenario-xi-f-distribution.html#cb262-21" aria-hidden="true" tabindex="-1"></a>                           <span class="at">scale =</span> <span class="dv">1</span>)</span>
+<span id="cb262-22"><a href="scenario-xi-f-distribution.html#cb262-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># monotonicity with respect to degrees of freedom</span></span>
+<span id="cb262-23"><a href="scenario-xi-f-distribution.html#cb262-23" aria-hidden="true" tabindex="-1"></a>    testthat<span class="sc">::</span><span class="fu">expect_true</span>(<span class="fu">all</span>(<span class="fu">diff</span>(.<span class="sc">$</span>ess) <span class="sc">&lt;</span> <span class="dv">0</span>)) }</span></code></pre></div>
+<pre><code>## # A tibble: 3 × 7
+##   type             initial    optimal          ess ess_sim  ess0 ess0_sim
+##   &lt;chr&gt;            &lt;list&gt;     &lt;list&gt;         &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+## 1 one-stage        &lt;OnStgDsg&gt; &lt;adptrOpR [3]&gt;  121     121   121      121 
+## 2 group-sequential &lt;GrpSqntD&gt; &lt;adptrOpR [3]&gt;  111.    111.  103.     103.
+## 3 two-stage        &lt;TwStgDsg&gt; &lt;adptrOpR [3]&gt;  111.    111.  104.     105.</code></pre>
+<p>The expected sample size under the alternative of the optimized designs should be lower than the sample size of the initial designs.</p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="scenario-xi-f-distribution.html#cb264-1" aria-hidden="true" tabindex="-1"></a>testthat<span class="sc">::</span><span class="fu">expect_lte</span>(</span>
+<span id="cb264-2"><a href="scenario-xi-f-distribution.html#cb264-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">evaluate</span>(ess, </span>
+<span id="cb264-3"><a href="scenario-xi-f-distribution.html#cb264-3" aria-hidden="true" tabindex="-1"></a>             tbl_designs <span class="sc">%&gt;%</span> </span>
+<span id="cb264-4"><a href="scenario-xi-f-distribution.html#cb264-4" aria-hidden="true" tabindex="-1"></a>                <span class="fu">pull</span>(optimal) <span class="sc">%&gt;%</span> </span>
+<span id="cb264-5"><a href="scenario-xi-f-distribution.html#cb264-5" aria-hidden="true" tabindex="-1"></a>                .[[<span class="dv">1</span>]]  <span class="sc">%&gt;%</span></span>
+<span id="cb264-6"><a href="scenario-xi-f-distribution.html#cb264-6" aria-hidden="true" tabindex="-1"></a>                .<span class="sc">$</span>design ),</span>
+<span id="cb264-7"><a href="scenario-xi-f-distribution.html#cb264-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">evaluate</span>(ess, </span>
+<span id="cb264-8"><a href="scenario-xi-f-distribution.html#cb264-8" aria-hidden="true" tabindex="-1"></a>             tbl_designs <span class="sc">%&gt;%</span> </span>
+<span id="cb264-9"><a href="scenario-xi-f-distribution.html#cb264-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">pull</span>(initial) <span class="sc">%&gt;%</span> </span>
+<span id="cb264-10"><a href="scenario-xi-f-distribution.html#cb264-10" aria-hidden="true" tabindex="-1"></a>                .[[<span class="dv">1</span>]] ) )</span></code></pre></div>
 
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div class="csl-entry">
-Bauer, P., F. Bretz, V. Dragalin, F. König, and G. Wassmer. 2015. <span>“Twenty-Five Years of Confirmatory Adaptive Designs: Opportunities and Pitfalls.”</span> <em>Statistics in Medicine</em> 35 (3): 325–47. <a href="https://doi.org/10.1002/sim.6472">https://doi.org/10.1002/sim.6472</a>.
-</div>
-<div class="csl-entry">
-Pilz, M., K. Kunzmann, C. Herrmann, G. Rauch, and M. Kieser. 2019. <span>“A Variational Approach to Optimal Two-Stage Designs.”</span> <em>Statistics in Medicine</em> 38 (21): 4159–71. <a href="https://doi.org/10.1002/sim.8291">https://doi.org/10.1002/sim.8291</a>.
-</div>
-<div class="csl-entry">
-Wassmer, G., and W. Brannath. 2016. <em>Group Sequential and Confirmatory Adaptive Designs in Clinical Trials</em>. Springer Series in Pharmaceutical Statistics -. Springer International Publishing.
-</div>
-<div class="csl-entry">
-Wassmer, G., and F. Pahlke. 2018. <em>Rpact: Confirmatory Adaptive Clinical Trial Design and Analysis</em>. <a href="https://www.rpact.org">https://www.rpact.org</a>.
-</div>
-<div class="csl-entry">
-Wickham, H., R Studio, and R Core Team. 2018. <em>Testthat: Unit Testing for r</em>. <a href="https://cran.r-project.org/web/packages/testthat/index.html">https://cran.r-project.org/web/packages/testthat/index.html</a>.
 </div>
 </div>
 </div>
@@ -483,8 +610,8 @@ Wickham, H., R Studio, and R Core Team. 2018. <em>Testthat: Unit Testing for r</
           </div>
         </div>
       </div>
-<a href="scenario-xii-using-further-constraints.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="scenario-x-chi-squared-distribution.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="scenario-xii-using-further-constraints.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -515,7 +642,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/kkmann/adoptr-validation-report/edit/master/13-references.Rmd",
+"link": "https://github.com/kkmann/adoptr-validation-report/edit/master/11-scenario-XI.Rmd",
 "text": "Edit"
 },
 "history": {
