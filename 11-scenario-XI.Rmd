@@ -21,8 +21,8 @@ prior <- PointMassPrior(theta, 1)
 alpha <- 0.05
 min_power <- 0.8
 
-toer_cnstr <- Power(dist, H_0) <= alpha
-pow_cnstr <- Power(dist, H_1) >= min_power
+toer_cnstr <- Power(datadist, H_0)  <= alpha
+pow_cnstr <- Power(datadist, prior) >= min_power
 ```
 
 ### Objective
@@ -34,19 +34,18 @@ ess <- ExpectedSampleSize(datadist, prior)
 
 ### Initial Design
 
-The initial designs are chosen heuristically.
+The initial designs are chosen via the in-built function to create initial designs.
 
 ```{r}
 tbl_designs <- tibble(
     type    = c("one-stage", "group-sequential", "two-stage"),
     initial = list(
-        OneStageDesign(121, 3.02),
-        GroupSequentialDesign(102, 1.2, 4.35, 102, 
-                              c2_pivots=c(4.87, 4.55, 4.01, 3.38, 2.74, 2.21, 1.88)),
-        TwoStageDesign(102, 1.2, 4.35, 
-                       n2_pivots = c(137, 130, 117, 102, 87, 74, 65), 
-                       c2_pivots = c(4.87, 4.55, 4.01, 3.38, 2.74, 2.21, 1.88), 
-                       event_rate = 0.7)) )
+        get_initial_design(theta, alpha, 1 - min_power, 
+                           "one-stage", dist = datadist),
+        get_initial_design(theta, alpha, 1 - min_power, 
+                           "group-sequential", dist = datadist),
+        get_initial_design(theta, alpha, 1 - min_power, 
+                           "two-stage", dist = datadist) ))
 ```
 
 ### Optimization
@@ -59,7 +58,7 @@ tbl_designs <- tbl_designs %>%
           ess,
           subject_to(
               toer_cnstr,
-              pow_cnstr
+              pow_cnstr 
           ),
           
           initial_design = ., 
