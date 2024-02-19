@@ -23,7 +23,7 @@
 <meta name="author" content="Kevin Kunzmann, Maximilian Pilz &amp; Nico Bruder" />
 
 
-<meta name="date" content="2023-12-15" />
+<meta name="date" content="2024-02-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -462,7 +462,7 @@ div.csl-indent {
 <div id="details-8" class="section level2 hasAnchor" number="10.1">
 <h2><span class="header-section-number">10.1</span> Details<a href="scenario-ix-time-to-event-endpoints.html#details-8" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In this scenario, we visit a different scenario: Instead of continuous or binary endpoints, we now consider time-to-event endpoints. Therefore, we conduct a log-rank test, for which <code>adoptr</code> provides the normal approximation of the test statistic. In order to obtain a one-parametric statistic, we need to fix the event probability <span class="math inline">\(d\)</span> during the trial. We assume that a hazard ratio <span class="math inline">\(\theta&gt;1\)</span> implies favorable results. The null-hypothesis is given by <span class="math inline">\(\mathcal{H}_0:\theta\leq 1\)</span>. In both of the following two scenarios, we assume a constant event rate of <span class="math inline">\(d=0.7\)</span> and the type one error should be bounded by <span class="math inline">\(\alpha&lt;0.025\)</span> and a power of <span class="math inline">\(0.8\)</span> is necessary.
-Attention: <code>adoptr</code> calculates the number of necessary events, not the sample size. Thus, e.g. the function <code>ExpectedSampleSize</code> does not really represent the expected sample size, but the expected number of events.
+Attention: <code>adoptr</code> calculates the number of necessary events, not the sample size. Thus, e.g. the function <code>ExpectedSampleSize</code> does not really represent the expected sample size, but the expected number of events. To make a clear distinction, one can use <code>ExpectedNumberOfEvents</code> instead.
 The sample size can be calculated by dividing the number of events by the event rate.</p>
 <div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="scenario-ix-time-to-event-endpoints.html#cb217-1" aria-hidden="true" tabindex="-1"></a>datadist <span class="ot">&lt;-</span> <span class="fu">Survival</span>(<span class="fl">0.7</span>, <span class="at">two_armed =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb217-2"><a href="scenario-ix-time-to-event-endpoints.html#cb217-2" aria-hidden="true" tabindex="-1"></a>H_0 <span class="ot">&lt;-</span> <span class="fu">PointMassPrior</span>(<span class="fl">1.0</span>, <span class="dv">1</span>)</span>
@@ -558,7 +558,7 @@ the expected sample sizes (under the alternative) should be ordered
 in reverse (‘two-stage’ smallest).
 Additionally, expected sample sizes under both null and alternative
 are computed both via <code>evaluate()</code> and simulation-based.</p>
-<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="scenario-ix-time-to-event-endpoints.html#cb226-1" aria-hidden="true" tabindex="-1"></a>ess0 <span class="ot">&lt;-</span> <span class="fu">ExpectedSampleSize</span>(datadist, H_0)</span>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="scenario-ix-time-to-event-endpoints.html#cb226-1" aria-hidden="true" tabindex="-1"></a>ess0 <span class="ot">&lt;-</span> <span class="fu">ExpectedNumberOfEvents</span>(datadist, H_0)</span>
 <span id="cb226-2"><a href="scenario-ix-time-to-event-endpoints.html#cb226-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb226-3"><a href="scenario-ix-time-to-event-endpoints.html#cb226-3" aria-hidden="true" tabindex="-1"></a>tbl_designs <span class="sc">%&gt;%</span> </span>
 <span id="cb226-4"><a href="scenario-ix-time-to-event-endpoints.html#cb226-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
