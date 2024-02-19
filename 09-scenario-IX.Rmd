@@ -2,7 +2,7 @@
 
 ## Details
 In this scenario, we visit a different scenario: Instead of continuous or binary endpoints, we now consider time-to-event endpoints. Therefore, we conduct a log-rank test, for which `adoptr` provides the normal approximation of the test statistic. In order to obtain a one-parametric statistic, we need to fix the event probability $d$ during the trial. We assume that a hazard ratio $\theta>1$ implies favorable results. The null-hypothesis is given by $\mathcal{H}_0:\theta\leq 1$. In both of the following two scenarios, we assume a constant event rate of $d=0.7$ and the type one error should be bounded by $\alpha<0.025$ and a power of $0.8$ is necessary. 
-Attention: `adoptr` calculates the number of necessary events, not the sample size. Thus, e.g. the function `ExpectedSampleSize` does not really represent the expected sample size, but the expected number of events. 
+Attention: `adoptr` calculates the number of necessary events, not the sample size. Thus, e.g. the function `ExpectedSampleSize` does not really represent the expected sample size, but the expected number of events. To make a clear distinction, one can use `ExpectedNumberOfEvents` instead.
 The sample size can be calculated by dividing the number of events by the event rate. 
 
 ```{r}
@@ -109,7 +109,7 @@ Additionally, expected sample sizes under both null and alternative
 are computed both via `evaluate()` and simulation-based.
 
 ```{r}
-ess0 <- ExpectedSampleSize(datadist, H_0)
+ess0 <- ExpectedNumberOfEvents(datadist, H_0)
 
 tbl_designs %>% 
     mutate(
